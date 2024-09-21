@@ -47,7 +47,7 @@ export default function App() {
                     )
                 })}
             </Routes>
-            <Toaster richColors position="top-right" />
+            <Toaster richColors position="bottom-center" />
         </React.Fragment>
     )
 }
