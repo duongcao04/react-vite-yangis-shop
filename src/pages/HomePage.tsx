@@ -13,7 +13,7 @@ import {
 import { useGetProducts } from '@/hooks/useProduct'
 
 function HomePage() {
-    const { loadingProducts, products } = useGetProducts()
+    const { isLoading, products } = useGetProducts()
 
     return (
         <React.Fragment>
@@ -37,10 +37,7 @@ function HomePage() {
                 <FeatureProduct />
             </section>
             <section className="container mt-20">
-                <OurProduct
-                    loadingProducts={loadingProducts}
-                    products={products}
-                />
+                <OurProduct loadingProducts={isLoading} products={products} />
             </section>
             <section className="container mt-20">
                 {/* <NewestPost /> */}
