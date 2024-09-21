@@ -43,7 +43,14 @@ type ProductProperties = {
         type?: string
     }
 }
-type NewProduct = Omit<Product, '_id' | keyof Timestamps>
+type NewProduct = Omit<
+    Product,
+    '_id' | 'category' | 'brand' | 'variants' | keyof Timestamps
+> & {
+    category: string
+    brand: string
+    variants: string[]
+}
 
 type ProductVariant = Timestamps & {
     _id: string
@@ -81,7 +88,7 @@ type Category = Timestamps & {
     icon: string
     products: Product[]
 }
-type NewCategory = Omit<Category, '_id' | keyof Timestamps>
+type NewCategory = Omit<Category, '_id' | 'products' | keyof Timestamps>
 
 // OrderType
 type Order = Timestamps & {
@@ -107,8 +114,8 @@ type NewOrder = Omit<Order, '_id' | 'user' | keyof Timestamps> & {
 // ReviewType
 type Review = Timestamps & {
     _id: string
-    user: User
-    product: Product
+    user: User | string
+    product: Product | string
     rating: number
     comment: string
 }

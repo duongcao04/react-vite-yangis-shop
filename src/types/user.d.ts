@@ -11,5 +11,5 @@ type User = Timestamps & {
     reviews: string[]
     role: 'admin' | 'member'
 }
-type Login = Required<Pick<User, 'username' | 'password'>>
-type NewUser = Required<Pick<User, 'username' | 'password' | 'email' | 'phone'>>
+type Login = Required<Pick<User, 'email' | 'password'>>
+type NewUser = Required<Pick<User, 'fullName' | 'password' | 'email' | 'phone'>>

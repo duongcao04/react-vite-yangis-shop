@@ -24,7 +24,6 @@ import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/constants/imageValidate'
 import { useGetBrands } from '@/hooks/useBrand'
 import { useGetCategories } from '@/hooks/useCategory'
 import { useCreateProduct } from '@/hooks/useProduct'
-import { INewProduct } from '@/types/product'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -74,13 +73,14 @@ function NewProductForm() {
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        const newProduct: INewProduct = {
+        const newProduct: NewProduct = {
             name: data.name,
             description: data.description,
             thumbnail: data.thumbnail,
             featureImage: data.featureImage,
             price: +data.price,
             sale: data.sale,
+            inStock: 0,
             category: data.category,
             brand: data.brand,
             variants: data.variants,

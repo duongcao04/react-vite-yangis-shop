@@ -12,7 +12,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from '@/constants/imageValidate'
-import { INewCategory } from '@/types/category'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -43,7 +42,7 @@ export default function NewCategoryForm() {
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        const newCategory: INewCategory = {
+        const newCategory: NewCategory = {
             name: data.name,
             thumbnail: data.thumbnail,
             icon: data.icon,

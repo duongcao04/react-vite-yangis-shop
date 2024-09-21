@@ -1,12 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormField,
-    FormItem,
-    FormMessage,
-} from '@/components/ui/form'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useLogin } from '@/hooks/useLogin'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -14,14 +9,17 @@ import { z } from 'zod'
 import { FloatingLabelInput } from '../ui/floating-label-input'
 
 const FormSchema = z.object({
-    email: z.string().email({message: "Email không hợp lệ"}).min(2, {
+    email: z.string().email({ message: 'Email không hợp lệ' }).min(2, {
         message: 'Email phải tối thiểu 2 ký tự',
     }),
-    password: z.string().min(8, {
-        message: 'Mật khẩu phải tối thiểu 8 ký tự',
-    }).max(255, {
-        message: 'Mật khẩu chỉ tối đa 255 ký tự',
-    }),
+    password: z
+        .string()
+        .min(8, {
+            message: 'Mật khẩu phải tối thiểu 8 ký tự',
+        })
+        .max(255, {
+            message: 'Mật khẩu chỉ tối đa 255 ký tự',
+        }),
 })
 
 export default function LoginForm() {
@@ -75,7 +73,7 @@ export default function LoginForm() {
                                 id="password"
                                 label="Mật khẩu"
                                 required
-                                type='password'
+                                type="password"
                             />
                             <FormMessage />
                         </FormItem>

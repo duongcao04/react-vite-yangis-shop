@@ -17,7 +17,7 @@ import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 
 export default function CategoriesTable() {
-    const { loadingCategories, categories } = useGetCategories()
+    const { isLoading, categories } = useGetCategories()
     const { deleteAProduct } = useDeleteProduct()
 
     const handleDeleteCategory = (category: Category) => {
@@ -43,7 +43,7 @@ export default function CategoriesTable() {
                 <TableRow className="h-[14px]"></TableRow>
             </TableHeader>
             <TableBody>
-                {!loadingCategories &&
+                {!isLoading &&
                     categories.map((category) => (
                         <TableRow key={category._id}>
                             <TableCell className="font-semibold flex items-center justify-start gap-[14px]">
@@ -128,7 +128,7 @@ export default function CategoriesTable() {
                             </TableCell>
                         </TableRow>
                     ))}
-                {loadingCategories &&
+                {isLoading &&
                     new Array(5).fill('table').map((item, index) => (
                         <TableRow key={item + index}>
                             <TableCell className="font-semibold flex items-center justify-start gap-[14px]">

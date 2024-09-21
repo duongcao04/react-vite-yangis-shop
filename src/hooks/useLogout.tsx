@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useAuthContext } from '@/context/AuthContext'
-import IUser from '@/types/user'
 import { toast } from 'sonner'
 
 const useLogout = () => {
@@ -18,7 +17,7 @@ const useLogout = () => {
             localStorage.removeItem('__user-information')
             toast.success('Đăng xuất thành công')
             navigates('/')
-            setAuthUser({} as IUser)
+            setAuthUser({} as User)
         } catch (error) {
             toast.error('Đã xảy ra lỗi')
         } finally {

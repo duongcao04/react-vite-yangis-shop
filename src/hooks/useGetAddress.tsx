@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 
-import { ICommune, IDistrict, IProvince } from '@/types/address'
 import axios from 'axios'
 import { toast } from 'sonner'
 
 // https://docs.developers.supership.vn/guide/areas.html
 export const useGetAddress = () => {
     const [loading, setLoading] = useState<boolean>(false)
-    const [provinces, setProvinces] = useState<IProvince[]>([])
+    const [provinces, setProvinces] = useState<Province[]>([])
 
     useEffect(() => {
         const getGeography = async () => {
@@ -35,7 +34,7 @@ export const useGetAddress = () => {
         getGeography()
     }, [])
 
-    const getDistricts: (provinceId: string) => Promise<IDistrict[]> = async (
+    const getDistricts: (provinceId: string) => Promise<District[]> = async (
         provinceId
     ) => {
         try {
@@ -56,7 +55,7 @@ export const useGetAddress = () => {
         }
     }
 
-    const getCommunes: (districtId: string) => Promise<ICommune[]> = async (
+    const getCommunes: (districtId: string) => Promise<Commune[]> = async (
         districtId
     ) => {
         try {

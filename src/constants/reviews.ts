@@ -1,8 +1,8 @@
 const reviews: Review[] = [
     {
         _id: '1',
-        user_id: '123',
-        product_id: '66a7d238219274d2e0068b24',
+        user: '123',
+        product: '66a7d238219274d2e0068b24',
         rating: 3,
         comment: 'Tuyệt',
         createdAt: '123',
@@ -11,8 +11,8 @@ const reviews: Review[] = [
     },
     {
         _id: '2',
-        user_id: '123',
-        product_id: '66a7d238219274d2e0068b24',
+        user: '123',
+        product: '66a7d238219274d2e0068b24',
         rating: 3,
         comment: 'Tuyệt',
         createdAt: '123',
@@ -21,8 +21,8 @@ const reviews: Review[] = [
     },
     {
         _id: '3',
-        user_id: '123',
-        product_id: '66a7d238219274d2e0068b24',
+        user: '123',
+        product: '66a7d238219274d2e0068b24',
         rating: 3,
         comment: 'Tuyệt',
         createdAt: '123',
