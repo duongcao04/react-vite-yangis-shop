@@ -6,7 +6,7 @@ const variantApi = {
         return await axiosClient.get(url, { params })
     },
     createVariant: async (newVariant: NewProductVariant) => {
-        const url = 'variants/add'
+        const url = 'variant/add'
         return await axiosClient.post(url, newVariant, {
             headers: {
                 'content-type': 'multipart/form-data',

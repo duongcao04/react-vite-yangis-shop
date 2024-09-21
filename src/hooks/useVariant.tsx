@@ -36,7 +36,7 @@ export const useCreateVariant = () => {
             const response = await variantApi.createVariant(newVariant)
             const { data, message, status } = response.data
             if (status === 201) {
-                toast.success('Tạo mới biến thể sản phẩm thành công')
+                toast.success(message)
                 return data
             } else {
                 throw new Error(message)
