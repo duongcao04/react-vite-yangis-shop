@@ -1,7 +1,5 @@
-import * as React from 'react'
-
 import productApi, { IGetProductsParams } from '@/api/product.api'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 export const useGetProducts: (params?: IGetProductsParams) => {
@@ -54,41 +52,28 @@ export const useGetProduct: (productId: string) => {
 }
 
 export const useCreateProduct = () => {
-    const [loading, setLoading] = React.useState<boolean>(false)
-
-    const createAProduct: (newProduct: NewProduct) => Promise<void> = async (
-        newProduct
-    ) => {
-        setLoading(true)
-        try {
-            await productApi.createProduct(newProduct)
+    const queryClient = useQueryClient()
+    const { isIdle, mutate } = useMutation({
+        mutationFn: (newProduct: NewProduct) =>
+            productApi.createProduct(newProduct),
+        onSuccess: () => {
             toast.success('Thêm mới sản phẩm thành công')
-        } catch (error) {
-            toast.error('Đã xảy ra lỗi')
-        } finally {
-            setLoading(false)
-        }
-    }
+            queryClient.invalidateQueries({ queryKey: ['products'] })
+        },
+    })
 
-    return { loading, createAProduct }
+    return { isLoading: isIdle, createProduct: mutate }
 }
 
 export const useDeleteProduct = () => {
-    const [loading, setLoading] = React.useState<boolean>(false)
-
-    const deleteAProduct: (productId: string) => Promise<void> = async (
-        productId
-    ) => {
-        setLoading(true)
-        try {
-            await productApi.deleteProduct(productId)
+    const queryClient = useQueryClient()
+    const { isIdle, mutate } = useMutation({
+        mutationFn: (productId: string) => productApi.deleteProduct(productId),
+        onSuccess: () => {
             toast.success('Xóa sản phẩm thành công')
-        } catch (error) {
-            toast.error('Đã xảy ra lỗi')
-        } finally {
-            setLoading(false)
-        }
-    }
+            queryClient.invalidateQueries({ queryKey: ['products'] })
+        },
+    })
 
-    return { loading, deleteAProduct }
+    return { isLoading: isIdle, deleteProduct: mutate }
 }

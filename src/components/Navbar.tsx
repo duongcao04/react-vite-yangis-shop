@@ -1,4 +1,8 @@
 import { useState } from 'react'
+
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
+import { DialogClose } from '@radix-ui/react-dialog'
+import { motion } from 'framer-motion'
 import { BsListNested } from 'react-icons/bs'
 import { FaShoppingCart } from 'react-icons/fa'
 import { FaHeart } from 'react-icons/fa6'
@@ -7,33 +11,31 @@ import { MdPerson } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 
-import Ymember from '@/assets/png/ymember.png'
+import { useAuthContext } from '@/context/AuthContext'
+
 import MobileNavigate from '@/components/fragment/MobileNavigate'
 import Searchbar from '@/components/fragment/Searchbar'
 import UserDropdown from '@/components/fragment/UserDropdown'
 import Modal from '@/components/modal/Modal'
 import { Button } from '@/components/ui/button'
+
+import Ymember from '@/assets/png/ymember.png'
 import HEADER_NAVIGATES from '@/constants/navigates'
-import { useAuthContext } from '@/context/AuthContext'
 import { RootState } from '@/redux/store'
+import { pathConstants } from '@/routes/pathConstants'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
-import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined'
-import { DialogClose } from '@radix-ui/react-dialog'
-import { motion } from 'framer-motion'
 
 export default function Navbar() {
     const [isExtendSearchbar, setIsExtendSearchbar] = useState<boolean>(false)
     const { authUser } = useAuthContext()
 
-    const { cart }: { cart: ProductCart[] } = useSelector(
+    const { cart }: { cart: Cart } = useSelector(
         (state: RootState) => state.cart
     )
 
-    const calcNumberProductInCart: (cart: ProductCart[]) => number = function (
-        cart
-    ) {
+    const calcNumberProductInCart: (cart: Cart) => number = function (cart) {
         let total = 0
-        cart.forEach((product) => (total += product.quantity))
+        cart.forEach((cartItem: CartItem) => (total += cartItem.quantity ?? 0))
         return total
     }
 
@@ -154,20 +156,6 @@ export default function Navbar() {
                                             </p>
                                         ),
                                     }}
-                                    body={
-                                        <div className="flex flex-col items-center justify-center gap-2">
-                                            <img
-                                                src={Ymember}
-                                                alt="y member"
-                                                className="size-[90px]"
-                                            />
-                                            <p className="text-center font-bold leading-[20px]">
-                                                Vui lòng đăng nhập tài khoản
-                                                Ymember để xem ưu đãi và thanh
-                                                toán dễ dàng hơn.
-                                            </p>
-                                        </div>
-                                    }
                                     footer={
                                         <div className="mt-2 w-full flex items-center justify-center gap-5">
                                             {/* DialogClose:::Use api Dialog close from shadcn ui library */}
@@ -177,21 +165,40 @@ export default function Navbar() {
                                                     size={'lg'}
                                                     asChild
                                                 >
-                                                    <Link to={'/register'}>
+                                                    <Link
+                                                        to={
+                                                            pathConstants.REGISTER
+                                                        }
+                                                    >
                                                         Đăng ký
                                                     </Link>
                                                 </Button>
                                             </DialogClose>
                                             <DialogClose asChild>
                                                 <Button size={'lg'} asChild>
-                                                    <Link to={'/login'}>
+                                                    <Link
+                                                        to={pathConstants.LOGIN}
+                                                    >
                                                         Đăng nhập
                                                     </Link>
                                                 </Button>
                                             </DialogClose>
                                         </div>
                                     }
-                                />
+                                >
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <img
+                                            src={Ymember}
+                                            alt="y member"
+                                            className="size-[90px]"
+                                        />
+                                        <p className="text-center font-bold leading-[20px]">
+                                            Vui lòng đăng nhập tài khoản Ymember
+                                            để xem ưu đãi và thanh toán dễ dàng
+                                            hơn.
+                                        </p>
+                                    </div>
+                                </Modal>
                             )}
 
                             {!isObjectEmpty(authUser) && (
@@ -225,7 +232,7 @@ export default function Navbar() {
                             animate={{ opacity: 1 }}
                         >
                             <Link
-                                to={'/wish-list'}
+                                to={pathConstants.FAVOURITE}
                                 className="w-fit h-[44px] py-[6px] px-4 bg-black rounded-full flex items-center justify-center gap-3"
                                 title="Danh sách yêu thích"
                             >
@@ -240,7 +247,7 @@ export default function Navbar() {
                         animate={{ opacity: 1 }}
                     >
                         <Link
-                            to={'/cart'}
+                            to={pathConstants.CART}
                             className="relative w-fit h-[44px] py-[6px] px-[20px] bg-black rounded-full flex items-center justify-center gap-3"
                             title="Giỏ hàng"
                         >

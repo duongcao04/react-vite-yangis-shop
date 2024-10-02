@@ -1,3 +1,4 @@
+import { Image } from '@/components/ui/image'
 import {
     Carousel,
     CarouselContent,
@@ -5,6 +6,7 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from '@/components/ui/carousel'
+
 import { cn } from '@/lib/utils'
 
 interface IImageCarouselProps {
@@ -28,7 +30,11 @@ function ImageCarousel({ images, itemClassName }: IImageCarouselProps) {
                                 key={index}
                             >
                                 <div className="flex items-center justify-center">
-                                    <img src={image} alt="" className='max-h-[384px]'/>
+                                    <Image
+                                        src={image}
+                                        alt="Product Image"
+                                        className="max-h-[384px]"
+                                    />
                                 </div>
                             </CarouselItem>
                         ))}

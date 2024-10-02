@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { addCart } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'
+import { pathConstants } from '@/routes/pathConstants'
 import { calcSalePrice } from '@/utils/calcSalePrice'
 import { isProductInList } from '@/utils/isInWishlist'
 import { formatMoney } from '@/utils/numberServices'
@@ -52,7 +53,7 @@ function ProductCard({
                     </div>
                 )}
                 <Link
-                    to={`/products/${product._id}`}
+                    to={`${pathConstants.PRODUCTS}/${product.slug}`}
                     className="h-[230px] hover:scale-105 duration-200 transition"
                     title={product.name}
                 >
@@ -108,7 +109,7 @@ function ProductCard({
             </div>
             <div className="px-3 pb-5">
                 <Link
-                    to={`/products/${product._id}`}
+                    to={`${pathConstants.PRODUCTS}/${product.slug}`}
                     className="text-base font-medium text-black dark:text-white hover:text-link transition duration-200"
                     title={product.name}
                 >

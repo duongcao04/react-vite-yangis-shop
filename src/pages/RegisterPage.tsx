@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+
+import HomeIcon from '@mui/icons-material/Home'
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { FaChevronLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-import RegisterBanner from '@/assets/banner/registerBanner.avif'
-import { Button } from '@/components/ui/button'
-import HomeIcon from '@mui/icons-material/Home'
-import { motion } from 'framer-motion'
 import RegisterForm from '@/components/form/RegisterForm'
+import { Button } from '@/components/ui/button'
+
+import RegisterBanner from '@/assets/banner/registerBanner.avif'
+import { pathConstants } from '@/routes/pathConstants'
 
 function RegisterPage() {
     const [showSignupForm, setShowSignupForm] = useState<boolean>(false)
@@ -153,7 +156,7 @@ function RegisterPage() {
                             <p className="mt-4 text-center">
                                 Đã có tài khoản?{' '}
                                 <Link
-                                    to={'/login'}
+                                    to={pathConstants.LOGIN}
                                     className="underline font-medium opacity-80 hover:opacity-100 transition duration-200"
                                     title="Đăng nhập"
                                 >

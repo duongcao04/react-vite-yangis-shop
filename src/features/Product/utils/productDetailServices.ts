@@ -6,7 +6,7 @@ export interface IImagePreviewOptions {
 }
 
 const getProductImages: (product: Product) => IImagePreviewOptions[] = (
-    product
+    product,
 ) => {
     const result = []
 
@@ -19,7 +19,7 @@ const getProductImages: (product: Product) => IImagePreviewOptions[] = (
         })
     }
 
-    product.variants?.forEach((item) => {
+    product.variants?.forEach((item: ProductVariant) => {
         result.push({
             id: result.length,
             label: item.label,

@@ -1,10 +1,6 @@
 import React from 'react'
 
-export type IGuestGuardProps = {
-    children: React.ReactNode
-}
-
-function GuestGuard({ children }: IGuestGuardProps) {
+function GuestGuard({ children }: { children: React.ReactNode }) {
     return <React.Fragment>{children}</React.Fragment>
 }
 

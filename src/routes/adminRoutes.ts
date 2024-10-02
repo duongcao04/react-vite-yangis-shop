@@ -1,83 +1,74 @@
-import AdminHelp from '@/features/Permissions/Admin/pages/AdminHelp'
-import AdminSettings from '@/features/Permissions/Admin/pages/AdminSettings'
-import BrandsDashboard from '@/features/Permissions/Admin/pages/BrandsDashboard'
-import CategoriesDashboard from '@/features/Permissions/Admin/pages/CategoriesDashboard'
-import Dashboard from '@/features/Permissions/Admin/pages/Dashboard'
-import GalleryDashboard from '@/features/Permissions/Admin/pages/GalleryDashboard'
-import OrderDetail from '@/features/Permissions/Admin/pages/OrderDetail'
-import OrdersDashboard from '@/features/Permissions/Admin/pages/OrdersDashboard'
-import PostsDashboard from '@/features/Permissions/Admin/pages/PostsDashboard'
-import ProductsDashboard from '@/features/Permissions/Admin/pages/ProductsDashboard'
-import ReportDashboard from '@/features/Permissions/Admin/pages/ReportDashboard'
-import UsersDashboard from '@/features/Permissions/Admin/pages/UsersDashboard'
-import AdminLayout from '@/layouts/AdminLayout'
-import { IRoute } from '@/routes/globalRoutes'
+import AdminHelp from '@/features/admin/pages/AdminHelp'
+import AdminSettings from '@/features/admin/pages/AdminSettings'
+import Dashboard from '@/features/admin/pages/Dashboard'
+import ReportDashboard from '@/features/admin/pages/ReportDashboard'
+import ArticleDashboard from '@/features/article/pages/ArticleDashboard'
+import BrandDashboard from '@/features/brand/pages/BrandDashboard'
+import CategoryDashboard from '@/features/category/pages/CategoryDashboard'
+import CustomerDashboard from '@/features/customer/pages/CustomerDashboard'
+import GalleryDashboard from '@/features/gallery/pages/GalleryDashboard'
+import OrderDashboard from '@/features/order/pages/OrderDashboard'
+import OrderDetail from '@/features/order/pages/OrderDetail'
+import ProductDashboard from '@/features/product/pages/ProductDashboard'
 
-const adminRoutes: IRoute[] = [
-    { id: 100, path: '/dashboard', layout: AdminLayout, element: Dashboard },
+import AdminLayout from '@/layouts/AdminLayout'
+import { TRoute } from '@/routes/globalRoutes'
+import { pathConstants } from '@/routes/pathConstants'
+
+const adminRoutes: TRoute[] = [
+    { path: pathConstants.DASHBOARD, layout: AdminLayout, element: Dashboard },
     {
-        id: 101,
-        path: '/dashboard/products',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: ProductsDashboard,
+        element: ProductDashboard,
     },
     {
-        id: 102,
-        path: '/dashboard/categories',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: CategoriesDashboard,
+        element: CategoryDashboard,
     },
     {
-        id: 103,
-        path: '/dashboard/brands',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: BrandsDashboard,
+        element: BrandDashboard,
     },
     {
-        id: 104,
-        path: '/dashboard/orders',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: OrdersDashboard,
+        element: OrderDashboard,
     },
     {
-        id: 105,
-        path: '/dashboard/orders/:id',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
         element: OrderDetail,
     },
     {
-        id: 106,
-        path: '/dashboard/users',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: UsersDashboard,
+        element: CustomerDashboard,
     },
     {
-        id: 107,
-        path: '/dashboard/posts',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
-        element: PostsDashboard,
+        element: ArticleDashboard,
     },
     {
-        id: 108,
-        path: '/dashboard/report',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
         element: ReportDashboard,
     },
     {
-        id: 109,
-        path: '/dashboard/gallery',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
         element: GalleryDashboard,
     },
     {
-        id: 110,
-        path: '/dashboard/setting',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
         element: AdminSettings,
     },
     {
-        id: 111,
-        path: '/dashboard/help',
+        path: pathConstants.DASHBOARD_PRODUCTS,
         layout: AdminLayout,
         element: AdminHelp,
     },

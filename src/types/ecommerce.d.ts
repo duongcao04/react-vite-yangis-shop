@@ -1,19 +1,4 @@
 // ProductType
-type Product = Timestamps & {
-    _id: string
-    name: string
-    thumbnail: string
-    featureImage: string[]
-    price: number
-    sale?: string
-    description?: string
-    variants: ProductVariant[]
-    inStock: number
-    properties?: ProductProperties
-    category: { name: string }
-    brand: { name: string }
-    reviews?: string[]
-}
 type ProductProperties = {
     screen?: {
         size?: string
@@ -43,13 +28,30 @@ type ProductProperties = {
         type?: string
     }
 }
+type Product = Timestamps & {
+    _id: string
+    name: string
+    thumbnail: string
+    featureImage: string[]
+    price: number
+    sale?: string
+    description?: object | string
+    variants: ProductVariant[]
+    inStock: number
+    properties?: ProductProperties
+    category: { name: string }
+    brand: { name: string }
+    reviews?: string[]
+    slug: string
+}
 type NewProduct = Omit<
     Product,
-    '_id' | 'category' | 'brand' | 'variants' | keyof Timestamps
+    '_id' | 'category' | 'brand' | 'variants' | 'slug' | keyof Timestamps
 > & {
     category: string
     brand: string
     variants: string[]
+    slug?: string
 }
 
 type ProductVariant = Timestamps & {
@@ -66,10 +68,12 @@ type NewProductVariant = Omit<
 }
 
 // CartType
-type ProductCart = Product & {
+type CartItem = {
+    product: Product
     quantity: number
-    color: ProductVariant
+    variant: ProductVariant
 }
+type Cart = CartItem[]
 
 // BrandType
 type Brand = Timestamps & {

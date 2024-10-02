@@ -1,4 +1,8 @@
 import React from 'react'
+
+import { DevSupport } from '@react-buddy/ide-toolbox'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { Provider } from 'react-redux'
@@ -6,9 +10,9 @@ import { BrowserRouter as Router } from 'react-router-dom'
 
 import { AuthContextProvider } from '@/context/AuthContext.tsx'
 import { ThemeProvider } from '@/context/ThemeContext.tsx'
+
+import { ComponentPreviews, useInitial } from '@/dev'
 import { store } from '@/redux/store'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import App from './App.tsx'
 import './index.css'
@@ -26,7 +30,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     >
                         <AuthContextProvider>
                             <Provider store={store}>
-                                <App />
+                                <DevSupport
+                                    ComponentPreviews={ComponentPreviews}
+                                    useInitialHook={useInitial}
+                                >
+                                    <App />
+                                </DevSupport>
                             </Provider>
                         </AuthContextProvider>
                     </ThemeProvider>

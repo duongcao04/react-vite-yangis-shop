@@ -1,12 +1,4 @@
-import { ReactNode } from 'react'
-
-import PropTypes from 'prop-types'
-
-EmptyLayout.propTypes = {
-    children: PropTypes.node,
-}
-
-function EmptyLayout({ children }: { children: ReactNode }) {
+function EmptyLayout({ children }: { children: React.ReactNode }) {
     return (
         <div
             id="page"

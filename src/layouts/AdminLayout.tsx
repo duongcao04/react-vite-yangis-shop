@@ -1,12 +1,7 @@
 import { useState } from 'react'
 
-import Header from '@/features/Permissions/Admin/components/Header'
-import Sidebar from '@/features/Permissions/Admin/components/Sidebar'
-import PropTypes from 'prop-types'
-
-AdminLayout.propTypes = {
-    children: PropTypes.node,
-}
+import Header from '@/features/admin/components/Header'
+import Sidebar from '@/features/admin/components/Sidebar'
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const [showSidebar, setShowSidebar] = useState<boolean>(true)

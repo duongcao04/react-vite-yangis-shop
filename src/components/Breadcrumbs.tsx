@@ -1,5 +1,8 @@
 import * as React from 'react'
+
 import { Link, useLocation, useParams } from 'react-router-dom'
+
+import { useAuthContext } from '@/context/AuthContext'
 
 import {
     Breadcrumb,
@@ -9,22 +12,26 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { useAuthContext } from '@/context/AuthContext'
+
 import adminRoutes from '@/routes/adminRoutes'
-import globalRoutes, { IRoute } from '@/routes/globalRoutes'
+import globalRoutes, { TRoute } from '@/routes/globalRoutes'
 
 function Breadcrumbs() {
     const location = useLocation().pathname
     const params = useParams()
 
     const { authUser } = useAuthContext()
-    const [routes, setRoutes] = React.useState<IRoute[]>(globalRoutes)
+    const [routes, setRoutes] = React.useState<TRoute[]>(globalRoutes)
 
-    React.useEffect(() => {
-        if (authUser.role === 'admin') {
-            setRoutes([...globalRoutes, ...adminRoutes])
-        } else setRoutes(globalRoutes)
-    }, [authUser.role])
+    React.useLayoutEffect(() => {
+        if (!authUser.role) {
+            setRoutes(globalRoutes)
+        } else {
+            if (authUser.role === 'admin') {
+                setRoutes([...globalRoutes, ...adminRoutes])
+            }
+        }
+    }, [authUser])
 
     let paths: string = location
     Object.keys(params).forEach((key) => {
@@ -33,7 +40,7 @@ function Breadcrumbs() {
         }
     })
 
-    const crumbs: IRoute[] = routes.filter((route) =>
+    const crumbs: TRoute[] = routes.filter((route) =>
         paths.includes(route.path)
     )
 
@@ -47,7 +54,7 @@ function Breadcrumbs() {
 
                         return (
                             <div
-                                key={item.id}
+                                key={index}
                                 className="flex items-center gap-1.25 sm:gap-2.5"
                             >
                                 <BreadcrumbItem>

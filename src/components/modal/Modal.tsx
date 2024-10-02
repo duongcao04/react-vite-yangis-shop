@@ -1,50 +1,54 @@
+import { DialogDescription } from '@radix-ui/react-dialog'
+
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
 
+import { cn } from '../../lib/utils'
+
 interface IModalProps {
     classname?: string
     trigger: React.ReactNode
-    header?: { title?: React.ReactNode; description?: React.ReactNode }
-    body: React.ReactNode
+    header?: { title: React.ReactNode }
+    overlayClassname?: string
+    bodyClassname?: string
+    children: React.ReactNode
     footer?: React.ReactNode
 }
 
 export default function Modal({
     trigger,
     header,
-    body,
+    children,
     classname,
+    bodyClassname,
+    overlayClassname,
     footer,
 }: IModalProps) {
     return (
         <Dialog>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
-            <DialogContent className={classname}>
+            <DialogContent
+                className={cn('flex flex-col', classname)}
+                overlayClassname={overlayClassname}
+            >
                 {header && (
-                    <DialogHeader>
-                        {header.title && (
-                            <DialogTitle className="text-center">
-                                {header.title}
-                            </DialogTitle>
-                        )}
-                        {header.description ? (
-                            <DialogDescription>
-                                {header.description}
-                            </DialogDescription>
-                        ) : (
-                            <DialogDescription />
-                        )}
+                    <DialogHeader id="dialog_header">
+                        <DialogTitle className="text-center">
+                            {header.title}
+                        </DialogTitle>
+                        <DialogDescription />
                     </DialogHeader>
                 )}
-                {body}
-                <DialogFooter>{footer}</DialogFooter>
+                <div id="dialog_body" className={bodyClassname}>
+                    {children}
+                </div>
+                {footer && <DialogFooter>{footer}</DialogFooter>}
             </DialogContent>
         </Dialog>
     )

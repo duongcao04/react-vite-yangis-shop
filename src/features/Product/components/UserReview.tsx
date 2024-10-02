@@ -2,7 +2,8 @@ import { FaChevronDown } from 'react-icons/fa6'
 
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import UserReviewCard from '@/features/Product/components/UserReviewCard'
+
+import UserReviewCard from './UserReviewCard'
 
 interface IProps {
     data: Review[]

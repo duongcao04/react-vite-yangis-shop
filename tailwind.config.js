@@ -1,3 +1,5 @@
+import { nextui } from '@nextui-org/react'
+
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -7,6 +9,7 @@ module.exports = {
         './components/**/*.{ts,tsx}',
         './app/**/*.{ts,tsx}',
         './src/**/*.{ts,tsx}',
+        './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
     ],
     prefix: '',
     theme: {
@@ -40,7 +43,7 @@ module.exports = {
                 admin: '280px 1fr',
             },
             fontSize: {
-                xxs: ['10px', '12px']
+                xxs: ['10px', '12px'],
             },
             fontFamily: {
                 rampart: ['Rampart One'],
@@ -107,5 +110,5 @@ module.exports = {
         },
     },
     // eslint-disable-next-line no-undef
-    plugins: [require('tailwindcss-animate')],
+    plugins: [require('tailwindcss-animate'), nextui()],
 }

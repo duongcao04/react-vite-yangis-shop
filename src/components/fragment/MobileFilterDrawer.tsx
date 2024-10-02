@@ -6,9 +6,10 @@ import {
     DrawerFooter,
     DrawerTrigger,
 } from '@/components/ui/drawer'
+
 import FilterBar, {
     IFilterBarProps,
-} from '@/features/Product/components/FilterBar'
+} from '../../features/product/components/FilterBar'
 
 interface IMobileFilterDrawerProps extends IFilterBarProps {
     trigger: React.ReactNode

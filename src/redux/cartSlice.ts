@@ -1,29 +1,33 @@
-import { calcSalePrice } from '@/utils/calcSalePrice'
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { toast } from 'sonner'
 
-const currentCart: string = localStorage.getItem('_cart') ?? '[]'
+import { calcSalePrice } from '@/utils/calcSalePrice'
+
+const currentCart = localStorage.getItem('_cart') ?? JSON.stringify([] as Cart)
 const currentTotal: string = localStorage.getItem('_cart-total') ?? '0'
 
-export interface cartSlice {
-    cart: ProductCart[]
+export interface ICartSlice {
+    cart: Cart
     total: number
 }
 
-const initialState: cartSlice = {
+const initialState: ICartSlice = {
     cart: JSON.parse(currentCart),
     total: +JSON.parse(currentTotal),
 }
 
-const calcTotal: (cart: ProductCart[]) => number = function (cart) {
+const calcTotal: (cart: Cart) => number = function (cart) {
     let total = 0
-    cart.forEach((product) => {
-        if (product.sale) {
-            const price = calcSalePrice(product.price, product.sale)
-            total += price * product.quantity
+    cart.forEach((cartItem) => {
+        if (cartItem.product.sale) {
+            const price = calcSalePrice(
+                cartItem.product.price,
+                cartItem.product.sale
+            )
+            total += price * cartItem.quantity
         } else {
-            total += product.price * product.quantity
+            total += cartItem.product.price * cartItem.quantity
         }
     })
     return total
@@ -36,22 +40,22 @@ export const cartSlice = createSlice({
         buyNow: (state, action: PayloadAction<Product>) => {
             const product = action.payload
             state.cart = [
-                { ...product, quantity: 1, color: product.variants[0] },
+                { product: product, quantity: 1, variant: product.variants[0] },
             ]
             toast.success('Vui lòng kiểm tra thông tin thanh toán')
         },
         addCart: (state, action: PayloadAction<Product>) => {
             const newProduct = action.payload
             const foundProductExist = state.cart.findIndex(
-                (product) => product._id === newProduct._id
+                (item) => item.product._id === newProduct._id
             )
             if (foundProductExist === -1) {
-                const newProductWithQuantity = {
-                    ...newProduct,
+                const newCartItem: CartItem = {
+                    product: newProduct,
                     quantity: 1,
-                    color: newProduct.variants[0],
+                    variant: newProduct.variants[0],
                 }
-                state.cart.push(newProductWithQuantity)
+                state.cart.push(newCartItem)
             } else {
                 state.cart[foundProductExist].quantity++
             }
@@ -68,15 +72,15 @@ export const cartSlice = createSlice({
 
             newProducts.forEach((newProduct) => {
                 const foundProductExist = state.cart.findIndex(
-                    (product) => product._id === newProduct._id
+                    (item) => item.product._id === newProduct._id
                 )
                 if (foundProductExist === -1) {
-                    const newProductWithQuantity = {
-                        ...newProduct,
+                    const newCartItem: CartItem = {
+                        product: newProduct,
                         quantity: 1,
-                        color: newProduct.variants[0],
+                        variant: newProduct.variants[0],
                     }
-                    state.cart.push(newProductWithQuantity)
+                    state.cart.push(newCartItem)
                 } else {
                     state.cart[foundProductExist].quantity++
                 }
@@ -90,13 +94,13 @@ export const cartSlice = createSlice({
         removeCart: (state, action) => {
             const productId = action.payload
             const foundProductIndex = state.cart.findIndex(
-                (product) => product._id === productId
+                (item) => item.product._id === productId
             )
 
             if (foundProductIndex !== -1) {
                 state.total =
                     state.total -
-                    state.cart[foundProductIndex].price *
+                    state.cart[foundProductIndex].product.price *
                         state.cart[foundProductIndex].quantity
                 state.cart.splice(foundProductIndex, 1)
             }
@@ -114,17 +118,17 @@ export const cartSlice = createSlice({
         incrementQuantity: (state, action) => {
             const productId = action.payload
             const foundProductIndex = state.cart.findIndex(
-                (product) => product._id === productId
+                (item) => item.product._id === productId
             )
             if (foundProductIndex !== -1) {
                 const price = calcSalePrice(
-                    state.cart[foundProductIndex].price,
-                    state.cart[foundProductIndex].sale ?? ''
+                    state.cart[foundProductIndex].product.price,
+                    state.cart[foundProductIndex].product.sale ?? ''
                 )
 
                 if (
                     state.cart[foundProductIndex].quantity <
-                    state.cart[foundProductIndex].color.inStock
+                    state.cart[foundProductIndex].variant.inStock
                 ) {
                     state.cart[foundProductIndex].quantity++
                     state.total = state.total + price
@@ -141,19 +145,19 @@ export const cartSlice = createSlice({
         decrementQuantity: (state, action) => {
             const productId = action.payload
             const foundProductIndex = state.cart.findIndex(
-                (product) => product._id === productId
+                (item) => item.product._id === productId
             )
             if (foundProductIndex !== -1) {
                 if (state.cart[foundProductIndex].quantity > 1) {
-                    if (state.cart[foundProductIndex].sale) {
+                    if (state.cart[foundProductIndex].product.sale) {
                         const price = calcSalePrice(
-                            state.cart[foundProductIndex].price,
-                            state.cart[foundProductIndex].sale
+                            state.cart[foundProductIndex].product.price,
+                            state.cart[foundProductIndex].product.sale
                         )
                         state.total = state.total - price
                     } else {
                         state.total =
-                            state.total - state.cart[foundProductIndex].price
+                            state.total - state.cart[foundProductIndex].product.price
                     }
                     state.cart[foundProductIndex].quantity--
                 }

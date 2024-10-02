@@ -1,12 +1,15 @@
 import React from 'react'
+
+import HomeIcon from '@mui/icons-material/Home'
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { Link } from 'react-router-dom'
 
-import LoginBanner from '@/assets/banner/login_banner.jpg'
 import LoginForm from '@/components/form/LoginForm'
 import { Button } from '@/components/ui/button'
-import HomeIcon from '@mui/icons-material/Home'
-import { motion } from 'framer-motion'
+
+import LoginBanner from '@/assets/banner/login_banner.jpg'
+import { pathConstants } from '@/routes/pathConstants'
 
 function LoginPage() {
     return (
@@ -120,7 +123,7 @@ function LoginPage() {
                             <p className="mt-4 text-center">
                                 Bạn chưa có tài khoản?{' '}
                                 <Link
-                                    to={'/register'}
+                                    to={pathConstants.REGISTER}
                                     className="underline font-medium opacity-80 hover:opacity-100 transition duration-200"
                                     title="Đăng ký"
                                 >

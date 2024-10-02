@@ -1,15 +1,5 @@
-import { ElementType } from 'react'
+import { RouteProps } from 'react-router-dom'
 
-import Account from '@/features/Permissions/Member/pages/Account'
-import Cart from '@/features/Permissions/Member/pages/Cart'
-import Checkout from '@/features/Permissions/Member/pages/Checkout'
-import MyOrder from '@/features/Permissions/Member/pages/MyOrder'
-import WishList from '@/features/Permissions/Member/pages/WishList'
-import ProductDetail from '@/features/Product/pages/ProductDetail'
-import Products from '@/features/Product/pages/Products'
-import EmptyLayout from '@/layouts/EmptyLayout'
-import AuthGuard from '@/layouts/Guard/AuthGuard'
-import UserInformationLayout from '@/layouts/UserInformationLayout'
 import AboutPage from '@/pages/AboutPage'
 import ContactPage from '@/pages/ContactPage'
 import Error from '@/pages/Error'
@@ -17,119 +7,134 @@ import HomePage from '@/pages/HomePage'
 import LoginPage from '@/pages/LoginPage'
 import RegisterPage from '@/pages/RegisterPage'
 
-export interface IRoute {
-    id: number
-    path: string
-    element: ElementType
-    handle?: { crumb: () => string }
-    layout?: ElementType
-    guard?: ElementType
+import Account from '@/features/member/pages/Account'
+import Cart from '@/features/member/pages/Cart'
+import Checkout from '@/features/member/pages/Checkout'
+import MyOrder from '@/features/member/pages/MyOrder'
+import WishList from '@/features/member/pages/WishList'
+import ProductDetail from '@/features/product/pages/ProductDetail'
+import Products from '@/features/product/pages/Products'
+
+import EmptyLayout from '@/layouts/EmptyLayout'
+import UserInformationLayout from '@/layouts/UserInformationLayout'
+import { pathConstants } from '@/routes/pathConstants'
+
+export type TRoute = Omit<RouteProps, 'path' | 'element'> & {
+    path: pathConstants
+    layout?: ({ children }: { children: React.ReactNode }) => React.ReactElement
+    element: () => React.ReactElement
+    isPrivateRoute: boolean
 }
 
-const globalRoutes: IRoute[] = [
+const globalRoutes: TRoute[] = [
     {
-        id: 1,
-        path: '/',
+        path: pathConstants.HOME,
         element: HomePage,
         handle: {
             crumb: () => 'Trang chủ',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 2,
-        path: '/register',
+        path: pathConstants.REGISTER,
         layout: EmptyLayout,
         element: RegisterPage,
         handle: {
             crumb: () => 'Đăng ký',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 3,
-        path: '/login',
+        path: pathConstants.LOGIN,
         layout: EmptyLayout,
         element: LoginPage,
         handle: {
             crumb: () => 'Đăng nhập',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 4,
-        path: '/wish-list',
+        path: pathConstants.FAVOURITE,
         element: WishList,
         handle: {
             crumb: () => 'Yêu thích',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 5,
-        path: '/cart',
+        path: pathConstants.CART,
         element: Cart,
         handle: {
             crumb: () => 'Giỏ hàng',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 6,
-        path: '/check-out',
-        element: Checkout,
-        handle: {
-            crumb: () => 'Thanh toán',
-        },
-    },
-    {
-        id: 7,
-        path: '/account',
-        element: Account,
-        layout: UserInformationLayout,
-        guard: AuthGuard,
-        handle: {
-            crumb: () => 'Thông tin cá nhân',
-        },
-    },
-    {
-        id: 8,
-        path: '/my-order',
-        element: MyOrder,
-        layout: UserInformationLayout,
-        guard: AuthGuard,
-        handle: {
-            crumb: () => 'Đơn hàng của tôi',
-        },
-    },
-    {
-        id: 9,
-        path: '/products',
+        path: pathConstants.PRODUCTS,
         element: Products,
         handle: {
             crumb: () => 'Sản phẩm',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 10,
-        path: '/products/:productId',
+        path: pathConstants.PRODUCT_DETAIL,
         element: ProductDetail,
         handle: {
             crumb: () => 'Chi tiết sản phẩm',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 11,
-        path: '/about',
+        path: pathConstants.ABOUT,
         element: AboutPage,
         handle: {
             crumb: () => 'Về chúng tôi',
         },
+        isPrivateRoute: false,
     },
     {
-        id: 12,
-        path: '/contact',
+        path: pathConstants.CONTACT,
         element: ContactPage,
         handle: {
             crumb: () => 'Liên hệ',
         },
+        isPrivateRoute: false,
     },
-    { id: 99, path: '/*', element: Error },
+    {
+        path: pathConstants.CHECK_OUT,
+        element: Checkout,
+        handle: {
+            crumb: () => 'Thanh toán',
+        },
+        isPrivateRoute: true,
+    },
+    {
+        path: pathConstants.ACCOUNT_INFORMATION,
+        element: Account,
+        layout: UserInformationLayout,
+        handle: {
+            crumb: () => 'Thông tin cá nhân',
+        },
+        isPrivateRoute: true,
+    },
+    {
+        path: pathConstants.MY_ORDER,
+        element: MyOrder,
+        layout: UserInformationLayout,
+        handle: {
+            crumb: () => 'Đơn hàng của tôi',
+        },
+        isPrivateRoute: true,
+    },
+    {
+        path: pathConstants.ERROR,
+        element: Error,
+        handle: {
+            crumb: () => '404 Not Found',
+        },
+        isPrivateRoute: false,
+    },
 ]
 
 export default globalRoutes

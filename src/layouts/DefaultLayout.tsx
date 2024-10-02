@@ -1,15 +1,8 @@
-import { ReactNode } from 'react'
-
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import TopHeader from '@/components/TopHeader'
-import PropTypes from 'prop-types'
 
-DefaultLayout.propTypes = {
-    children: PropTypes.node,
-}
-
-function DefaultLayout({ children }: { children: ReactNode }) {
+function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
         <div
             id="page"

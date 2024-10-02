@@ -1,8 +1,10 @@
 import { Helmet } from 'react-helmet-async'
 
+import Breadcrumbs from '@/components/Breadcrumbs'
+import { Image } from '@/components/ui/image'
+
 import Focus from '@/assets/Focus_1.png'
 import AboutImage from '@/assets/about.png'
-import Breadcrumbs from '@/components/Breadcrumbs'
 
 export default function AboutPage() {
     return (
@@ -69,14 +71,14 @@ export default function AboutPage() {
                                 công nghệ của bạn!
                             </p>
                         </div>
-                        <img
+                        <Image
                             src={AboutImage}
                             alt="about"
                             className="rounded-lg"
                         />
                     </div>
                     <div className=" mt-10 flex items-start gap-10">
-                        <img
+                        <Image
                             src={Focus}
                             alt="about"
                             className="rounded-lg w-[500px]"

@@ -1,26 +1,31 @@
 import * as React from 'react'
+
+import { Icon } from '@iconify/react'
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+
+import { useGetProduct, useGetProducts } from '@/hooks/useProduct'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ProductsCarousel from '@/components/carousel/ProductsCarousel'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+
+import SpecialFeatures from '@/features/product/components/SpecialFeatures'
+import SpecificationsTable from '@/features/product/components/SpecificationsTable'
+import UserReview from '@/features/product/components/UserReview'
+import ImagePreviewer from '@/features/product/components/image-preview/ImagePreviewer'
+import { getProductImages } from '@/features/product/utils/productDetailServices'
+
 import initReviews from '@/constants/reviews'
-import SpecialFeatures from '@/features/Product/components/SpecialFeatures'
-import SpecificationsTable from '@/features/Product/components/SpecificationsTable'
-import UserReview from '@/features/Product/components/UserReview'
-import ImagePreviewer from '@/features/Product/components/image-preview/ImagePreviewer'
-import { getProductImages } from '@/features/Product/utils/productDetailServices'
-import { useGetProduct, useGetProducts } from '@/hooks/useProduct'
 import { addCart, buyNow } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'
+import { pathConstants } from '@/routes/pathConstants'
 import { isProductInList } from '@/utils/isInWishlist'
 import { formatMoney } from '@/utils/numberServices'
-import { Icon } from '@iconify/react'
-import { motion } from 'framer-motion'
 
 // import queryString from 'query-string'
 
@@ -31,9 +36,9 @@ function ProductDetail() {
     const { products } = useGetProducts()
 
     // Lấy product id từ params
-    const { productId } = useParams()
+    const { productSlug } = useParams()
     const { isLoading: loadingProduct, product } = useGetProduct(
-        productId ?? ''
+        productSlug ?? ''
     )
 
     // Kiểm tra sản phẩm có nằm trong wishlist ?
@@ -248,7 +253,7 @@ function ProductDetail() {
                                     className="w-[200px]"
                                     onClick={() => {
                                         dispatch(buyNow(product))
-                                        navigate('/check-out')
+                                        navigate(pathConstants.CHECK_OUT)
                                     }}
                                 >
                                     Mua ngay

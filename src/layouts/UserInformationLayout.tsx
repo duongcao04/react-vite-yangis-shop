@@ -1,17 +1,18 @@
-import React from 'react'
+import { motion } from 'framer-motion'
 import { IconType } from 'react-icons'
 import { AiOutlineProduct } from 'react-icons/ai'
 import { BiLogOut } from 'react-icons/bi'
 import { FaRegAddressCard } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
+import useLogout from '@/hooks/useLogout'
+
+import { useAuthContext } from '@/context/AuthContext'
+
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import TopHeader from '@/components/TopHeader'
-import { useAuthContext } from '@/context/AuthContext'
-import useLogout from '@/hooks/useLogout'
-import { motion } from 'framer-motion'
 
 export interface userNavigate {
     id: number

@@ -1,9 +1,11 @@
 import * as React from 'react'
 
-import { Skeleton } from '@/components/ui/skeleton'
-import { IImagePreviewOptions } from '@/features/Product/utils/productDetailServices'
 import { Icon } from '@iconify/react'
 import { motion } from 'framer-motion'
+
+import { Skeleton } from '@/components/ui/skeleton'
+
+import { IImagePreviewOptions } from '@/features/product/utils/productDetailServices'
 
 import ImageCarousel from './ImageCarousel'
 

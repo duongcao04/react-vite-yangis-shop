@@ -1,6 +1,9 @@
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-import RegisterVector from '@/assets/png/register.png'
+import { useGetCategories } from '@/hooks/useCategory'
+
 import { Button } from '@/components/ui/button'
 import {
     Sheet,
@@ -9,10 +12,10 @@ import {
     SheetHeader,
     SheetTrigger,
 } from '@/components/ui/sheet'
+
+import RegisterVector from '@/assets/png/register.png'
 import HEADER_NAVIGATES from '@/constants/navigates'
-import { useGetCategories } from '@/hooks/useCategory'
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
-import { motion } from 'framer-motion'
+import { pathConstants } from '@/routes/pathConstants'
 
 interface IMobileNavigateProps {
     trigger: React.ReactNode
@@ -65,12 +68,16 @@ export default function MobileNavigate({ trigger }: IMobileNavigateProps) {
                             <div className="flex items-center justify-start gap-2 mt-3">
                                 <SheetClose asChild>
                                     <Button variant={'outline'} asChild>
-                                        <Link to={'/register'}>Đăng ký</Link>
+                                        <Link to={pathConstants.REGISTER}>
+                                            Đăng ký
+                                        </Link>
                                     </Button>
                                 </SheetClose>
                                 <SheetClose asChild>
                                     <Button asChild>
-                                        <Link to={'/login'}>Đăng nhập</Link>
+                                        <Link to={pathConstants.LOGIN}>
+                                            Đăng nhập
+                                        </Link>
                                     </Button>
                                 </SheetClose>
                             </div>
