@@ -1,6 +1,12 @@
 import * as React from 'react'
+
+import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { IoFilter } from 'react-icons/io5'
+import { useSearchParams } from 'react-router-dom'
+
+import { useGetProducts } from '@/hooks/useProduct'
+import { useQueryString } from '@/hooks/useQueryString'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ProductCard from '@/components/ProductCard'
@@ -8,22 +14,15 @@ import MobileFilterDrawer from '@/components/fragment/MobileFilterDrawer'
 import { PaginationCustomize } from '@/components/fragment/PaginationCustomize'
 import SelectBox from '@/components/fragment/SelectBox'
 import { Skeleton } from '@/components/ui/skeleton'
+
 import FilterBar from '@/features/product/components/FilterBar'
-import { useGetProducts } from '@/hooks/useProduct'
-import { useQueryString } from '@/hooks/useQueryString'
-import { motion } from 'framer-motion'
+
+import { config } from '@/config'
 
 function Products() {
-    // Get query from searchbar
-    const queryString: {
-        name?: string
-        category?: string
-        brand?: string
-        price?: string
-    } = useQueryString()
     // State for pagination
     const [currentPage, setCurrentPage] = React.useState<number>(1)
-    const LIMIT = 12
+    const [, setSearchParams] = useSearchParams()
     // Get search url params
     const [params, setParams] = React.useState<object>({})
     // Get products
@@ -34,12 +33,12 @@ function Products() {
         totalPage,
     } = useGetProducts(params)
 
-    const { name, category, brand, price } = queryString
+    const { tim_kiem, danh_muc, thuong_hieu, gia_tien } = useQueryString()
 
     const initialFilter = {
-        category,
-        brand,
-        price,
+        category: danh_muc,
+        brand: thuong_hieu,
+        price: gia_tien,
     }
     const [, setSort] = React.useState<string>('name')
     const [filter, setFilter] = React.useState<{
@@ -49,14 +48,28 @@ function Products() {
     }>(initialFilter)
 
     React.useEffect(() => {
+        const searchParamsBuilder = () => {
+            const temp: {
+                tim_kiem?: string
+                danh_muc?: string
+                thuong_hieu?: string
+                gia_tien?: string
+            } = {}
+            if (tim_kiem) temp.tim_kiem = tim_kiem
+            if (filter.category) temp.danh_muc = filter.category
+            if (filter.brand) temp.thuong_hieu = filter.brand
+            if (filter.price) temp.gia_tien = filter.price
+            return temp
+        }
+        setSearchParams(searchParamsBuilder())
         setParams({
-            name: name,
+            name: tim_kiem,
             category: filter.category,
             brand: filter.brand,
-            limit: LIMIT,
+            limit: config.products_pagination.limit,
             page: currentPage,
         })
-    }, [filter, name, currentPage])
+    }, [filter, tim_kiem, currentPage, setSearchParams])
 
     return (
         <div className="container mx-auto">

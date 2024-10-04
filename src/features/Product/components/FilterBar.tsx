@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
+
+import { motion } from 'framer-motion'
 import { FaChevronDown } from 'react-icons/fa6'
 import { IoFilter } from 'react-icons/io5'
+
+import { useGetBrands } from '@/hooks/useBrand'
+import { useGetCategories } from '@/hooks/useCategory'
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Skeleton } from '@/components/ui/skeleton'
+
 import { FILTER_PRICE_VALUES } from '@/constants/filterPriceValues'
-import { useGetBrands } from '@/hooks/useBrand'
-import { useGetCategories } from '@/hooks/useCategory'
-import { motion } from 'framer-motion'
 
 export interface IFilterBarProps {
     filter: {
@@ -80,15 +83,15 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                                 asChild
                                 key={category._id}
                                 variant={
-                                    filter.category === category.name
+                                    filter.category === category.slug
                                         ? 'default'
                                         : 'outline'
                                 }
                                 onClick={() => {
-                                    if (filter.category !== category.name) {
+                                    if (filter.category !== category.slug) {
                                         setFilter((pre) => ({
                                             ...pre,
-                                            category: category.name,
+                                            category: category.slug,
                                         }))
                                     } else {
                                         setFilter((pre) => ({
@@ -148,15 +151,15 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                                 asChild
                                 key={brand._id}
                                 variant={
-                                    filter.brand === brand.name
+                                    filter.brand === brand.slug
                                         ? 'default'
                                         : 'outline'
                                 }
                                 onClick={() => {
-                                    if (filter.brand !== brand.name) {
+                                    if (filter.brand !== brand.slug) {
                                         setFilter((pre) => ({
                                             ...pre,
-                                            brand: brand.name,
+                                            brand: brand.slug,
                                         }))
                                     } else {
                                         setFilter((pre) => ({

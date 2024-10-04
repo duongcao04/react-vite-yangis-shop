@@ -1,4 +1,7 @@
 const config = {
+    products_pagination: {
+        limit: 8,
+    },
     routes: {
         home: '/',
         about: '/ve-chung-toi',

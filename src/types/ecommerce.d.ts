@@ -82,6 +82,7 @@ type Cart = CartItem[]
 type Brand = Timestamps & {
     _id: string
     name: string
+    slug: string
     logo: string
     products: Product[]
 }
@@ -91,6 +92,7 @@ type NewBrand = Omit<Brand, '_id' | keyof Timestamps>
 type Category = Timestamps & {
     _id: string
     name: string
+    slug: string
     thumbnail: string
     icon: string
     products: Product[]

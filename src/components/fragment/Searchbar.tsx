@@ -19,7 +19,7 @@ function Searchbar({
     const [searchKey, setSearchKey] = useState<string>('')
 
     const handleSearch = () => {
-        navigate(`${config.routes.products}?name=${searchKey}`)
+        navigate(`${config.routes.products}?tim_kiem=${searchKey}`)
         setIsExtendSearchbar(false)
         setSearchKey('')
     }

@@ -1,8 +1,11 @@
 import React from 'react'
+
+import { Icon } from '@iconify/react'
 import { Link } from 'react-router-dom'
 
 import { useGetCategories } from '@/hooks/useCategory'
-import { Icon } from '@iconify/react'
+
+import { config } from '@/config'
 
 function Categories() {
     const { categories } = useGetCategories()
@@ -27,7 +30,7 @@ function Categories() {
             <div className="grid grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-6 gap-8">
                 {categories.map((category) => (
                     <Link
-                        to={`/products?category=${category.name}`}
+                        to={`${config.routes.products}?danh_muc=${category.slug}`}
                         key={category._id}
                     >
                         <div
