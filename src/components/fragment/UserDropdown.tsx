@@ -1,4 +1,6 @@
 import React from 'react'
+
+import { motion } from 'framer-motion'
 import { IconType } from 'react-icons'
 import { AiOutlineProduct } from 'react-icons/ai'
 import { BiLogOut } from 'react-icons/bi'
@@ -7,7 +9,6 @@ import { FaRegAddressCard } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
 import useLogout from '@/hooks/useLogout'
-import { motion } from 'framer-motion'
 
 export interface userNavigate {
     id: number

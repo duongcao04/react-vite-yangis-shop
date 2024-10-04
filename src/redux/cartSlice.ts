@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import ObjectID from 'bson-objectid'
 import { toast } from 'sonner'
 
 import { calcSalePrice } from '@/utils/calcSalePrice'
@@ -37,50 +38,49 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        buyNow: (state, action: PayloadAction<Product>) => {
-            const product = action.payload
-            state.cart = [
-                { product: product, quantity: 1, variant: product.variants[0] },
-            ]
+        buyNow: (state, action: PayloadAction<NewCartItem>) => {
+            const { product, quantity, variant } = action.payload
+            const id = ObjectID().toHexString()
+
+            state.cart = [{ id, product, quantity, variant }]
             toast.success('Vui lòng kiểm tra thông tin thanh toán')
         },
-        addCart: (state, action: PayloadAction<Product>) => {
-            const newProduct = action.payload
+        addCart: (state, action: PayloadAction<NewCartItem>) => {
+            const { product, quantity, variant } = action.payload
+            const id = ObjectID().toHexString()
+
             const foundProductExist = state.cart.findIndex(
-                (item) => item.product._id === newProduct._id
+                (item) =>
+                    item.product._id === product._id &&
+                    item.variant.label === variant.label
             )
+
             if (foundProductExist === -1) {
-                const newCartItem: CartItem = {
-                    product: newProduct,
-                    quantity: 1,
-                    variant: newProduct.variants[0],
-                }
-                state.cart.push(newCartItem)
+                state.cart.push({ id, product, quantity, variant })
             } else {
                 state.cart[foundProductExist].quantity++
             }
 
-            state.total = calcTotal(state.cart)
-
             toast.success('Thêm vào giỏ hàng thành công')
 
             localStorage.setItem('_cart', JSON.stringify(state.cart))
+            state.total = calcTotal(state.cart)
             localStorage.setItem('_cart-total', JSON.stringify(state.total))
         },
-        addMany: (state, action: PayloadAction<Product[]>) => {
-            const newProducts = action.payload
+        addMany: (state, action: PayloadAction<NewCartItem[]>) => {
+            const newCartItems = action.payload
 
-            newProducts.forEach((newProduct) => {
+            newCartItems.forEach((newCartItem) => {
+                const { product, variant, quantity } = newCartItem
+                const id = ObjectID().toHexString()
+
                 const foundProductExist = state.cart.findIndex(
-                    (item) => item.product._id === newProduct._id
+                    (item) =>
+                        item.product._id === product._id &&
+                        item.variant.label === variant.label
                 )
                 if (foundProductExist === -1) {
-                    const newCartItem: CartItem = {
-                        product: newProduct,
-                        quantity: 1,
-                        variant: newProduct.variants[0],
-                    }
-                    state.cart.push(newCartItem)
+                    state.cart.push({ id, product, variant, quantity })
                 } else {
                     state.cart[foundProductExist].quantity++
                 }
@@ -91,10 +91,11 @@ export const cartSlice = createSlice({
             localStorage.setItem('_cart', JSON.stringify(state.cart))
             localStorage.setItem('_cart-total', JSON.stringify(state.total))
         },
-        removeCart: (state, action) => {
-            const productId = action.payload
+        removeCart: (state, action: PayloadAction<string>) => {
+            const cartId = action.payload
+
             const foundProductIndex = state.cart.findIndex(
-                (item) => item.product._id === productId
+                (item) => item.id === cartId
             )
 
             if (foundProductIndex !== -1) {
@@ -115,10 +116,10 @@ export const cartSlice = createSlice({
             localStorage.setItem('_cart', JSON.stringify(state.cart))
             localStorage.setItem('_cart-total', JSON.stringify(state.total))
         },
-        incrementQuantity: (state, action) => {
-            const productId = action.payload
+        incrementQuantity: (state, action: PayloadAction<string>) => {
+            const cartId = action.payload
             const foundProductIndex = state.cart.findIndex(
-                (item) => item.product._id === productId
+                (item) => item.id === cartId
             )
             if (foundProductIndex !== -1) {
                 const price = calcSalePrice(
@@ -142,10 +143,10 @@ export const cartSlice = createSlice({
             localStorage.setItem('_cart', JSON.stringify(state.cart))
             localStorage.setItem('_cart-total', JSON.stringify(state.total))
         },
-        decrementQuantity: (state, action) => {
-            const productId = action.payload
+        decrementQuantity: (state, action: PayloadAction<string>) => {
+            const cartId = action.payload
             const foundProductIndex = state.cart.findIndex(
-                (item) => item.product._id === productId
+                (item) => item.id === cartId
             )
             if (foundProductIndex !== -1) {
                 if (state.cart[foundProductIndex].quantity > 1) {
@@ -157,7 +158,8 @@ export const cartSlice = createSlice({
                         state.total = state.total - price
                     } else {
                         state.total =
-                            state.total - state.cart[foundProductIndex].product.price
+                            state.total -
+                            state.cart[foundProductIndex].product.price
                     }
                     state.cart[foundProductIndex].quantity--
                 }

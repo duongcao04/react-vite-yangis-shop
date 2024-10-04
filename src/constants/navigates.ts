@@ -1,4 +1,4 @@
-import { pathConstants } from '@/routes/pathConstants'
+import { config } from '@/config'
 
 interface INavigate {
     id: number
@@ -8,17 +8,17 @@ interface INavigate {
 }
 
 const HEADER_NAVIGATES: INavigate[] = [
-    { id: 1, path: pathConstants.HOME, label: 'Trang chủ' },
-    { id: 2, path: pathConstants.PRODUCTS, label: 'Sản phẩm' },
-    { id: 3, path: pathConstants.ARTICLES, label: 'Bài viết' },
+    { id: 1, path: config.routes.home, label: 'Trang chủ' },
+    { id: 2, path: config.routes.products, label: 'Sản phẩm' },
+    { id: 3, path: config.routes.articles, label: 'Bài viết' },
     {
         id: 4,
-        path: pathConstants.ABOUT,
+        path: config.routes.about,
         label: 'Về chúng tôi',
     },
     {
         id: 5,
-        path: pathConstants.CONTACT,
+        path: config.routes.contact,
         label: 'Liên hệ',
     },
 ]

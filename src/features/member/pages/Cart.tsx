@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { Checkbox } from '@/components/ui/checkbox'
 
+import { config } from '@/config'
 import {
     decrementQuantity,
     incrementQuantity,
@@ -15,7 +16,6 @@ import {
     removeCart,
 } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
-import { pathConstants } from '@/routes/pathConstants'
 import { calcSalePrice } from '@/utils/calcSalePrice'
 import { formatMoney } from '@/utils/numberServices'
 
@@ -25,8 +25,8 @@ function Cart() {
     const dispatch = useDispatch()
     const { cart } = useSelector((state: RootState) => state.cart)
 
-    const handleRemoveCart = (productId: string) => {
-        dispatch(removeCart(productId))
+    const handleRemoveCart = (cartId: string) => {
+        dispatch(removeCart(cartId))
     }
 
     return (
@@ -72,7 +72,7 @@ function Cart() {
 
                             {cart.map((item) => (
                                 <div
-                                    key={item.product._id}
+                                    key={item.id}
                                     className="rounded-xl px-4 pt-[10px] pb-[45px] flex items-center gap-x-3 bg-white mt-[10px]"
                                 >
                                     <Checkbox id={item.product._id} />
@@ -88,7 +88,7 @@ function Cart() {
                                         <div className="w-[calc(100%-68px)] flex items-center justify-between">
                                             <div>
                                                 <Link
-                                                    to={`${pathConstants.PRODUCTS}/${item.product.slug}`}
+                                                    to={`${config.routes.products}/${item.product.slug}`}
                                                     className="text-base font-medium hover:text-[#2275fb] transition-colors duration-300"
                                                 >
                                                     {item.product.name}
@@ -140,9 +140,7 @@ function Cart() {
                                                             ) {
                                                                 dispatch(
                                                                     decrementQuantity(
-                                                                        item
-                                                                            .product
-                                                                            ._id
+                                                                        item.id
                                                                     )
                                                                 )
                                                             } else {
@@ -157,9 +155,7 @@ function Cart() {
                                                                                 () =>
                                                                                     dispatch(
                                                                                         removeCart(
-                                                                                            item
-                                                                                                .product
-                                                                                                ._id
+                                                                                            item.id
                                                                                         )
                                                                                     ),
                                                                         },
@@ -178,8 +174,7 @@ function Cart() {
                                                         onClick={() => {
                                                             dispatch(
                                                                 incrementQuantity(
-                                                                    item.product
-                                                                        ._id
+                                                                    item.id
                                                                 )
                                                             )
                                                         }}
@@ -191,7 +186,7 @@ function Cart() {
                                                     title="Xóa"
                                                     onClick={() => {
                                                         handleRemoveCart(
-                                                            item.product._id
+                                                            item.id
                                                         )
                                                     }}
                                                 >
@@ -209,7 +204,7 @@ function Cart() {
                             <OrderInformation
                                 action={
                                     <Link
-                                        to={pathConstants.CHECK_OUT}
+                                        to={config.routes.check_out}
                                         className="w-full h-[56px] leading-[56px] text-center rounded-md bg-[#df2121] hover:bg-[#b81a1a] text-white font-semibold transition duration-200"
                                     >
                                         Xác nhận đơn

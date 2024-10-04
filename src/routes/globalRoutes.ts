@@ -15,12 +15,12 @@ import WishList from '@/features/member/pages/WishList'
 import ProductDetail from '@/features/product/pages/ProductDetail'
 import Products from '@/features/product/pages/Products'
 
+import { config } from '@/config'
 import EmptyLayout from '@/layouts/EmptyLayout'
 import UserInformationLayout from '@/layouts/UserInformationLayout'
-import { pathConstants } from '@/routes/pathConstants'
 
 export type TRoute = Omit<RouteProps, 'path' | 'element'> & {
-    path: pathConstants
+    path: string
     layout?: ({ children }: { children: React.ReactNode }) => React.ReactElement
     element: () => React.ReactElement
     isPrivateRoute: boolean
@@ -28,7 +28,7 @@ export type TRoute = Omit<RouteProps, 'path' | 'element'> & {
 
 const globalRoutes: TRoute[] = [
     {
-        path: pathConstants.HOME,
+        path: config.routes.home,
         element: HomePage,
         handle: {
             crumb: () => 'Trang chủ',
@@ -36,7 +36,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.REGISTER,
+        path: config.routes.register,
         layout: EmptyLayout,
         element: RegisterPage,
         handle: {
@@ -45,7 +45,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.LOGIN,
+        path: config.routes.login,
         layout: EmptyLayout,
         element: LoginPage,
         handle: {
@@ -54,7 +54,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.FAVOURITE,
+        path: config.routes.favourite,
         element: WishList,
         handle: {
             crumb: () => 'Yêu thích',
@@ -62,7 +62,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.CART,
+        path: config.routes.cart,
         element: Cart,
         handle: {
             crumb: () => 'Giỏ hàng',
@@ -70,7 +70,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.PRODUCTS,
+        path: config.routes.products,
         element: Products,
         handle: {
             crumb: () => 'Sản phẩm',
@@ -78,7 +78,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.PRODUCT_DETAIL,
+        path: config.routes.product_detail,
         element: ProductDetail,
         handle: {
             crumb: () => 'Chi tiết sản phẩm',
@@ -86,7 +86,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.ABOUT,
+        path: config.routes.about,
         element: AboutPage,
         handle: {
             crumb: () => 'Về chúng tôi',
@@ -94,7 +94,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.CONTACT,
+        path: config.routes.contact,
         element: ContactPage,
         handle: {
             crumb: () => 'Liên hệ',
@@ -102,7 +102,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: false,
     },
     {
-        path: pathConstants.CHECK_OUT,
+        path: config.routes.check_out,
         element: Checkout,
         handle: {
             crumb: () => 'Thanh toán',
@@ -110,7 +110,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: true,
     },
     {
-        path: pathConstants.ACCOUNT_INFORMATION,
+        path: config.routes.account_information,
         element: Account,
         layout: UserInformationLayout,
         handle: {
@@ -119,7 +119,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: true,
     },
     {
-        path: pathConstants.MY_ORDER,
+        path: config.routes.my_order,
         element: MyOrder,
         layout: UserInformationLayout,
         handle: {
@@ -128,7 +128,7 @@ const globalRoutes: TRoute[] = [
         isPrivateRoute: true,
     },
     {
-        path: pathConstants.ERROR,
+        path: config.routes.error,
         element: Error,
         handle: {
             crumb: () => '404 Not Found',

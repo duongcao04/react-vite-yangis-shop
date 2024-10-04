@@ -4,10 +4,10 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { config } from '@/config'
 import { addCart } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'
-import { pathConstants } from '@/routes/pathConstants'
 import { calcSalePrice } from '@/utils/calcSalePrice'
 import { isProductInList } from '@/utils/isInWishlist'
 import { formatMoney } from '@/utils/numberServices'
@@ -33,7 +33,12 @@ function ProductCard({
     const isWished = isProductInList(product, wishlist)
 
     const handleAddCart = (product: Product) => {
-        dispatch(addCart(product))
+        const cartItem = {
+            product,
+            quantity: 1,
+            variant: product.variants[0],
+        }
+        dispatch(addCart(cartItem))
     }
     const handleAddWishlist = (product: Product) => {
         dispatch(addProduct(product))
@@ -53,7 +58,7 @@ function ProductCard({
                     </div>
                 )}
                 <Link
-                    to={`${pathConstants.PRODUCTS}/${product.slug}`}
+                    to={`${config.routes.products}/${product.slug}`}
                     className="h-[230px] hover:scale-105 duration-200 transition"
                     title={product.name}
                 >
@@ -109,7 +114,7 @@ function ProductCard({
             </div>
             <div className="px-3 pb-5">
                 <Link
-                    to={`${pathConstants.PRODUCTS}/${product.slug}`}
+                    to={`${config.routes.products}/${product.slug}`}
                     className="text-base font-medium text-black dark:text-white hover:text-link transition duration-200"
                     title={product.name}
                 >

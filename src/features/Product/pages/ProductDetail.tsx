@@ -19,11 +19,11 @@ import UserReview from '@/features/product/components/UserReview'
 import ImagePreviewer from '@/features/product/components/image-preview/ImagePreviewer'
 import { getProductImages } from '@/features/product/utils/productDetailServices'
 
+import { config } from '@/config'
 import initReviews from '@/constants/reviews'
 import { addCart, buyNow } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'
-import { pathConstants } from '@/routes/pathConstants'
 import { isProductInList } from '@/utils/isInWishlist'
 import { formatMoney } from '@/utils/numberServices'
 
@@ -55,6 +55,7 @@ function ProductDetail() {
 
     // Khởi tạo state lưu thông tin lựa chọn hiện tại
     const [currentSelection, setCurrentSelection] = React.useState<string>('')
+
     const [inStock, setInStock] = React.useState<number>(0)
 
     // Cập nhật lựa chọn và params
@@ -71,6 +72,31 @@ function ProductDetail() {
         const newParams = Object.fromEntries([...searchParams])
         setCurrentParams(newParams)
     }, [searchParams, product])
+
+    const handleBuyNow = () => {
+        const currentVariant = product.variants.filter(
+            (item) => item.label === currentSelection
+        )[0]
+        const cartItem = {
+            product,
+            quantity: 1,
+            variant: currentVariant,
+        }
+        dispatch(buyNow(cartItem))
+        navigate(config.routes.check_out)
+    }
+
+    const handleAddCart = () => {
+        const currentVariant = product.variants.filter(
+            (item) => item.label === currentSelection
+        )[0]
+        const cartItem = {
+            product,
+            quantity: 1,
+            variant: currentVariant ?? product.variants[0],
+        }
+        dispatch(addCart(cartItem))
+    }
 
     return (
         <React.Fragment>
@@ -241,7 +267,7 @@ function ProductDetail() {
                                     variant={'outline'}
                                     title="Thêm vào giỏ hàng"
                                     onClick={() => {
-                                        dispatch(addCart(product))
+                                        handleAddCart()
                                     }}
                                 >
                                     <Icon
@@ -252,8 +278,7 @@ function ProductDetail() {
                                 <Button
                                     className="w-[200px]"
                                     onClick={() => {
-                                        dispatch(buyNow(product))
-                                        navigate(pathConstants.CHECK_OUT)
+                                        handleBuyNow()
                                     }}
                                 >
                                     Mua ngay

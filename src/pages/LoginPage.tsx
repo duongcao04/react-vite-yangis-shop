@@ -9,7 +9,7 @@ import LoginForm from '@/components/form/LoginForm'
 import { Button } from '@/components/ui/button'
 
 import LoginBanner from '@/assets/banner/login_banner.jpg'
-import { pathConstants } from '@/routes/pathConstants'
+import { config } from '@/config'
 
 function LoginPage() {
     return (
@@ -123,7 +123,7 @@ function LoginPage() {
                             <p className="mt-4 text-center">
                                 Bạn chưa có tài khoản?{' '}
                                 <Link
-                                    to={pathConstants.REGISTER}
+                                    to={config.routes.register}
                                     className="underline font-medium opacity-80 hover:opacity-100 transition duration-200"
                                     title="Đăng ký"
                                 >

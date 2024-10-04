@@ -10,7 +10,7 @@ import RegisterForm from '@/components/form/RegisterForm'
 import { Button } from '@/components/ui/button'
 
 import RegisterBanner from '@/assets/banner/registerBanner.avif'
-import { pathConstants } from '@/routes/pathConstants'
+import { config } from '@/config'
 
 function RegisterPage() {
     const [showSignupForm, setShowSignupForm] = useState<boolean>(false)
@@ -156,7 +156,7 @@ function RegisterPage() {
                             <p className="mt-4 text-center">
                                 Đã có tài khoản?{' '}
                                 <Link
-                                    to={pathConstants.LOGIN}
+                                    to={config.routes.login}
                                     className="underline font-medium opacity-80 hover:opacity-100 transition duration-200"
                                     title="Đăng nhập"
                                 >

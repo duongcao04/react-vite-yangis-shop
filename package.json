@@ -47,6 +47,7 @@
         "@tanstack/react-table": "^8.20.5",
         "add": "^2.0.6",
         "axios": "^1.7.2",
+        "bson-objectid": "^2.0.4",
         "class-variance-authority": "^0.7.0",
         "classnames": "^2.5.1",
         "clsx": "^2.1.1",

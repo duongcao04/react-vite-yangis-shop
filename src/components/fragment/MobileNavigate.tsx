@@ -14,8 +14,8 @@ import {
 } from '@/components/ui/sheet'
 
 import RegisterVector from '@/assets/png/register.png'
+import { config } from '@/config'
 import HEADER_NAVIGATES from '@/constants/navigates'
-import { pathConstants } from '@/routes/pathConstants'
 
 interface IMobileNavigateProps {
     trigger: React.ReactNode
@@ -68,14 +68,14 @@ export default function MobileNavigate({ trigger }: IMobileNavigateProps) {
                             <div className="flex items-center justify-start gap-2 mt-3">
                                 <SheetClose asChild>
                                     <Button variant={'outline'} asChild>
-                                        <Link to={pathConstants.REGISTER}>
+                                        <Link to={config.routes.register}>
                                             Đăng ký
                                         </Link>
                                     </Button>
                                 </SheetClose>
                                 <SheetClose asChild>
                                     <Button asChild>
-                                        <Link to={pathConstants.LOGIN}>
+                                        <Link to={config.routes.login}>
                                             Đăng nhập
                                         </Link>
                                     </Button>

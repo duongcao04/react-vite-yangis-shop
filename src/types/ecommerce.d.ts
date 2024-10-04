@@ -68,10 +68,13 @@ type NewProductVariant = Omit<
 }
 
 // CartType
-type CartItem = {
+type NewCartItem = {
     product: Product
     quantity: number
     variant: ProductVariant
+}
+type CartItem = NewCartItem & {
+    id: string
 }
 type Cart = CartItem[]
 

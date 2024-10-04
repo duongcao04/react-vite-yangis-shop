@@ -8,7 +8,8 @@ import SelectBox from '@/components/fragment/SelectBox'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import DashboardPagination from '../../admin/components/fragment/DashboardPagination'
+import DashboardPagination from '@/features/admin/components/fragment/DashboardPagination'
+
 import ProductsTable from '../components/ProductsTable'
 import NewProductForm from '../components/form/NewProductForm'
 

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { IoCloseCircle, IoSearch } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 
-import { pathConstants } from '@/routes/pathConstants'
+import { config } from '@/config'
 
 interface ISearchbarProps {
     isExtendSearchbar: boolean
@@ -19,7 +19,7 @@ function Searchbar({
     const [searchKey, setSearchKey] = useState<string>('')
 
     const handleSearch = () => {
-        navigate(`${pathConstants.PRODUCTS}?name=${searchKey}`)
+        navigate(`${config.routes.products}?name=${searchKey}`)
         setIsExtendSearchbar(false)
         setSearchKey('')
     }

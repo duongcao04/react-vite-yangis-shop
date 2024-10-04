@@ -20,9 +20,9 @@ import Modal from '@/components/modal/Modal'
 import { Button } from '@/components/ui/button'
 
 import Ymember from '@/assets/png/ymember.png'
+import { config } from '@/config'
 import HEADER_NAVIGATES from '@/constants/navigates'
 import { RootState } from '@/redux/store'
-import { pathConstants } from '@/routes/pathConstants'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 
 export default function Navbar() {
@@ -167,7 +167,8 @@ export default function Navbar() {
                                                 >
                                                     <Link
                                                         to={
-                                                            pathConstants.REGISTER
+                                                            config.routes
+                                                                .register
                                                         }
                                                     >
                                                         Đăng ký
@@ -177,7 +178,7 @@ export default function Navbar() {
                                             <DialogClose asChild>
                                                 <Button size={'lg'} asChild>
                                                     <Link
-                                                        to={pathConstants.LOGIN}
+                                                        to={config.routes.login}
                                                     >
                                                         Đăng nhập
                                                     </Link>
@@ -232,7 +233,7 @@ export default function Navbar() {
                             animate={{ opacity: 1 }}
                         >
                             <Link
-                                to={pathConstants.FAVOURITE}
+                                to={config.routes.favourite}
                                 className="w-fit h-[44px] py-[6px] px-4 bg-black rounded-full flex items-center justify-center gap-3"
                                 title="Danh sách yêu thích"
                             >
@@ -247,7 +248,7 @@ export default function Navbar() {
                         animate={{ opacity: 1 }}
                     >
                         <Link
-                            to={pathConstants.CART}
+                            to={config.routes.cart}
                             className="relative w-fit h-[44px] py-[6px] px-[20px] bg-black rounded-full flex items-center justify-center gap-3"
                             title="Giỏ hàng"
                         >
