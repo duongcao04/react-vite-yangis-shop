@@ -75,7 +75,7 @@ function Cart() {
                                     key={item.id}
                                     className="rounded-xl px-4 pt-[10px] pb-[45px] flex items-center gap-x-3 bg-white mt-[10px]"
                                 >
-                                    <Checkbox id={item.product._id} />
+                                    <Checkbox id={item.id} />
                                     <div className="flex gap-x-3 w-[calc(100%-28px)]">
                                         <div className="p-2 border rounded-lg">
                                             <img

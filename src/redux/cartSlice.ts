@@ -99,10 +99,12 @@ export const cartSlice = createSlice({
             )
 
             if (foundProductIndex !== -1) {
+                const price = calcSalePrice(
+                    state.cart[foundProductIndex].product.price,
+                    state.cart[foundProductIndex].product.sale ?? ''
+                )
                 state.total =
-                    state.total -
-                    state.cart[foundProductIndex].product.price *
-                        state.cart[foundProductIndex].quantity
+                    state.total - price * state.cart[foundProductIndex].quantity
                 state.cart.splice(foundProductIndex, 1)
             }
 
