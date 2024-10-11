@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { NextUIProvider } from '@nextui-org/react'
 import { DevSupport } from '@react-buddy/ide-toolbox'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -24,21 +25,23 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Router>
             <QueryClientProvider client={queryClient}>
                 <HelmetProvider>
-                    <ThemeProvider
-                        defaultTheme="light"
-                        storageKey="vite-ui-theme"
-                    >
-                        <AuthContextProvider>
-                            <Provider store={store}>
-                                <DevSupport
-                                    ComponentPreviews={ComponentPreviews}
-                                    useInitialHook={useInitial}
-                                >
-                                    <App />
-                                </DevSupport>
-                            </Provider>
-                        </AuthContextProvider>
-                    </ThemeProvider>
+                    <NextUIProvider>
+                        <ThemeProvider
+                            defaultTheme="light"
+                            storageKey="vite-ui-theme"
+                        >
+                            <AuthContextProvider>
+                                <Provider store={store}>
+                                    <DevSupport
+                                        ComponentPreviews={ComponentPreviews}
+                                        useInitialHook={useInitial}
+                                    >
+                                        <App />
+                                    </DevSupport>
+                                </Provider>
+                            </AuthContextProvider>
+                        </ThemeProvider>
+                    </NextUIProvider>
                 </HelmetProvider>
                 {/* Dev tool for react-query */}
                 <ReactQueryDevtools initialIsOpen={false} />

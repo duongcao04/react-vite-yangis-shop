@@ -11,7 +11,7 @@ import OrderDashboard from '@/features/order/pages/OrderDashboard'
 import OrderDetail from '@/features/order/pages/OrderDetail'
 import ProductDashboard from '@/features/product/pages/ProductDashboard'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 import AdminLayout from '@/layouts/AdminLayout'
 import { TRoute } from '@/routes/globalRoutes'
 

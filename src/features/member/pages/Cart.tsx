@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { Checkbox } from '@/components/ui/checkbox'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 import {
     decrementQuantity,
     incrementQuantity,

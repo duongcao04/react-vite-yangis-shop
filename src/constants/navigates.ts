@@ -1,4 +1,4 @@
-import { config } from '@/config'
+import { config } from '@/configs'
 
 interface INavigate {
     id: number

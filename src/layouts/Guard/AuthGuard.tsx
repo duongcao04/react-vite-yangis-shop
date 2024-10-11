@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 
 import { useAuthContext } from '@/context/AuthContext'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
 
 function AuthGuard({ children }: { children: React.ReactNode }) {

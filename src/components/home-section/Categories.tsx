@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { useGetCategories } from '@/hooks/useCategory'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 
 function Categories() {
     const { categories } = useGetCategories()

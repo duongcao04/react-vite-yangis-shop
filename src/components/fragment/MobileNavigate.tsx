@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/sheet'
 
 import RegisterVector from '@/assets/png/register.png'
-import { config } from '@/config'
+import { config } from '@/configs'
 import HEADER_NAVIGATES from '@/constants/navigates'
 
 interface IMobileNavigateProps {

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import { IoCloseCircle, IoSearch } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 
 interface ISearchbarProps {
     isExtendSearchbar: boolean

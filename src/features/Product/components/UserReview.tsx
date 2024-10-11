@@ -1,15 +1,17 @@
+import { Button } from '@nextui-org/react'
 import { FaChevronDown } from 'react-icons/fa6'
 
-import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
+import { ReviewForm } from './ReviewForm'
 import UserReviewCard from './UserReviewCard'
 
 interface IProps {
     data: Review[]
+    productId: string
 }
 
-function UserReview({ data }: IProps) {
+function UserReview({ data, productId }: IProps) {
     const progressReview = [
         { id: 5, countReviews: 50 },
         { id: 4, countReviews: 30 },
@@ -41,8 +43,10 @@ function UserReview({ data }: IProps) {
                         ))}
                     </div>
                     <p className="underline underline-offset-4">
-                        <span className="font-semibold">50</span> đánh giá
+                        <span className="font-semibold">{data.length}</span>{' '}
+                        đánh giá
                     </p>
+                    <Button color="primary">Đánh giá ngay</Button>
                 </div>
                 <div className="h-full bg-gray-300" />
                 <div className="mt-12 px-3 laptop:px-10 flex flex-col items-start justify-center gap-3">
@@ -78,9 +82,8 @@ function UserReview({ data }: IProps) {
                 </div>
             </div>
 
-            <div className="border-t border-b mt-5 py-5 flex flex-col items-center justify-center gap-5">
-                <p className="text-center">Bạn đánh giá sao về sản phẩm này?</p>
-                <Button>Đánh giá ngay</Button>
+            <div className="border-t border-b mt-5 py-5">
+                <ReviewForm productId={productId} />
             </div>
 
             <div className="mt-5">
@@ -92,7 +95,7 @@ function UserReview({ data }: IProps) {
                 ))}
             </div>
             <div className="mt-5 flex justify-center mb-2">
-                <Button variant={'outline'} className="px-20">
+                <Button color="primary" className="px-20">
                     Xem thêm
                     <FaChevronDown className="ml-2" size={10} />
                 </Button>

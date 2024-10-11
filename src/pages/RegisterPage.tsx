@@ -10,7 +10,7 @@ import RegisterForm from '@/components/form/RegisterForm'
 import { Button } from '@/components/ui/button'
 
 import RegisterBanner from '@/assets/banner/registerBanner.avif'
-import { config } from '@/config'
+import { config } from '@/configs'
 
 function RegisterPage() {
     const [showSignupForm, setShowSignupForm] = useState<boolean>(false)

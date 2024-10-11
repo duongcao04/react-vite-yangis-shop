@@ -4,7 +4,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 import { addCart } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'

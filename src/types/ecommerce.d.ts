@@ -121,10 +121,15 @@ type NewOrder = Omit<Order, '_id' | 'user' | keyof Timestamps> & {
 }
 
 // ReviewType
-type Review = Timestamps & {
-    _id: string
-    user: User | string
-    product: Product | string
+type NewReview = {
+    user: string
+    product: string
     rating: number
     comment: string
 }
+type Review = Timestamps &
+    Omit<NewReview, 'user' | 'product'> & {
+        _id: string
+        user: { avatar: string }
+        product: Product | string
+    }

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { useGetProduct, useGetProducts } from '@/hooks/useProduct'
+import { useGetReviews } from '@/hooks/useReview'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ProductsCarousel from '@/components/carousel/ProductsCarousel'
@@ -19,8 +20,7 @@ import UserReview from '@/features/product/components/UserReview'
 import ImagePreviewer from '@/features/product/components/image-preview/ImagePreviewer'
 import { getProductImages } from '@/features/product/utils/productDetailServices'
 
-import { config } from '@/config'
-import initReviews from '@/constants/reviews'
+import { config } from '@/configs'
 import { addCart, buyNow } from '@/redux/cartSlice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlistSlice'
@@ -40,6 +40,7 @@ function ProductDetail() {
     const { isLoading: loadingProduct, product } = useGetProduct(
         productSlug ?? ''
     )
+    const { reviews } = useGetReviews({ product_slug: productSlug })
 
     // Kiểm tra sản phẩm có nằm trong wishlist ?
     const isWished = isProductInList(product, wishlist)
@@ -183,7 +184,7 @@ function ProductDetail() {
                                                 ))}
                                         </div>
                                         <p className="text-sm leading-[21px] font-semibold opacity-60">
-                                            ({55} Reviews)
+                                            ({reviews.length} đánh giá)
                                         </p>
                                         <div className="w-[1px] h-[20px] bg-neutral-300 mx-2" />
                                         <p className="font-medium opacity-60">
@@ -463,7 +464,7 @@ function ProductDetail() {
                 <p className="mb-7 text-base leading-none font-semibold">
                     Đánh giá & nhận xét về {product.name}
                 </p>
-                <UserReview data={initReviews} />
+                <UserReview data={reviews} productId={product._id}/>
             </div>
             <div className="mt-5 mb-20 container">
                 <div className="mb-5 flex items-center justify-start gap-4">

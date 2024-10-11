@@ -9,7 +9,7 @@ import LoginForm from '@/components/form/LoginForm'
 import { Button } from '@/components/ui/button'
 
 import LoginBanner from '@/assets/banner/login_banner.jpg'
-import { config } from '@/config'
+import { config } from '@/configs'
 
 function LoginPage() {
     return (

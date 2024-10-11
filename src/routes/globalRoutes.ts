@@ -15,7 +15,7 @@ import WishList from '@/features/member/pages/WishList'
 import ProductDetail from '@/features/product/pages/ProductDetail'
 import Products from '@/features/product/pages/Products'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 import EmptyLayout from '@/layouts/EmptyLayout'
 import UserInformationLayout from '@/layouts/UserInformationLayout'
 

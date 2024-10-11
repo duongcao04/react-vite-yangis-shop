@@ -17,7 +17,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import FilterBar from '@/features/product/components/FilterBar'
 
-import { config } from '@/config'
+import { config } from '@/configs'
 
 function Products() {
     // State for pagination

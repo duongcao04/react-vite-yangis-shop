@@ -20,7 +20,7 @@ import Modal from '@/components/modal/Modal'
 import { Button } from '@/components/ui/button'
 
 import Ymember from '@/assets/png/ymember.png'
-import { config } from '@/config'
+import { config } from '@/configs'
 import HEADER_NAVIGATES from '@/constants/navigates'
 import { RootState } from '@/redux/store'
 import { isObjectEmpty } from '@/utils/isObjectEmpty'
