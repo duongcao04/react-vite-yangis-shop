@@ -19,8 +19,8 @@ import {
 } from '@/components/ui/form'
 
 const formSchema = z.object({
-    comment: z.string().min(10, {
-        message: 'Vui lòng nhập tối thiểu 10 ký tự',
+    comment: z.string().min(1, {
+        message: 'Vui lòng nhập nội dung bình luận',
     }),
 })
 
