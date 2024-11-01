@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 import { FaChevronDown } from 'react-icons/fa6'
 import { IoFilter } from 'react-icons/io5'
 
-import { useGetBrands } from '@/hooks/useBrand'
-import { useGetCategories } from '@/hooks/useCategory'
+import { useGetAllBrands } from '@/hooks/useBrand'
+import { useGetAllCategories } from '@/hooks/useCategory'
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -30,8 +30,8 @@ export interface IFilterBarProps {
 }
 
 function FilterBar({ filter, setFilter }: IFilterBarProps) {
-    const { isLoading: loadingCategories, categories } = useGetCategories()
-    const { isLoading: loadingBrands, brands } = useGetBrands()
+    const { isLoading: loadingCategories, categories } = useGetAllCategories()
+    const { isLoading: loadingBrands, brands } = useGetAllBrands()
 
     const [collapse, setCollapse] = useState<{
         category: boolean

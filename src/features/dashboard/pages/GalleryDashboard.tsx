@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useGetProducts } from '@/hooks/useProduct'
+import { useGetAllProducts } from '@/hooks/useProduct'
 import { useGetVariants } from '@/hooks/useVariant'
 
 import SelectBox from '@/components/fragment/SelectBox'
@@ -13,7 +13,7 @@ import ViewByProduct from '../components/sections/ViewByProduct'
 
 export default function GalleryDashboard() {
     const { isLoading, variants } = useGetVariants()
-    const { products } = useGetProducts()
+    const { products } = useGetAllProducts()
     const [viewingStyle, setViewingStyle] = React.useState<string>(
         GALLERY_VIEW_STYLE[0]
     )

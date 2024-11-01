@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import categoryApi from '@/apis/category.api'
 
-export const useGetCategories: (params?: object) => {
+const useGetAllCategories: (params?: object) => {
     isLoading: boolean
     categories: Category[]
 } = (params) => {
@@ -22,3 +22,5 @@ export const useGetCategories: (params?: object) => {
 
     return { isLoading: isFetching, categories }
 }
+
+export default useGetAllCategories

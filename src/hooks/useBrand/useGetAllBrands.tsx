@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import brandApi from '@/apis/brand.api'
 
-export const useGetBrands: (params?: object) => {
+const useGetAllBrands: (params?: object) => {
     isLoading: boolean
     brands: Brand[]
 } = (params) => {
@@ -20,3 +20,5 @@ export const useGetBrands: (params?: object) => {
 
     return { isLoading: isFetching, brands }
 }
+
+export default useGetAllBrands

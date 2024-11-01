@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { Icon } from '@iconify/react'
 
-import { useGetProducts } from '@/hooks/useProduct'
+import { useGetAllProducts } from '@/hooks/useProduct'
 
 import SelectBox from '@/components/fragment/SelectBox'
 import { Button } from '@/components/ui/button'
@@ -27,7 +27,7 @@ export default function ProductDashboard() {
         })
     }, [showing, currentPage])
 
-    const { products, isLoading, totalPage } = useGetProducts(params)
+    const { products, isLoading, totalPage } = useGetAllProducts(params)
 
     return (
         <React.Fragment>

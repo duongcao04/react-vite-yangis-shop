@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { useGetProducts } from '@/hooks/useProduct'
+import { useGetAllProducts } from '@/hooks/useProduct'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,7 @@ import { resetWishlist } from '@/redux/wishlistSlice'
 import ProductCard from '../../product/components/cards/ProductCard'
 
 function WishListPage() {
-    const { products } = useGetProducts()
+    const { products } = useGetAllProducts()
     const dispatch = useDispatch()
     const { wishlist } = useSelector((state: RootState) => state.wishlist)
 

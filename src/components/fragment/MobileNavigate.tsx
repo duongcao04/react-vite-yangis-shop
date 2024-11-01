@@ -2,7 +2,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-import { useGetCategories } from '@/hooks/useCategory'
+import { useGetAllCategories } from '@/hooks/useCategory'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,7 +22,7 @@ interface IMobileNavigateProps {
 }
 
 export default function MobileNavigate({ trigger }: IMobileNavigateProps) {
-    const { categories } = useGetCategories()
+    const { categories } = useGetAllCategories()
     return (
         <Sheet>
             <SheetTrigger asChild>{trigger}</SheetTrigger>

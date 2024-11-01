@@ -3,12 +3,12 @@ import React from 'react'
 import { Icon } from '@iconify/react'
 import { Link } from 'react-router-dom'
 
-import { useGetCategories } from '@/hooks/useCategory'
+import { useGetAllCategories } from '@/hooks/useCategory'
 
 import { config } from '@/configs'
 
 function Categories() {
-    const { categories } = useGetCategories()
+    const { categories } = useGetAllCategories()
 
     return (
         <React.Fragment>

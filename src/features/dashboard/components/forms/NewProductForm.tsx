@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { useGetBrands } from '@/hooks/useBrand'
-import { useGetCategories } from '@/hooks/useCategory'
+import { useGetAllBrands } from '@/hooks/useBrand'
+import { useGetAllCategories } from '@/hooks/useCategory'
 import { useCreateProduct } from '@/hooks/useProduct'
 
 import Modal from '@/components/modals/Modal'
@@ -41,8 +41,8 @@ function NewProductForm({
     setSection: React.Dispatch<React.SetStateAction<string>>
 }) {
     const { createProduct } = useCreateProduct()
-    const { categories } = useGetCategories()
-    const { brands } = useGetBrands()
+    const { categories } = useGetAllCategories()
+    const { brands } = useGetAllBrands()
 
     const form = useForm<z.infer<typeof NewProductFormSchema>>({
         resolver: zodResolver(NewProductFormSchema),

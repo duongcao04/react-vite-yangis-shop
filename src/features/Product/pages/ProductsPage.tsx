@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async'
 import { IoFilter } from 'react-icons/io5'
 import { useSearchParams } from 'react-router-dom'
 
-import { useGetProducts } from '@/hooks/useProduct'
+import { useGetAllProducts } from '@/hooks/useProduct'
 import { useQueryString } from '@/hooks/useQueryString'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -32,7 +32,7 @@ function ProductsPage() {
         products,
         totalProduct,
         totalPage,
-    } = useGetProducts(params)
+    } = useGetAllProducts(params)
 
     const { tim_kiem, danh_muc, thuong_hieu, gia_tien } = useQueryString()
 

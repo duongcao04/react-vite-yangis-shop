@@ -9,7 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { useGetCategories } from '@/hooks/useCategory'
+import { useGetAllCategories } from '@/hooks/useCategory'
 import { useDeleteProduct } from '@/hooks/useProduct'
 import { shortDateFormat } from '@/utils/dateServices'
 import { Icon } from '@iconify/react'
@@ -17,7 +17,7 @@ import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 
 export default function CategoriesTable() {
-    const { isLoading, categories } = useGetCategories()
+    const { isLoading, categories } = useGetAllCategories()
     const { deleteProduct } = useDeleteProduct()
 
     const handleDeleteCategory = (category: Category) => {

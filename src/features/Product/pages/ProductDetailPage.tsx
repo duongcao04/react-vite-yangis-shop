@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useGetProduct, useGetProducts } from '@/hooks/useProduct'
+import { useGetAllProducts, useGetProduct } from '@/hooks/useProduct'
 import { useGetReviews } from '@/hooks/useReview'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -32,7 +32,7 @@ function ProductDetailPage() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { wishlist } = useSelector((state: RootState) => state.wishlist)
-    const { products } = useGetProducts()
+    const { products } = useGetAllProducts()
 
     // Lấy product id từ params
     const { productSlug } = useParams()
