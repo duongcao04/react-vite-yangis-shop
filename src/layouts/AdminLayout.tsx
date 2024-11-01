@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import Header from '@/features/admin/components/Header'
-import Sidebar from '@/features/admin/components/Sidebar'
+import DashboardHeader from '@/features/dashboard/components/DashboardHeader'
+import DashboardSidebar from '@/features/dashboard/components/DashboardSidebar'
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const [showSidebar, setShowSidebar] = useState<boolean>(true)
@@ -11,10 +11,12 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             id="page"
             className={`bg-wallground-light h-screen ${showSidebar && 'grid grid-cols-admin'}`}
         >
-            {showSidebar && <Sidebar setShowSidebar={setShowSidebar} />}
+            {showSidebar && (
+                <DashboardSidebar setShowSidebar={setShowSidebar} />
+            )}
             <div className="bg-wallground-light border-l">
                 <header className="h-[80px] bg-white border-b px-[30px] py-[15px]">
-                    <Header
+                    <DashboardHeader
                         showSidebar={showSidebar}
                         setShowSidebar={setShowSidebar}
                     />

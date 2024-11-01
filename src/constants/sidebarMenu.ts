@@ -10,7 +10,7 @@ export interface IMenuItem {
 const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
     {
         id: 1,
-        title: 'Nhà chính',
+        title: 'Dashboard',
         menu: [
             {
                 id: 11,
@@ -22,7 +22,7 @@ const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
     },
     {
         id: 2,
-        title: 'Tất cả các trang',
+        title: 'Quản lý',
         menu: [
             {
                 id: 21,
@@ -60,14 +60,20 @@ const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
                 label: 'Bài đăng',
                 path: config.routes.dashboard_article,
             },
+        ],
+    },
+    {
+        id: 3,
+        title: 'Theo dõi',
+        menu: [
             {
-                id: 27,
+                id: 37,
                 icon: 'hugeicons:school-report-card',
                 label: 'Báo cáo',
                 path: config.routes.dashboard_report,
             },
             {
-                id: 28,
+                id: 38,
                 icon: 'material-symbols-light:gallery-thumbnail-outline-rounded',
                 label: 'Thư viện',
                 path: config.routes.dashboard_gallery,
@@ -75,11 +81,11 @@ const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
         ],
     },
     {
-        id: 3,
+        id: 4,
         title: 'Cài đặt',
         menu: [
             {
-                id: 31,
+                id: 41,
                 icon: 'hugeicons:setting-07',
                 label: 'Cài đặt',
                 path: config.routes.dashboard_setting,
@@ -87,17 +93,17 @@ const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
         ],
     },
     {
-        id: 4,
+        id: 5,
         title: 'Hỗ trợ',
         menu: [
             {
-                id: 41,
+                id: 51,
                 icon: 'hugeicons:help-circle',
                 label: 'Trợ giúp',
                 path: config.routes.dashboard_help,
             },
             {
-                id: 42,
+                id: 52,
                 icon: 'hugeicons:user-question-01',
                 label: 'FAQs',
                 path: config.routes.dashboard_faq,

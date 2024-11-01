@@ -1,6 +1,8 @@
+'use client'
+
 import * as React from 'react'
 
-import Modal from '@/components/modal/Modal'
+import Modal from '@/components/modals/Modal'
 
 import { cn } from '@/lib/utils'
 

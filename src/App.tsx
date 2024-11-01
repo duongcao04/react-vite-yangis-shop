@@ -7,9 +7,8 @@ import { useAuthContext } from '@/context/AuthContext'
 import ScrollToTop from '@/components/ScrollToTop'
 import { Toaster } from '@/components/ui/sonner'
 
+import { AuthGuard, GuestGuard } from '@/guards'
 import DefaultLayout from '@/layouts/DefaultLayout'
-import AuthGuard from '@/layouts/Guard/AuthGuard'
-import GuestGuard from '@/layouts/Guard/GuestGuard'
 import adminRoutes from '@/routes/adminRoutes'
 import globalRoutes, { TRoute } from '@/routes/globalRoutes'
 
@@ -35,7 +34,8 @@ export default function App() {
                     const Layout = route.layout ?? DefaultLayout
                     const Page = route.element
                     const Path = route.path
-                    const Guard = route.isPrivateRoute === true ? AuthGuard : GuestGuard
+                    const Guard =
+                        route.isPrivateRoute === true ? AuthGuard : GuestGuard
 
                     return (
                         <Route

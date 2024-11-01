@@ -8,7 +8,7 @@ function DefaultLayout({ children }: { children: React.ReactNode }) {
             id="page"
             className="bg-wallground-light dark:bg-wallground-dark text-black dark:text-white "
         >
-            <header className="sticky top-0 z-50 laptop:static">
+            <header className="sticky top-0 laptop:static">
                 <Navbar />
                 <div className="hidden laptop:block desktop:block">
                     <TopHeader />

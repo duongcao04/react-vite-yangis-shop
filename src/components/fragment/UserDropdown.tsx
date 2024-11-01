@@ -8,7 +8,9 @@ import { FaRegUser } from 'react-icons/fa'
 import { FaRegAddressCard } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
-import useLogout from '@/hooks/useLogout'
+import useLogout from '@/features/auth/hooks/useLogout'
+
+import { config } from '../../configs'
 
 export interface userNavigate {
     id: number
@@ -25,13 +27,13 @@ function UserDropdown() {
             id: 1,
             icon: FaRegUser,
             label: 'Thông tin cá nhân',
-            path: '/account',
+            path: config.routes.account_information,
         },
         {
             id: 2,
             icon: AiOutlineProduct,
             label: 'Đơn hàng của tôi',
-            path: '/my-order',
+            path: config.routes.my_order,
         },
         {
             id: 3,

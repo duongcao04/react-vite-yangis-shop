@@ -19,7 +19,7 @@ function UserReviewCard({ data }: IProps) {
                     {new Array(5 - Number(data.rating))
                         .fill('outline')
                         .map((item, index) => (
-                            <Star key={index + item} fill='#bfbfbf'/>
+                            <Star key={index + item} fill="#bfbfbf" />
                         ))}
                 </div>
                 <p className="mt-1 text-xs">{data.comment}</p>

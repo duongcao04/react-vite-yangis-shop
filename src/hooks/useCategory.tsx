@@ -1,5 +1,6 @@
-import categoryApi from '@/api/category.api'
 import { useQuery } from '@tanstack/react-query'
+
+import categoryApi from '@/apis/category.api'
 
 export const useGetCategories: (params?: object) => {
     isLoading: boolean

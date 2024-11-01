@@ -1,5 +1,8 @@
 import React from 'react'
+
 import { Helmet } from 'react-helmet-async'
+
+import { useGetAllProducts } from '@/hooks/useProduct'
 
 import {
     BannerTheme,
@@ -9,11 +12,10 @@ import {
     FlashSales,
     OurProduct,
     Services,
-} from '@/components/home-section/index'
-import { useGetProducts } from '@/hooks/useProduct'
+} from '@/components/home-sections'
 
 function HomePage() {
-    const { isLoading, products } = useGetProducts()
+    const { isLoading, products } = useGetAllProducts()
 
     return (
         <React.Fragment>
@@ -30,6 +32,7 @@ function HomePage() {
             <section className="container mt-20">
                 <Categories />
             </section>
+
             <section className="container mt-20">
                 <BestSelling products={products} />
             </section>

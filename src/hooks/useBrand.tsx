@@ -1,5 +1,6 @@
-import brandApi from '@/api/brand.api'
 import { useQuery } from '@tanstack/react-query'
+
+import brandApi from '@/apis/brand.api'
 
 export const useGetBrands: (params?: object) => {
     isLoading: boolean

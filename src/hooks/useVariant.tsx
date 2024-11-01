@@ -1,8 +1,9 @@
 import * as React from 'react'
 
-import variantApi from '@/api/variant.api'
 import { useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+
+import variantApi from '@/apis/variant.api'
 
 export const useGetVariants: (params?: object) => {
     isLoading: boolean

@@ -1,91 +1,93 @@
 import AdminHelp from '@/features/admin/pages/AdminHelp'
 import AdminSettings from '@/features/admin/pages/AdminSettings'
-import Dashboard from '@/features/admin/pages/Dashboard'
 import ReportDashboard from '@/features/admin/pages/ReportDashboard'
-import ArticleDashboard from '@/features/article/pages/ArticleDashboard'
-import BrandDashboard from '@/features/brand/pages/BrandDashboard'
-import CategoryDashboard from '@/features/category/pages/CategoryDashboard'
-import CustomerDashboard from '@/features/customer/pages/CustomerDashboard'
-import GalleryDashboard from '@/features/gallery/pages/GalleryDashboard'
-import OrderDashboard from '@/features/order/pages/OrderDashboard'
-import OrderDetail from '@/features/order/pages/OrderDetail'
-import ProductDashboard from '@/features/product/pages/ProductDashboard'
+import {
+    ArticleDashboard,
+    BrandDashboard,
+    CategoryDashboard,
+    CustomerDashboard,
+    GalleryDashboard,
+    HomeDashboard,
+    OrderDashboard,
+    OrderDetail,
+    ProductDashboard,
+} from '@/features/dashboard/pages'
 
 import { config } from '@/configs'
-import AdminLayout from '@/layouts/AdminLayout'
+import { DashboardLayout } from '@/layouts'
 import { TRoute } from '@/routes/globalRoutes'
 
 const adminRoutes: TRoute[] = [
     {
         isPrivateRoute: true,
         path: config.routes.dashboard,
-        layout: AdminLayout,
-        element: Dashboard,
+        layout: DashboardLayout,
+        element: HomeDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_product,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: ProductDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_category,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: CategoryDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_brand,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: BrandDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_order,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: OrderDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_order_detail,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: OrderDetail,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_customer,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: CustomerDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_article,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: ArticleDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_report,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: ReportDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_gallery,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: GalleryDashboard,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_setting,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: AdminSettings,
     },
     {
         isPrivateRoute: true,
         path: config.routes.dashboard_help,
-        layout: AdminLayout,
+        layout: DashboardLayout,
         element: AdminHelp,
     },
 ]

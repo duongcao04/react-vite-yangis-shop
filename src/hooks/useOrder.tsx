@@ -1,11 +1,12 @@
 import * as React from 'react'
+
+import { useQuery } from '@tanstack/react-query'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
-import orderApi from '@/api/order.api'
-import { resetCart } from '@/redux/cartSlice'
-import { useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+
+import orderApi from '@/apis/order.api'
+import { resetCart } from '@/redux/cartSlice'
 
 export const useGetOrders: (params?: object) => {
     isLoading: boolean

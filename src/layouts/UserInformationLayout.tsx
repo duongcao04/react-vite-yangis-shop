@@ -5,7 +5,7 @@ import { BiLogOut } from 'react-icons/bi'
 import { FaRegAddressCard } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
 
-import useLogout from '@/hooks/useLogout'
+import useLogout from '@/features/auth/hooks/useLogout'
 
 import { useAuthContext } from '@/context/AuthContext'
 

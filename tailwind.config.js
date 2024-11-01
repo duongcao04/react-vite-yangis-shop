@@ -1,7 +1,3 @@
-import { nextui } from '@nextui-org/react'
-
-import { config } from './src/configs'
-
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
 module.exports = {
@@ -112,20 +108,5 @@ module.exports = {
         },
     },
     // eslint-disable-next-line no-undef
-    plugins: [
-        require('tailwindcss-animate'),
-        nextui({
-            themes: {
-                light: {
-                    layout: {}, // light theme layout tokens
-                    colors: config.colors.light, // light theme colors
-                },
-                dark: {
-                    layout: {}, // dark theme layout tokens
-                    colors: config.colors.dark, // dark theme colors
-                },
-                // ... custom themes
-            },
-        }),
-    ],
+    plugins: [require('tailwindcss-animate')],
 }

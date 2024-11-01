@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import reviewApi from '@/api/review.api'
+import reviewApi from '@/apis/review.api'
 
 export const useGetReviews: (params?: { product_slug?: string }) => {
     isLoading: boolean

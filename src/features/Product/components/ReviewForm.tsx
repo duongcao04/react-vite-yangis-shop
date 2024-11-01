@@ -1,7 +1,5 @@
-'use client'
-
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Textarea } from '@nextui-org/react'
+import { Button } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -17,6 +15,8 @@ import {
     FormItem,
     FormMessage,
 } from '@/components/ui/form'
+
+import { Textarea } from '../../../components/ui/textarea'
 
 const formSchema = z.object({
     comment: z.string().min(1, {

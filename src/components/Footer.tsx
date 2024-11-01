@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import QR from '@/assets/images/QR.png'
-import SubcribeForm from '@/components/form/SubcribeForm'
+import SubcribeForm from '@/components/forms/SubcribeForm'
 import FOOTER_NAVIGATES from '@/constants/footerLinks'
 
 function Footer() {

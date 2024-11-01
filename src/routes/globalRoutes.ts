@@ -1,23 +1,19 @@
 import { RouteProps } from 'react-router-dom'
 
-import AboutPage from '@/pages/AboutPage'
-import ContactPage from '@/pages/ContactPage'
-import Error from '@/pages/Error'
-import HomePage from '@/pages/HomePage'
-import LoginPage from '@/pages/LoginPage'
-import RegisterPage from '@/pages/RegisterPage'
-
-import Account from '@/features/member/pages/Account'
-import Cart from '@/features/member/pages/Cart'
-import Checkout from '@/features/member/pages/Checkout'
-import MyOrder from '@/features/member/pages/MyOrder'
-import WishList from '@/features/member/pages/WishList'
-import ProductDetail from '@/features/product/pages/ProductDetail'
-import Products from '@/features/product/pages/Products'
+import { LoginPage, RegisterPage } from '@/features/auth/pages'
+import { CartPage } from '@/features/cart/pages'
+import { CheckoutPage } from '@/features/checkout/pages'
+import {
+    CustomerAddressBook,
+    CustomerOrder,
+    CustomerProfile,
+} from '@/features/customer-profile/pages'
+import { ProductDetailPage, ProductsPage } from '@/features/product/pages'
+import { WishListPage } from '@/features/wish-list/pages'
 
 import { config } from '@/configs'
-import EmptyLayout from '@/layouts/EmptyLayout'
-import UserInformationLayout from '@/layouts/UserInformationLayout'
+import { BlankLayout, UserInformationLayout } from '@/layouts'
+import { AboutPage, ContactPage, ErrorPage, HomePage } from '@/pages'
 
 export type TRoute = Omit<RouteProps, 'path' | 'element'> & {
     path: string
@@ -37,7 +33,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.register,
-        layout: EmptyLayout,
+        layout: BlankLayout,
         element: RegisterPage,
         handle: {
             crumb: () => 'Đăng ký',
@@ -46,7 +42,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.login,
-        layout: EmptyLayout,
+        layout: BlankLayout,
         element: LoginPage,
         handle: {
             crumb: () => 'Đăng nhập',
@@ -55,7 +51,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.favourite,
-        element: WishList,
+        element: WishListPage,
         handle: {
             crumb: () => 'Yêu thích',
         },
@@ -63,7 +59,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.cart,
-        element: Cart,
+        element: CartPage,
         handle: {
             crumb: () => 'Giỏ hàng',
         },
@@ -71,7 +67,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.products,
-        element: Products,
+        element: ProductsPage,
         handle: {
             crumb: () => 'Sản phẩm',
         },
@@ -79,7 +75,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.product_detail,
-        element: ProductDetail,
+        element: ProductDetailPage,
         handle: {
             crumb: () => 'Chi tiết sản phẩm',
         },
@@ -103,15 +99,23 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.check_out,
-        element: Checkout,
+        element: CheckoutPage,
         handle: {
             crumb: () => 'Thanh toán',
         },
         isPrivateRoute: true,
     },
     {
+        path: config.routes.address_book,
+        element: CustomerAddressBook,
+        handle: {
+            crumb: () => 'Sổ tay địa chỉ',
+        },
+        isPrivateRoute: true,
+    },
+    {
         path: config.routes.account_information,
-        element: Account,
+        element: CustomerProfile,
         layout: UserInformationLayout,
         handle: {
             crumb: () => 'Thông tin cá nhân',
@@ -120,7 +124,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.my_order,
-        element: MyOrder,
+        element: CustomerOrder,
         layout: UserInformationLayout,
         handle: {
             crumb: () => 'Đơn hàng của tôi',
@@ -129,7 +133,7 @@ const globalRoutes: TRoute[] = [
     },
     {
         path: config.routes.error,
-        element: Error,
+        element: ErrorPage,
         handle: {
             crumb: () => '404 Not Found',
         },

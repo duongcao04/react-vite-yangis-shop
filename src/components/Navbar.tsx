@@ -16,7 +16,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import MobileNavigate from '@/components/fragment/MobileNavigate'
 import Searchbar from '@/components/fragment/Searchbar'
 import UserDropdown from '@/components/fragment/UserDropdown'
-import Modal from '@/components/modal/Modal'
+import Modal from '@/components/modals/Modal'
 import { Button } from '@/components/ui/button'
 
 import Ymember from '@/assets/png/ymember.png'
@@ -132,7 +132,7 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                <div className="flex items-center justify-end gap-3">
+                <div className="flex items-center justify-end gap-3 z-10">
                     <div className="hidden laptop:block desktop:block">
                         <motion.div
                             initial={{ opacity: 0 }}
@@ -218,7 +218,7 @@ export default function Navbar() {
                                             opacity: 1,
                                             y: 0,
                                         }}
-                                        className="hidden group-hover:block absolute top-full pt-2 left-0 z-10"
+                                        className="hidden group-hover:block absolute top-full pt-2 left-0"
                                     >
                                         <UserDropdown />
                                     </motion.div>
