@@ -1,331 +1,163 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { FormikProps, useFormik } from 'formik'
+import { MdDelete } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
+import * as yup from 'yup'
 
 import { useGetAllBrands } from '@/hooks/useBrand'
 import { useGetAllCategories } from '@/hooks/useCategory'
 import { useCreateProduct } from '@/hooks/useProduct'
 
-import Modal from '@/components/modals/Modal'
 import { Button } from '@/components/ui/button'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
+import { ButtonLoading } from '@/components/ui/button-loading'
 
-import { MultipleImageUpload } from '@/features/dashboard/components/forms/MultipleImageUpload'
-
+import { config } from '@/configs'
 import { INITIAL_DATA } from '@/constants/editorInitialData'
-import { NewProductFormSchema } from '@/utils/validationSchemas'
 
-import AddColor from './AddColor'
-import AddProductDescription from './AddProductDescription'
-import { SingleImageUpload } from './SingleImageUpload'
+import { newProductValidationSchema as validationSchema } from '../../schemas/newProductValidationSchema'
+import {
+    ProductComponany,
+    ProductDescription,
+    ProductDetail,
+    ProductImages,
+    ProductThumbnail,
+    ProductType,
+    ProductVariants,
+} from '../form-feilds/product'
 
-function NewProductForm({
-    setSection,
+function FloatButton({
+    form,
+    isLoading,
 }: {
-    setSection: React.Dispatch<React.SetStateAction<string>>
+    form: FormikProps<FormValues>
+    isLoading: boolean
 }) {
-    const { createProduct } = useCreateProduct()
-    const { categories } = useGetAllCategories()
-    const { brands } = useGetAllBrands()
-
-    const form = useForm<z.infer<typeof NewProductFormSchema>>({
-        resolver: zodResolver(NewProductFormSchema),
-        defaultValues: {
-            name: '',
-            thumbnail: undefined,
-            description: JSON.stringify(INITIAL_DATA),
-            featureImage: [],
-            price: '',
-            sale: '',
-            category: '',
-            brand: '',
-            variants: [],
-        },
-    })
-
-    function onSubmit(data: z.infer<typeof NewProductFormSchema>) {
-        const newProduct: NewProduct = {
-            name: data.name,
-            description: data.description,
-            thumbnail: data.thumbnail,
-            featureImage: data.featureImage,
-            price: +data.price,
-            sale: data.sale,
-            inStock: 0,
-            category: data.category,
-            brand: data.brand,
-            variants: data.variants,
-        }
-        createProduct(newProduct)
-        setSection('Product List')
-    }
+    const navigate = useNavigate()
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-                <div className="grid grid-cols-3 gap-5">
-                    <div className="h-fit col-span-2 bg-white p-6 rounded-xl space-y-5">
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel required htmlFor="name">
-                                        Tên sản phẩm
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            id="name"
-                                            placeholder="Nhập tên sản phẩm"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="grid grid-cols-2 gap-5">
-                            <FormField
-                                control={form.control}
-                                name="price"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel required htmlFor="name">
-                                            Giá tiền
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                id="name"
-                                                type="number"
-                                                placeholder="Nhập giá tiền"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="sale"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel htmlFor="name">
-                                            Giảm giá
-                                        </FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                id="name"
-                                                type="number"
-                                                placeholder="Nhập giảm giá"
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <FormField
-                            control={form.control}
-                            name="category"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel required>Danh mục</FormLabel>
-                                    <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Chọn danh mục" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {categories.map((category) => (
-                                                <SelectItem
-                                                    value={category._id}
-                                                    key={category._id}
-                                                >
-                                                    {category.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="brand"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel required>Thương hiệu</FormLabel>
-                                    <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Chọn nhà cung cấp" />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            {brands.map((brand) => (
-                                                <SelectItem
-                                                    value={brand._id}
-                                                    key={brand._id}
-                                                >
-                                                    {brand.name}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="variants"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel required htmlFor="color">
-                                        Màu sắc
-                                    </FormLabel>
-                                    <FormControl>
-                                        <AddColor
-                                            {...field}
-                                            id="color"
-                                            onChange={field.onChange}
-                                            value={field.value}
-                                        />
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button
-                            type="submit"
-                            className="w-full h-[50px]"
-                            title="Thêm sản phẩm"
-                        >
-                            Thêm sản phẩm
-                        </Button>
-                    </div>
-                    <div className="col-span-1 bg-white p-6 rounded-xl space-y-5 h-fit">
-                        <FormField
-                            control={form.control}
-                            name="description"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="description">
-                                        Mô tả sản phẩm
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Modal
-                                            trigger={
-                                                <Button className="block">
-                                                    Thêm mô tả
-                                                </Button>
-                                            }
-                                            header={{
-                                                title: (
-                                                    <div className="flex items-center justify-between">
-                                                        <p className="text-base">
-                                                            Mô tả sản phẩm
-                                                        </p>
-                                                        <div className="space-x-3">
-                                                            <Button>Lưu</Button>
-                                                            <Button variant="outline">
-                                                                Xem trước
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                ),
-                                            }}
-                                            classname="max-w-screen max-h-screen w-[90vw] h-[90vh]"
-                                            bodyClassname="h-[calc(100%-48px)]"
-                                        >
-                                            <AddProductDescription
-                                                {...field}
-                                                id="description"
-                                                initialData={JSON.parse(
-                                                    field.value
-                                                )}
-                                            />
-                                        </Modal>
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="thumbnail"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="thumbnail">
-                                        Hình thu nhỏ
-                                    </FormLabel>
-                                    <FormControl>
-                                        <SingleImageUpload
-                                            {...field}
-                                            id="thumbnail"
-                                            label="Hình thu nhỏ"
-                                            onChange={field.onChange}
-                                            value={field.value}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="featureImage"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel htmlFor="featureImage">
-                                        Ảnh nổi bật
-                                    </FormLabel>
-                                    <FormControl>
-                                        <MultipleImageUpload
-                                            {...field}
-                                            id="featureImage"
-                                            onChange={field.onChange}
-                                            value={field.value}
-                                        />
-                                    </FormControl>
-                                    <FormDescription />
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                </div>
-            </form>
-        </Form>
+        <>
+            <div className="fixed bottom-10 right-[calc(2.5rem+278px)] z-10">
+                <Button
+                    type="button"
+                    className="w-[250px] h-[50px] !bg-red-100 text-red-600 hover:!bg-red-200 hover:text-red-700"
+                    title="Create Product"
+                    variant={'outline'}
+                    onClick={() => {
+                        form.resetForm()
+                        navigate(config.routes.dashboard.product.DEFAULT)
+                    }}
+                >
+                    <p className="text-base">Save as draft</p>
+                </Button>
+            </div>
+            <div className="fixed bottom-10 right-10 z-10">
+                <ButtonLoading
+                    type="submit"
+                    className="w-[250px] h-[50px]"
+                    title="Create Product"
+                    colorSchema={'success'}
+                    isLoading={isLoading}
+                >
+                    <p className="text-base">Create Product</p>
+                </ButtonLoading>
+            </div>
+        </>
+    )
+}
+export const RemoveButton = ({
+    size = 25,
+    handleRemove,
+}: {
+    size?: number
+    handleRemove: () => void
+}) => {
+    return (
+        <Button
+            variant={'destructive'}
+            type="button"
+            size={'icon'}
+            onClick={() => {
+                handleRemove()
+            }}
+            className="w-fit h-fit p-2"
+        >
+            <MdDelete size={size} />
+        </Button>
     )
 }
 
-export default NewProductForm
+export interface FormValues extends yup.InferType<typeof validationSchema> {}
+const initialValues: FormValues = {
+    name: '',
+    slug: '',
+    description: JSON.stringify(INITIAL_DATA),
+    thumbnail: {} as File,
+    featureImage: [],
+    price: 0,
+    sale: '',
+    category: '',
+    brand: '',
+    inStock: 0,
+    variants: [],
+}
+export default function NewProductForm() {
+    const navigate = useNavigate()
+    const { isLoading, createProduct } = useCreateProduct()
+    const { categories } = useGetAllCategories()
+    const { brands } = useGetAllBrands()
+
+    const formik: FormikProps<FormValues> = useFormik<FormValues>({
+        initialValues,
+        validationSchema,
+        onSubmit: (values) => {
+            const newProduct: NewProduct = {
+                name: values.name,
+                description: values.description,
+                thumbnail: values.thumbnail,
+                featureImage: values.featureImage,
+                price: +values.price,
+                sale: values.sale,
+                slug: values.slug,
+                inStock: 0,
+                category: values.category,
+                brand: values.brand,
+                variants: values.variants,
+            }
+            console.log(newProduct)
+
+            // createProduct(newProduct)
+            // navigate(config.routes.dashboard.product.DEFAULT)
+        },
+    })
+
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <FloatButton form={formik} isLoading={isLoading} />
+            <div className="grid grid-cols-3 gap-5">
+                <div className="col-span-1 space-y-5">
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductThumbnail form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductImages form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductVariants form={formik} />
+                    </div>
+                </div>
+                <div className="col-span-2 space-y-5">
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductType data={categories} form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductComponany data={brands} form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductDetail form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductDescription form={formik} />
+                    </div>
+                </div>
+            </div>
+        </form>
+    )
+}

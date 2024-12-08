@@ -14,7 +14,6 @@ const AddProductDescription = React.forwardRef<
     React.PropsWithoutRef<AddProductDescriptionProps>
 >(({ id, initialData }, ref) => {
     const [data, setData] = React.useState<OutputData>(initialData)
-    console.log(data)
 
     return (
         <div id={id} ref={ref} className="h-full">

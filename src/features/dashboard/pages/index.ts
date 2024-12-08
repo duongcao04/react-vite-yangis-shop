@@ -6,7 +6,9 @@ import GalleryDashboard from './GalleryDashboard'
 import HomeDashboard from './HomeDashboard'
 import OrderDashboard from './OrderDashboard'
 import OrderDetail from './OrderDetail'
-import ProductDashboard from './ProductDashboard'
+import ProductCreate from './product/ProductCreate'
+import ProductDashboard from './product/ProductDashboard'
+import ProductDetail from './product/ProductDetail'
 
 export {
     HomeDashboard,
@@ -17,5 +19,7 @@ export {
     GalleryDashboard,
     OrderDashboard,
     ProductDashboard,
+    ProductDetail,
     OrderDetail,
+    ProductCreate,
 }

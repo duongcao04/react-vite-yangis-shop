@@ -5,12 +5,12 @@ import { Helmet } from 'react-helmet-async'
 import { IoFilter } from 'react-icons/io5'
 import { useSearchParams } from 'react-router-dom'
 
-import { useGetAllProducts } from '@/hooks/useProduct'
+import { useGetProductsAndPaginate } from '@/hooks/useProduct'
 import { useQueryString } from '@/hooks/useQueryString'
 
 import Breadcrumbs from '@/components/Breadcrumbs'
-import { PaginationCustomize } from '@/components/fragment/PaginationCustomize'
-import SelectBox from '@/components/fragment/SelectBox'
+import { PaginationCustomize } from '@/components/fragments/PaginationCustomize'
+import SelectBox from '@/components/fragments/SelectBox'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import FilterBar from '@/features/product/components/FilterBar'
@@ -32,7 +32,7 @@ function ProductsPage() {
         products,
         totalProduct,
         totalPage,
-    } = useGetAllProducts(params)
+    } = useGetProductsAndPaginate(params)
 
     const { tim_kiem, danh_muc, thuong_hieu, gia_tien } = useQueryString()
 

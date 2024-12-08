@@ -31,10 +31,10 @@ export default function ProductsTable({
     const { deleteProduct } = useDeleteProduct()
 
     const handleDeleteProduct = (product: Product) => {
-        toast.message('Bạn muốn xóa sản phẩm ?', {
+        toast.message('Are you sure delete the product ?', {
             description: `${product.name}`,
             action: {
-                label: 'Xác nhận',
+                label: 'Confirm',
                 onClick: () => deleteProduct(product._id),
             },
         })
@@ -44,12 +44,12 @@ export default function ProductsTable({
         <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Tên sản phẩm</TableHead>
-                    <TableHead>Giá tiền</TableHead>
-                    <TableHead>Giảm giá</TableHead>
-                    <TableHead>Nhà cung cấp</TableHead>
-                    <TableHead>Kho hàng</TableHead>
-                    <TableHead className="w-[100px]">Hành động</TableHead>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Price</TableHead>
+                    <TableHead>Discount</TableHead>
+                    <TableHead>Brand</TableHead>
+                    <TableHead>In stock</TableHead>
+                    <TableHead className="w-[100px]">Actions</TableHead>
                 </TableRow>
                 <TableRow className="h-[14px]"></TableRow>
             </TableHeader>
@@ -71,8 +71,7 @@ export default function ProductsTable({
                                     className="flex flex-col items-start justify-start gap-1"
                                 >
                                     <Link
-                                        to={`${config.routes.products}/${product.slug}`}
-                                        target="_blank"
+                                        to={`${config.routes.dashboard.product.DEFAULT}/${product.slug}`}
                                         className="hover:text-[#2275fb] transition-colors text-base font-semibold"
                                     >
                                         {product.name}
@@ -134,8 +133,7 @@ export default function ProductsTable({
                                 >
                                     <button title="Xem sản phẩm">
                                         <Link
-                                            to={`${config.routes.products}/${product.slug}`}
-                                            target="_blank"
+                                            to={`${config.routes.dashboard.product.DEFAULT}/${product.slug}`}
                                         >
                                             <Icon
                                                 icon="hugeicons:view"

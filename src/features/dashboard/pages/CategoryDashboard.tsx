@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react'
 import { FaChevronRight } from 'react-icons/fa'
 import { FaChevronLeft } from 'react-icons/fa6'
 
-import SelectBox from '@/components/fragment/SelectBox'
+import SelectBox from '@/components/fragments/SelectBox'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 

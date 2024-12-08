@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 
 import { useGetOrders } from '@/hooks/useOrder'
 
-import SelectBox from '@/components/fragment/SelectBox'
+import SelectBox from '@/components/fragments/SelectBox'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 

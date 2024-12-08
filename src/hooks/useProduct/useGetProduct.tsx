@@ -2,14 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 
 import productApi from '@/apis/product.api'
 
-const useGetProduct: (productId: string) => {
+const useGetProduct: (productSlug: string) => {
     isLoading: boolean
     product: Product
-} = (productId) => {
+} = (productSlug) => {
     const { data, isFetching } = useQuery({
-        queryKey: ['product', productId],
+        queryKey: ['product', productSlug],
         queryFn: () =>
-            productApi.getProduct(productId ?? '').then((response) => {
+            productApi.getProductBySlug(productSlug ?? '').then((response) => {
                 return response.data
             }),
         refetchOnWindowFocus: false,

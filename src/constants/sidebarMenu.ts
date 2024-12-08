@@ -1,115 +1,113 @@
 import { config } from '@/configs'
 
-export interface IMenuItem {
+/**
+ * Sidebar -> SidebarItems -> Menus -> MenuItem
+ */
+export type MenuItem = {
     id: number
     icon: string
     label: string
     path: string
 }
-
-const SIDEBAR_MENUS: { id: number; title: string; menu: IMenuItem[] }[] = [
+export type SidebarItem = {
+    id: number
+    label: string
+    icon: string
+    path?: string
+    menus?: MenuItem[]
+}
+export const SIDEBAR_MENUS: SidebarItem[] = [
     {
         id: 1,
-        title: 'Dashboard',
-        menu: [
-            {
-                id: 11,
-                icon: 'hugeicons:dashboard-square-01',
-                label: 'Dashboard',
-                path: config.routes.dashboard,
-            },
-        ],
+        icon: 'hugeicons:dashboard-square-01',
+        label: 'Dashboard',
+        path: config.routes.dashboard.home,
     },
     {
         id: 2,
-        title: 'Quản lý',
-        menu: [
+        label: 'My shop',
+        icon: 'iconoir:shop',
+        menus: [
             {
                 id: 21,
                 icon: 'hugeicons:package',
-                label: 'Sản phẩm',
-                path: config.routes.dashboard_product,
+                label: 'Product',
+                path: config.routes.dashboard.product.DEFAULT,
             },
             {
                 id: 22,
                 icon: 'hugeicons:layers-01',
-                label: 'Danh mục',
-                path: config.routes.dashboard_category,
+                label: 'Category',
+                path: config.routes.dashboard.category.DEFAULT,
             },
             {
                 id: 23,
                 icon: 'hugeicons:package',
-                label: 'Thương hiệu',
-                path: config.routes.dashboard_brand,
+                label: 'Brand',
+                path: config.routes.dashboard.brand.DEFAULT,
             },
             {
                 id: 24,
                 icon: 'hugeicons:shopping-cart-01',
-                label: 'Đơn đặt hàng',
-                path: config.routes.dashboard_order,
+                label: 'Order',
+                path: config.routes.dashboard.order.DEFAULT,
             },
             {
                 id: 25,
                 icon: 'hugeicons:user-group',
-                label: 'Người dùng',
-                path: config.routes.dashboard_customer,
+                label: 'Customer',
+                path: config.routes.dashboard.customer.DEFAULT,
             },
             {
                 id: 26,
                 icon: 'hugeicons:align-box-middle-left',
-                label: 'Bài đăng',
-                path: config.routes.dashboard_article,
+                label: 'Article',
+                path: config.routes.dashboard.article.DEFAULT,
             },
         ],
     },
     {
         id: 3,
-        title: 'Theo dõi',
-        menu: [
+        label: 'Business analytics',
+        icon: 'hugeicons:analytics-01',
+        menus: [
             {
                 id: 37,
                 icon: 'hugeicons:school-report-card',
-                label: 'Báo cáo',
-                path: config.routes.dashboard_report,
+                label: 'Report',
+                path: config.routes.dashboard.report.DEFAULT,
             },
             {
                 id: 38,
                 icon: 'material-symbols-light:gallery-thumbnail-outline-rounded',
-                label: 'Thư viện',
-                path: config.routes.dashboard_gallery,
+                label: 'Gallery',
+                path: config.routes.dashboard.gallery.DEFAULT,
             },
         ],
     },
     {
         id: 4,
-        title: 'Cài đặt',
-        menu: [
-            {
-                id: 41,
-                icon: 'hugeicons:setting-07',
-                label: 'Cài đặt',
-                path: config.routes.dashboard_setting,
-            },
-        ],
+        icon: 'hugeicons:setting-07',
+        label: 'Setting',
+        path: config.routes.dashboard.setting.DEFAULT,
     },
     {
         id: 5,
-        title: 'Hỗ trợ',
-        menu: [
+        label: 'Support',
+        icon: 'fluent:info-12-regular',
+        menus: [
             {
                 id: 51,
                 icon: 'hugeicons:help-circle',
-                label: 'Trợ giúp',
-                path: config.routes.dashboard_help,
+                label: 'Help',
+                path: config.routes.dashboard.help.DEFAULT,
             },
             {
                 id: 52,
                 icon: 'hugeicons:user-question-01',
                 label: 'FAQs',
-                path: config.routes.dashboard_faq,
+                path: config.routes.dashboard.faq.DEFAULT,
             },
         ],
     },
 ]
-
-export default SIDEBAR_MENUS

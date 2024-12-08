@@ -2,42 +2,42 @@ import React from 'react'
 
 import { Icon } from '@iconify/react'
 
+import { useGetAllUser } from '@/hooks/useUser'
+
 export default function HomeDashboard() {
-    const Analytics = [
+    const { users } = useGetAllUser()
+    const statistical = [
         {
-            id: 1,
             icon: 'hugeicons:shopping-bag-02',
-            label: 'Total Sales',
+            label: 'Tổng doanh số',
             bgColor: '#22C55E',
-            number: '34,945',
+            value: '----',
         },
         {
-            id: 2,
             icon: 'hugeicons:money-bag-02',
-            label: 'Total Income',
+            label: 'Tổng thu nhập',
             bgColor: '#FF5200',
-            number: '37,802',
+            value: '----',
         },
         {
-            id: 3,
             icon: 'hugeicons:money-receive-square',
-            label: 'Orders Paid',
+            label: 'Đơn hàng đã thanh toán',
             bgColor: '#CBD5E1',
-            number: '34,945',
+            value: '----',
         },
         {
-            id: 4,
             icon: 'hugeicons:user-multiple',
-            label: 'Total Users',
+            label: 'Tổng số người dùng',
             bgColor: '#2377FC',
-            number: '34,945',
+            value: users.length,
         },
     ]
+
     return (
         <React.Fragment>
             <div className="grid grid-cols-4 gap-4 mb-7">
-                {Analytics.map((card) => (
-                    <div key={card.id} className="bg-white rounded-lg p-6">
+                {statistical.map((card, index) => (
+                    <div key={index} className="bg-white rounded-lg p-6">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center justify-start gap-[14px]">
                                 <div className="relative w-fit">
@@ -63,7 +63,7 @@ export default function HomeDashboard() {
                                 <div>
                                     <p className="text-sm">{card.label}</p>
                                     <p className="text-[22px] leading-[31px] font-bold">
-                                        {card.number}
+                                        {card.value}
                                     </p>
                                 </div>
                             </div>

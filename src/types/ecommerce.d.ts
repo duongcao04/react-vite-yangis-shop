@@ -46,11 +46,20 @@ type Product = Timestamps & {
 }
 type NewProduct = Omit<
     Product,
-    '_id' | 'category' | 'brand' | 'variants' | 'slug' | keyof Timestamps
+    | '_id'
+    | 'category'
+    | 'brand'
+    | 'variants'
+    | 'slug'
+    | 'featureImage'
+    | 'thumbnail'
+    | keyof Timestamps
 > & {
+    thumbnail: File
+    featureImage: File[]
     category: string
     brand: string
-    variants: string[]
+    variants: NewProductVariant[]
     slug?: string
 }
 
@@ -60,10 +69,7 @@ type ProductVariant = Timestamps & {
     images: string[]
     inStock: number
 }
-type NewProductVariant = Omit<
-    ProductVariant,
-    '_id' | 'images' | keyof Timestamps
-> & {
+type NewProductVariant = Omit<ProductVariant, 'images' | keyof Timestamps> & {
     images: File[]
 }
 

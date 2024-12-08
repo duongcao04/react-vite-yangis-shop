@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { motion } from 'framer-motion'
 import { IoCloseCircle, IoSearch } from 'react-icons/io5'
@@ -33,6 +33,24 @@ function Searchbar({
         narrow: { display: 'none', width: 0 },
         extend: { display: 'block', width: '100%', paddingLeft: '10px' },
     }
+
+    const handleUserKeyPress = useCallback(
+        (event: KeyboardEvent) => {
+            const { key } = event
+            if (key === 'Escape') {
+                setIsExtendSearchbar(false)
+                setSearchKey('')
+            }
+        },
+        [setIsExtendSearchbar]
+    )
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleUserKeyPress)
+        return () => {
+            window.removeEventListener('keydown', handleUserKeyPress)
+        }
+    }, [handleUserKeyPress])
 
     return (
         <div className="flex items-center justify-end">

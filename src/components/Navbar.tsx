@@ -13,9 +13,9 @@ import { Link, NavLink } from 'react-router-dom'
 
 import { useAuthContext } from '@/context/AuthContext'
 
-import MobileNavigate from '@/components/fragment/MobileNavigate'
-import Searchbar from '@/components/fragment/Searchbar'
-import UserDropdown from '@/components/fragment/UserDropdown'
+import MobileNavigate from '@/components/fragments/MobileNavigate'
+import Searchbar from '@/components/fragments/Searchbar'
+import UserDropdown from '@/components/fragments/UserDropdown'
 import Modal from '@/components/modals/Modal'
 import { Button } from '@/components/ui/button'
 

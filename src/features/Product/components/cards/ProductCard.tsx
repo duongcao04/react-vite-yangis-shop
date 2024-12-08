@@ -82,7 +82,7 @@ function ProductCard({
                                         onClick={() => {
                                             handleAddWishlist(product)
                                         }}
-                                        title="Thêm vào danh sách yêu thích"
+                                        title="Add to Wishlist"
                                     >
                                         <FaRegHeart size={16} />
                                     </button>
@@ -94,7 +94,7 @@ function ProductCard({
                                         onClick={() => {
                                             handleRemoveWishList(product._id)
                                         }}
-                                        title="Xóa khỏi danh sách yêu thích"
+                                        title="Remove Wishlist"
                                     >
                                         <FaHeart size={16} />
                                     </button>
@@ -117,7 +117,7 @@ function ProductCard({
             <div className="px-3 pb-5">
                 <Link
                     to={`${config.routes.products}/${product.slug}`}
-                    className="text-base font-medium text-black dark:text-white hover:text-link transition duration-200"
+                    className="text-base font-medium text-black dark:text-white hover:text-blue-600 transition duration-200"
                     title={product.name}
                 >
                     {product.name}
@@ -162,7 +162,7 @@ function ProductCard({
                                 onClick={() => {
                                     handleAddCart(product)
                                 }}
-                                title="Thêm vào giỏ hàng"
+                                title="Add to cart"
                             >
                                 <LiaCartArrowDownSolid
                                     size={30}

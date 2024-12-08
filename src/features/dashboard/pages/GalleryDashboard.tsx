@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import { useGetAllProducts } from '@/hooks/useProduct'
-import { useGetVariants } from '@/hooks/useVariant'
+import { useGetVariant } from '@/hooks/useProductVariant'
 
-import SelectBox from '@/components/fragment/SelectBox'
+import SelectBox from '@/components/fragments/SelectBox'
 import { FloatingLabelInput } from '@/components/ui/floating-label-input'
 
 import { GALLERY_VIEW_STYLE } from '@/constants/galleryViewStyles'
@@ -12,7 +12,7 @@ import ViewAll from '../components/sections/ViewAll'
 import ViewByProduct from '../components/sections/ViewByProduct'
 
 export default function GalleryDashboard() {
-    const { isLoading, variants } = useGetVariants()
+    const { isLoading, variants } = useGetVariant()
     const { products } = useGetAllProducts()
     const [viewingStyle, setViewingStyle] = React.useState<string>(
         GALLERY_VIEW_STYLE[0]

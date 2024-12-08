@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
+import { nextui } from '@nextui-org/react'
+
 module.exports = {
     darkMode: ['class'],
     content: [
@@ -19,17 +21,14 @@ module.exports = {
             },
         },
         screens: {
-            mobile: '375px',
             // => @media (min-width: 375px) { ... }
-
-            tablet: '640px',
+            mobile: '375px',
             // => @media (min-width: 640px) { ... }
-
-            laptop: '1024px',
+            tablet: '640px',
             // => @media (min-width: 1024px) { ... }
-
-            desktop: '1280px',
+            laptop: '1024px',
             // => @media (min-width: 1280px) { ... }
+            desktop: '1280px',
         },
         extend: {
             gridTemplateColumns: {
@@ -51,39 +50,117 @@ module.exports = {
                     light: '#f3f4f6',
                     dark: '#18191a',
                 },
-                link: '#1250dc',
-                border: 'hsl(var(--border))',
-                input: 'hsl(var(--input))',
-                ring: 'hsl(var(--ring))',
-                background: 'hsl(var(--background))',
-                foreground: 'hsl(var(--foreground))',
-                primary: {
-                    DEFAULT: 'hsl(var(--primary))',
-                    foreground: 'hsl(var(--primary-foreground))',
-                },
-                secondary: {
-                    DEFAULT: 'hsl(var(--secondary))',
-                    foreground: 'hsl(var(--secondary-foreground))',
-                },
-                destructive: {
-                    DEFAULT: 'hsl(var(--destructive))',
-                    foreground: 'hsl(var(--destructive-foreground))',
-                },
-                muted: {
-                    DEFAULT: 'hsl(var(--muted))',
-                    foreground: 'hsl(var(--muted-foreground))',
-                },
-                accent: {
-                    DEFAULT: 'hsl(var(--accent))',
-                    foreground: 'hsl(var(--accent-foreground))',
+                background: 'var(--background)',
+                foreground: 'var(--foreground)',
+                card: {
+                    DEFAULT: 'var(--card)',
+                    foreground: 'var(--card-foreground)',
                 },
                 popover: {
-                    DEFAULT: 'hsl(var(--popover))',
-                    foreground: 'hsl(var(--popover-foreground))',
+                    DEFAULT: 'var(--popover)',
+                    foreground: 'var(--popover-foreground)',
                 },
-                card: {
-                    DEFAULT: 'hsl(var(--card))',
-                    foreground: 'hsl(var(--card-foreground))',
+                sky: {
+                    50: '#D9EDFD',
+                    100: '#C5E4FC',
+                    200: '#9ED3FA',
+                    300: '#78C1F8',
+                    400: '#51AFF6',
+                    500: '#2A9DF4',
+                    600: '#0B81DB',
+                    700: '#0962A5',
+                    800: '#064270',
+                    900: '#03233B',
+                    950: '#021320',
+                    DEFAULT: '#2A9DF4',
+                    foreground: 'var(--primary-foreground)',
+                },
+                primary: {
+                    50: '#eff6ff',
+                    100: '#dbeafe',
+                    200: '#bfdbfe',
+                    300: '#93c5fd',
+                    400: '#60a5fa',
+                    500: '#3b82f6',
+                    600: '#2563eb',
+                    700: '#1d4ed8',
+                    800: '#1e40af',
+                    900: '#1e3a8a',
+                    950: '#172554',
+                    DEFAULT: 'var(--primary)',
+                    foreground: 'var(--primary-foreground)',
+                },
+                secondary: {
+                    50: '#fef2f3',
+                    100: '#fde6e7',
+                    200: '#fbd0d5',
+                    300: '#f7aab2',
+                    400: '#f27a8a',
+                    500: '#ea546c',
+                    600: '#d5294d',
+                    700: '#b31d3f',
+                    800: '#961b3c',
+                    900: '#811a39',
+                    950: '#48091a',
+                    DEFAULT: 'var(--secondary)',
+                    foreground: 'var(--secondary-foreground)',
+                },
+                success: {
+                    DEFAULT: '#22c55e',
+                },
+                warning: {
+                    DEFAULT: '#eab308',
+                },
+                green: {
+                    50: '#f0fdf4',
+                    100: '#dcfce7',
+                    200: '#bbf7d0',
+                    300: '#86efac',
+                    400: '#4ade80',
+                    500: '#22c55e',
+                    600: '#16a34a',
+                    700: '#15803d',
+                    800: '#166534',
+                    900: '#14532d',
+                    950: '#052e16',
+                    DEFAULT: '#22c55e',
+                },
+                yellow: {
+                    50: '#fefce8',
+                    100: '#fef9c3',
+                    200: '#fef08a',
+                    300: '#fde047',
+                    400: '#facc15',
+                    500: '#eab308',
+                    600: '#ca8a04',
+                    700: '#a16207',
+                    800: '#854d0e',
+                    900: '#713f12',
+                    950: '#422006',
+                    DEFAULT: '#eab308',
+                },
+
+                muted: {
+                    DEFAULT: 'var(--muted)',
+                    foreground: 'var(--muted-foreground)',
+                },
+                accent: {
+                    DEFAULT: 'var(--accent)',
+                    foreground: 'var(--accent-foreground)',
+                },
+                destructive: {
+                    DEFAULT: 'var(--destructive)',
+                    foreground: 'var(--destructive-foreground)',
+                },
+                border: 'var(--border)',
+                input: 'var(--input)',
+                ring: 'var(--ring)',
+                chart: {
+                    1: 'var(--chart-1)',
+                    2: 'var(--chart-2)',
+                    3: 'var(--chart-3)',
+                    4: 'var(--chart-4)',
+                    5: 'var(--chart-5)',
                 },
             },
             borderRadius: {
@@ -108,5 +185,21 @@ module.exports = {
         },
     },
     // eslint-disable-next-line no-undef
-    plugins: [require('tailwindcss-animate')],
+    plugins: [
+        nextui(),
+        require('tailwindcss-animate'),
+        function ({ addBase, theme }) {
+            addBase({
+                h1: {
+                    fontSize: theme('fontSize.5xl'),
+                    fontWeight: theme('fontWeight.bold'),
+                },
+                h2: { fontSize: theme('fontSize.2xl') },
+                h3: {
+                    fontSize: theme('fontSize.xl'),
+                    fontWeight: theme('fontWeight.medium'),
+                },
+            })
+        },
+    ],
 }

@@ -1,20 +1,31 @@
+import { useState } from 'react'
+
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import productApi from '@/apis/product.api'
 
 const useCreateProduct = () => {
+    const [isLoading, setLoading] = useState<boolean>(false)
+
     const queryClient = useQueryClient()
-    const { isIdle, mutate } = useMutation({
+    const { mutate } = useMutation({
         mutationFn: (newProduct: NewProduct) =>
             productApi.createProduct(newProduct),
+        onMutate: () => {
+            setLoading(true)
+        },
         onSuccess: () => {
+            setLoading(false)
             toast.success('Thêm mới sản phẩm thành công')
             queryClient.invalidateQueries({ queryKey: ['products'] })
         },
+        onError: () => {
+            setLoading(false)
+            throw new Error()
+        },
     })
-
-    return { isLoading: isIdle, createProduct: mutate }
+    return { isLoading, createProduct: mutate }
 }
 
 export default useCreateProduct

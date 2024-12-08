@@ -5,26 +5,19 @@ import productApi, { IGetProductsParams } from '@/apis/product.api'
 const useGetAllProducts: (params?: IGetProductsParams) => {
     isLoading: boolean
     products: Product[]
-    totalPage: number
-    totalProduct: number
 } = (params) => {
     const { data, isFetching } = useQuery({
-        queryKey: ['products', params],
+        queryKey: ['allProducts', params],
         queryFn: () =>
             productApi
-                .getProducts(params ?? {})
+                .getAllProducts(params ?? {})
                 .then((response) => response.data.data),
         refetchOnWindowFocus: false,
         placeholderData: () => {
-            return {
-                totalProduct: 0,
-                totalPage: 0,
-                products: [],
-            }
+            return []
         },
     })
 
-    const { products, totalPage, totalProduct } = data
-    return { isLoading: isFetching, products, totalPage, totalProduct }
+    return { isLoading: isFetching, products: data }
 }
 export default useGetAllProducts
