@@ -4,7 +4,7 @@ import EditorJS, { OutputData } from '@editorjs/editorjs'
 import DragDrop from 'editorjs-drag-drop'
 import Undo from 'editorjs-undo'
 
-import { EDITOR_JS_TOOLS } from '@/constants/editorJsTools'
+import { EDITOR_JS_TOOLS } from '@/constants/editorjs-tools'
 
 import './editor.css'
 

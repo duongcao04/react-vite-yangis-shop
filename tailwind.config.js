@@ -2,7 +2,7 @@
 // eslint-disable-next-line no-undef
 import { nextui } from '@nextui-org/react'
 
-module.exports = {
+export default {
     darkMode: ['class'],
     content: [
         './pages/**/*.{ts,tsx}',
@@ -75,7 +75,7 @@ module.exports = {
                     DEFAULT: '#2A9DF4',
                     foreground: 'var(--primary-foreground)',
                 },
-                primary: {
+                secondary: {
                     50: '#eff6ff',
                     100: '#dbeafe',
                     200: '#bfdbfe',
@@ -87,23 +87,23 @@ module.exports = {
                     800: '#1e40af',
                     900: '#1e3a8a',
                     950: '#172554',
-                    DEFAULT: 'var(--primary)',
-                    foreground: 'var(--primary-foreground)',
-                },
-                secondary: {
-                    50: '#fef2f3',
-                    100: '#fde6e7',
-                    200: '#fbd0d5',
-                    300: '#f7aab2',
-                    400: '#f27a8a',
-                    500: '#ea546c',
-                    600: '#d5294d',
-                    700: '#b31d3f',
-                    800: '#961b3c',
-                    900: '#811a39',
-                    950: '#48091a',
                     DEFAULT: 'var(--secondary)',
                     foreground: 'var(--secondary-foreground)',
+                },
+                primary: {
+                    50: '#fef2f2',
+                    100: '#fee2e2',
+                    200: '#fecaca',
+                    300: '#fca5a5',
+                    400: '#f87171',
+                    500: '#ef4444',
+                    600: '#dc2626',
+                    700: '#b91c1c',
+                    800: '#991b1b',
+                    900: '#7f1d1d',
+                    950: '#450a0a',
+                    DEFAULT: 'var(--primary)',
+                    foreground: 'var(--primary-foreground)',
                 },
                 success: {
                     DEFAULT: '#22c55e',
@@ -187,7 +187,7 @@ module.exports = {
     // eslint-disable-next-line no-undef
     plugins: [
         nextui(),
-        require('tailwindcss-animate'),
+        import('tailwindcss-animate'),
         function ({ addBase, theme }) {
             addBase({
                 h1: {

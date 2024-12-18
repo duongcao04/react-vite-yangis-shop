@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import Modal from '@/components/modals/Modal'
+import Modal from '@/components/modals/customize-modal'
 
 import { cn } from '@/lib/utils'
 

@@ -15,10 +15,10 @@
         --popover: #ffffff;
         --popover-foreground: #0f0f0f;
         /* Main accent color and its foreground text color. */
-        --primary: #3b82f6;
+        --primary: #ef4444;
         --primary-foreground: #ffffff;
         /* Secondary accent and text color. */
-        --secondary: #ea546c;
+        --secondary: #3b82f6;
         --secondary-foreground: #ffffff;
         /* Muted colors, often used for subtle UI elements. */
         --muted: #f5f5f5;
@@ -53,9 +53,9 @@
             --card-foreground: #ffffff;
             --popover: #0f0f0f;
             --popover-foreground: #ffffff;
-            --primary: #1d4ed8;
+            --primary: #ef4444;
             --primary-foreground: #ffffff;
-            --secondary: #b31d3f;
+            --secondary: #1d4ed8;
             --secondary-foreground: #ffffff;
             --muted: #262626;
             --muted-foreground: #a1a1a1;

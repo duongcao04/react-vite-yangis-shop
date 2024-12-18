@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+
 import { cn } from '@/lib/utils'
 
 export interface InputProps
@@ -48,12 +49,25 @@ const FloatingLabelInput = React.forwardRef<
     React.ElementRef<typeof FloatingInput>,
     React.PropsWithoutRef<FloatingLabelInputProps> & {
         required?: boolean
+        classNames?: {
+            label: string
+            input: string
+        }
     }
->(({ id, label, required = false, ...props }, ref) => {
+>(({ id, label, required = false, classNames, ...props }, ref) => {
     return (
         <div className="relative">
-            <FloatingInput ref={ref} id={id} {...props} />
-            <FloatingLabel htmlFor={id} required={required}>
+            <FloatingInput
+                ref={ref}
+                id={id}
+                {...props}
+                className={classNames?.input}
+            />
+            <FloatingLabel
+                htmlFor={id}
+                required={required}
+                className={classNames?.label}
+            >
                 {label}
             </FloatingLabel>
         </div>

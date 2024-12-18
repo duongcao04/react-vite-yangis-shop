@@ -28,7 +28,7 @@ type ProductProperties = {
         type?: string
     }
 }
-type Product = Timestamps & {
+type Product = Timestampz & {
     _id: string
     name: string
     thumbnail: string
@@ -53,8 +53,9 @@ type NewProduct = Omit<
     | 'slug'
     | 'featureImage'
     | 'thumbnail'
-    | keyof Timestamps
+    | keyof Timestampz
 > & {
+    name: string
     thumbnail: File
     featureImage: File[]
     category: string
@@ -63,13 +64,13 @@ type NewProduct = Omit<
     slug?: string
 }
 
-type ProductVariant = Timestamps & {
+type ProductVariant = Timestampz & {
     _id: string
     label: string
     images: string[]
     inStock: number
 }
-type NewProductVariant = Omit<ProductVariant, 'images' | keyof Timestamps> & {
+type NewProductVariant = Omit<ProductVariant, 'images' | keyof Timestampz> & {
     images: File[]
 }
 
@@ -85,17 +86,17 @@ type CartItem = NewCartItem & {
 type Cart = CartItem[]
 
 // BrandType
-type Brand = Timestamps & {
+type Brand = Timestampz & {
     _id: string
     name: string
     slug: string
     logo: string
     products: Product[]
 }
-type NewBrand = Omit<Brand, '_id' | keyof Timestamps>
+type NewBrand = Omit<Brand, '_id' | keyof Timestampz>
 
 // CategoryType
-type Category = Timestamps & {
+type Category = Timestampz & {
     _id: string
     name: string
     slug: string
@@ -103,10 +104,10 @@ type Category = Timestamps & {
     icon: string
     products: Product[]
 }
-type NewCategory = Omit<Category, '_id' | 'products' | keyof Timestamps>
+type NewCategory = Omit<Category, '_id' | 'products' | keyof Timestampz>
 
 // OrderType
-type Order = Timestamps & {
+type Order = Timestampz & {
     _id: string
     user: User
     deliveryInformation: {
@@ -122,7 +123,7 @@ type Order = Timestamps & {
     shippingFee: number
     bonusPoints: number
 }
-type NewOrder = Omit<Order, '_id' | 'user' | keyof Timestamps> & {
+type NewOrder = Omit<Order, '_id' | 'user' | keyof Timestampz> & {
     user: string
 }
 
@@ -133,7 +134,7 @@ type NewReview = {
     rating: number
     comment: string
 }
-type Review = Timestamps &
+type Review = Timestampz &
     Omit<NewReview, 'user' | 'product'> & {
         _id: string
         user: { avatar: string }

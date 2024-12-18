@@ -11,19 +11,20 @@ import { MdPerson } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { Link, NavLink } from 'react-router-dom'
 
-import { useAuthContext } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/auth-context'
 
-import MobileNavigate from '@/components/fragments/MobileNavigate'
-import Searchbar from '@/components/fragments/Searchbar'
-import UserDropdown from '@/components/fragments/UserDropdown'
-import Modal from '@/components/modals/Modal'
+import UserDropdown from '@/components/fragments/user-dropdown'
+import Modal from '@/components/modals/customize-modal'
+import Searchbar from '@/components/searchbar'
 import { Button } from '@/components/ui/button'
 
 import Ymember from '@/assets/png/ymember.png'
-import { config } from '@/configs'
+import { config } from '@/config'
 import HEADER_NAVIGATES from '@/constants/navigates'
 import { RootState } from '@/redux/store'
-import { isObjectEmpty } from '@/utils/isObjectEmpty'
+import { isObjectEmpty } from '@/utils/is-object-empty'
+
+import MobileNavigate from './fragments/mobile-navigate'
 
 export default function Navbar() {
     const [isExtendSearchbar, setIsExtendSearchbar] = useState<boolean>(false)

@@ -53,7 +53,7 @@
         "@tanstack/react-table": "^8.20.5",
         "@types/yup": "^0.29.14",
         "add": "^2.0.6",
-        "axios": "^1.7.2",
+        "axios": "^1.7.3",
         "bson-objectid": "^2.0.4",
         "class-variance-authority": "^0.7.0",
         "classnames": "^2.5.1",

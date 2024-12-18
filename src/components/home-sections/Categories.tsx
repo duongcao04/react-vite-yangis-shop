@@ -1,14 +1,10 @@
 import React from 'react'
 
-import { Icon } from '@iconify/react'
-import { Link } from 'react-router-dom'
-
-import { useGetAllCategories } from '@/hooks/useCategory'
-
-import { config } from '@/configs'
+import { useGetAllCategories } from '@/hooks/use-get-all-categories'
+import CategoryCard from '../cards/category-card'
 
 function Categories() {
-    const { categories } = useGetAllCategories()
+    const { isLoading, categories } = useGetAllCategories()
 
     return (
         <React.Fragment>
@@ -28,21 +24,12 @@ function Categories() {
             </div>
             <h2 className="my-5 text-2xl font-semibold">Danh mục sản phẩm</h2>
             <div className="grid grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-6 gap-8">
-                {categories.map((category) => (
-                    <Link
-                        to={`${config.routes.products}?danh_muc=${category.slug}`}
+                {categories?.map((category: Category) => (
+                    <CategoryCard
                         key={category._id}
-                    >
-                        <div
-                            key={category._id}
-                            className="h-[170px] rounded-md flex flex-col items-center justify-center gap-4 duration-200 hover:bg-[#DB4444] hover:text-white cursor-pointer bg-white shadow-sm border hover:shadow-lg transition"
-                        >
-                            <div className="p-[6px]">
-                                <Icon icon={category.icon} fontSize={44} />
-                            </div>
-                            <p className="text-base">{category.name}</p>
-                        </div>
-                    </Link>
+                        data={category}
+                        isLoading={isLoading}
+                    />
                 ))}
             </div>
         </React.Fragment>

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import variantApi from '@/apis/variant.api'
+import variantApi from '@/apis/product-variant.api'
 
 const useGetVariants: (params?: object) => {
     isLoading: boolean

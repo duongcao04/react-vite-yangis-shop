@@ -10,6 +10,8 @@ declare module 'editorjs-text-color-plugin'
 declare module 'editorjs-change-case'
 declare module 'editorjs-text-alignment-blocktune'
 
+declare module 'editorjs-drag-drop'
+
 type IconSvgProps = SVGProps<SVGSVGElement> & {
     size?: number
 }
