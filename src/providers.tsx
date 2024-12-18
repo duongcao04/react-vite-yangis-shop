@@ -5,8 +5,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HelmetProvider } from 'react-helmet-async'
 import { Provider as ReduxProvider } from 'react-redux'
 
-import { AuthContextProvider } from '@/context/AuthContext'
-import { ThemeProvider } from '@/context/ThemeContext'
+import { AuthContextProvider } from '@/context/auth-context'
+import { ThemeProvider } from '@/context/theme-context'
 
 import { store } from '@/redux/store'
 

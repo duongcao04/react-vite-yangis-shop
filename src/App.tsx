@@ -2,26 +2,27 @@ import * as React from 'react'
 
 import { Route, Routes } from 'react-router-dom'
 
-import { useAuthContext } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/auth-context'
 
-import ScrollToTop from '@/components/ScrollToTop'
+import ScrollToTop from '@/components/scroll-to-top'
 import { Toaster } from '@/components/ui/sonner'
 
-import { AuthGuard, GuestGuard } from '@/guards'
-import DefaultLayout from '@/layouts/DefaultLayout'
-import adminRoutes from '@/routes/adminRoutes'
-import globalRoutes, { TRoute } from '@/routes/globalRoutes'
+import AuthGuard from '@/guards/auth-guard'
+import GuestGuard from '@/guards/guest-guard'
+import DefaultLayout from '@/layouts/default-layout'
+import { ADMIN_ROUTES } from '@/routes/admin.route'
+import { GLOBAL_ROUTES, type TRoute } from '@/routes/public.route'
 
 export default function App() {
     const { authUser } = useAuthContext()
-    const [routes, setRoutes] = React.useState<TRoute[]>(globalRoutes)
+    const [routes, setRoutes] = React.useState<TRoute[]>(GLOBAL_ROUTES)
 
     React.useLayoutEffect(() => {
         if (!authUser.role) {
-            setRoutes(globalRoutes)
+            setRoutes(GLOBAL_ROUTES)
         } else {
             if (authUser.role === 'admin') {
-                setRoutes([...globalRoutes, ...adminRoutes])
+                setRoutes([...GLOBAL_ROUTES, ...ADMIN_ROUTES])
             }
         }
     }, [authUser])

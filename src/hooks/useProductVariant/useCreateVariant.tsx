@@ -2,7 +2,7 @@ import React from 'react'
 
 import { toast } from 'sonner'
 
-import variantApi from '@/apis/variant.api'
+import variantApi from '@/apis/product-variant.api'
 
 const useCreateVariant = () => {
     const [loading, setLoading] = React.useState<boolean>(false)
