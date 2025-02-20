@@ -8,7 +8,6 @@ import { EyeSlashFilledIcon } from '@/components/icons/eye-slash-filled-icon'
 import { FlatColorIconsGoogle } from '@/components/icons/google-icon'
 import { ButtonLoading } from '@/components/ui/button-loading'
 
-import { transformPhoneNumber } from '@/utils/transform-phone-number'
 
 import { useRegister } from '../../hooks/use-register'
 import {
@@ -40,6 +39,7 @@ export const InputPassword = ({ ...props }) => {
                 </button>
             }
             {...props}
+            autoComplete="password"
             type={isVisible ? 'text' : 'password'}
         />
     )

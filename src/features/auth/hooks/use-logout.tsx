@@ -5,6 +5,8 @@ import { toast } from 'sonner'
 
 import { useAuthContext } from '@/context/auth-context'
 
+import { User } from '../../../types/user'
+
 const useLogout = () => {
     const navigates = useNavigate()
     const [loading, setLoading] = useState(false)

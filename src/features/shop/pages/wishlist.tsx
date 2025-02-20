@@ -2,8 +2,6 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import useGetAllProducts from '@/hooks/use-get-all-products'
-
 import Breadcrumbs from '@/components/customize-breadcrumb'
 import { Button } from '@/components/ui/button'
 
@@ -12,6 +10,7 @@ import { RootState } from '@/redux/store'
 import { resetWishlist } from '@/redux/wishlist-slice'
 
 import ProductCard from '../../product/components/cards/product-card'
+import { useGetAllProducts } from '../../product/hooks/use-get-all-products'
 
 function WishListPage() {
     const { products } = useGetAllProducts()

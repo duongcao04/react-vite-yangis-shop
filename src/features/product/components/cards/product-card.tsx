@@ -10,22 +10,23 @@ import { config } from '@/config'
 import { addCart } from '@/redux/cart-slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
-import { calcSalePrice } from '@/utils/calc-sale-price'
-import { formatMoney } from '@/utils/number-services'
+import { VNDCurrencyFormat } from '@/utils/format'
+
+import { calcProductPrice } from '../../utils/calc-product-price'
 
 export const isProductInList: (product: Product, list: Product[]) => boolean = (
     product,
     list
 ) => {
-    const foundProductExist = list.findIndex((item) => item._id === product._id)
+    const foundProductExist = list.findIndex((item) => item.id === product.id)
     return foundProductExist !== -1 ? true : false
 }
 
-function ProductSaleTag({ saleValue }: { saleValue: string }) {
+function ProductSaleTag({ value }: { value: number }) {
     return (
         <div className="absolute w-[55px] h-[26px] rounded-sm top-[15px] left-[15px] bg-[#db4444] z-10">
             <p className="text-center text-white text-xs leading-[26px] tracking-wider font-medium">
-                -{saleValue}
+                - {value}%
             </p>
         </div>
     )
@@ -124,8 +125,8 @@ export default function ProductCard({
         return (
             <div className="group relative bg-white rounded-lg border-[1px] border-transparent hover:border-border hover:shadow-md transition duration-300">
                 <div className="w-full h-[250px] rounded-sm flex items-center justify-center select-none">
-                    {product.sale && (
-                        <ProductSaleTag saleValue={product.sale} />
+                    {product.discount_percentage && (
+                        <ProductSaleTag value={product.discount_percentage} />
                     )}
                     <Link
                         to={`${config.routes.products}/${product.slug}`}
@@ -152,7 +153,7 @@ export default function ProductCard({
                         {isWished && (
                             <RemoveWishlistButton
                                 onRemove={() => {
-                                    handleRemoveWishList(product._id)
+                                    handleRemoveWishList(product.id)
                                 }}
                             />
                         )}
@@ -168,21 +169,21 @@ export default function ProductCard({
                     </Link>
                     {isShowRating === true && <ProductRating data={product} />}
                     <div className="mt-1 flex items-end justify-between">
-                        {!product.sale && (
+                        {!product.discount_percentage && (
                             <p className="text-lg font-medium text-[#db4444]">
-                                {formatMoney(product.price)}
+                                {VNDCurrencyFormat(product.price)}
                             </p>
                         )}
-                        {product.sale && (
+                        {product.discount_percentage && (
                             <div className="flex flex-col items-start">
                                 <p className="text-xs line-through text-gray-400">
-                                    {formatMoney(product.price)}
+                                    {VNDCurrencyFormat(product.price)}
                                 </p>
                                 <p className="text-lg font-medium text-[#db4444]">
-                                    {formatMoney(
-                                        calcSalePrice(
+                                    {VNDCurrencyFormat(
+                                        calcProductPrice(
                                             product.price,
-                                            product.sale
+                                            product.discount_percentage
                                         )
                                     )}
                                 </p>

@@ -8,8 +8,6 @@ import {
     TableRow,
 } from '@nextui-org/table'
 
-import { formatMoney } from '@/utils/number-services'
-
 function VariantsTable({ data: productVariants }: { data: ProductVariant[] }) {
     return (
         <Table aria-label="Product Variants Table">

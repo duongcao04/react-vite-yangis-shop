@@ -1,25 +1,30 @@
+import { AxiosResponse } from 'axios'
+
 import axiosClient from '@/apis/axiosClient'
 
 export interface IGetProductsParams {
+    slug?: string
     name?: string
     category?: string
     brand?: string
     order?: string
     sort?: string
 }
-
 const productApi = {
-    getAllProducts: async (params: IGetProductsParams) => {
+    getProducts: async (
+        params: IGetProductsParams
+    ): Promise<AxiosResponse<Product[]>> => {
         const url = 'products'
+        return await axiosClient.get(url, { params })
+    },
+    getProductBySlug: async (slug: string): Promise<AxiosResponse<Product>> => {
+        const url = 'products'
+        const params = { slug: slug }
         return await axiosClient.get(url, { params })
     },
     getProductsWithPaginate: async (params: IGetProductsParams) => {
         const url = 'products/paginate'
         return await axiosClient.get(url, { params })
-    },
-    getProductBySlug: async (productSlug: string) => {
-        const url = `products/${productSlug}`
-        return await axiosClient.get(url)
     },
     createProduct: async (newProduct: NewProduct) => {
         const url = 'products/add'

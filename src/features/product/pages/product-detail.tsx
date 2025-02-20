@@ -6,8 +6,6 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import useGetAProduct from '@/hooks/use-get-a-product'
-import useGetAllProducts from '@/hooks/use-get-all-products'
 import { useGetReviews } from '@/hooks/useReview'
 
 import Breadcrumbs from '@/components/customize-breadcrumb'
@@ -19,15 +17,17 @@ import { config } from '@/config'
 import { addCart, buyNow } from '@/redux/cart-slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
-import { formatMoney } from '@/utils/number-services'
 
+import { VNDCurrencyFormat } from '../../../utils/format'
+import { isProductInList } from '../components/cards/product-card'
 import ProductsCarousel from '../components/carousels/product-carousel'
 import ImagePreviewer from '../components/image-previews/image-item-previewer'
 import SpecialFeatures from '../components/special-features'
 import SpecificationsTable from '../components/tables/specifications-table'
 import UserReview from '../components/user-reviews'
-import { getProductImages } from '../utils/get-product-images'
-import { isProductInList } from '../components/cards/product-card'
+import { useGetAllProducts } from '../hooks/use-get-all-products'
+import { useGetProductBySlug } from '../hooks/use-get-product-by-slug'
+import { getCarouselImages } from '../utils/get-carousel-images'
 
 function ProductDetailPage() {
     const dispatch = useDispatch()
@@ -37,16 +37,18 @@ function ProductDetailPage() {
 
     // Lấy product id từ params
     const { productSlug } = useParams()
-    const { isLoading: loadingProduct, product } = useGetAProduct(
+    const { isLoading: loadingProduct, product } = useGetProductBySlug(
         productSlug ?? ''
     )
+    console.log(product)
+
     const { reviews } = useGetReviews({ product_slug: productSlug })
 
     // Kiểm tra sản phẩm có nằm trong wishlist ?
     const isWished = isProductInList(product, wishlist)
 
-    // Lấy toàn bộ ảnh từ featureImages và attribute.color.images
-    const productImages = getProductImages(product)
+    // Lấy ảnh theo product-variant
+    const carouselImages = getCarouselImages(product)
 
     //TODO: dùng queryString format currentParams và thay đổi search params khi thay đổi lựa chọn màu sắc và storage
     const [searchParams] = useSearchParams()
@@ -181,7 +183,7 @@ function ProductDetailPage() {
                                         animate={{ opacity: 1 }}
                                         className="font-bold text-[28px] leading-none font-inter tracking-[3%]"
                                     >
-                                        {formatMoney(product.price)}
+                                        {VNDCurrencyFormat(product.price)}
                                     </motion.p>
                                 )}
                                 {loadingProduct && (

@@ -1,39 +1,46 @@
 import { useState } from 'react'
 
+import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
 
-import { useAuthContext } from '@/context/auth-context'
+import { useToast } from '@/hooks/use-toast'
 
-import authApi from '@/apis/auth.api'
-import { config } from '@/config'
-import { type Login } from '@/types/user'
+import authApi, { ILogin } from '@/apis/auth.api'
 
 export const useLogin = () => {
-    const navigate = useNavigate()
+    const [, setCookie] = useCookies()
     const [isLoading, setLoading] = useState<boolean>(false)
-    const { setAuthUser } = useAuthContext()
+    const { onToast } = useToast()
+    const navigate = useNavigate()
 
-    const login = async (user: Login) => {
+    const login = async (loginUser: ILogin) => {
+        setLoading(true)
         try {
-            setLoading(true)
-            const res = await authApi.login(user).then((result) => result.data)
-            const { data, message, statusCode, error } = res
+            const res = await authApi.login(loginUser)
 
-            if (statusCode !== 200) {
-                if (error) throw new Error(error)
-                throw new Error(message)
+            if (res.status === 200) {
+                const { access_token, refresh_token } = res.data.data
+
+                setCookie('access_token', access_token.value, {
+                    path: '/',
+                    expires: new Date(access_token.expires_at),
+                })
+                localStorage.setItem(
+                    'refresh_token',
+                    JSON.stringify(refresh_token)
+                )
+                onToast({
+                    title: res.data.message,
+                    description: null,
+                    color: 'success',
+                })
+                navigate('/')
             }
-
-            localStorage.setItem('__user-information', JSON.stringify(data))
-            setAuthUser(data)
-            toast.success(message)
-            data.role === 'ADMIN'
-                ? navigate(config.routes.dashboard.home)
-                : navigate(config.routes.home)
         } catch (error) {
-            toast.error('Log in failed', {
+            onToast({
+                title: 'Login failed !',
                 description: `${error}`,
+                color: 'danger',
             })
         } finally {
             setLoading(false)

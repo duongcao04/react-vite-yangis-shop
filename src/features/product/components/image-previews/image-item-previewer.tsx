@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 import { Skeleton } from '@/components/ui/skeleton'
 
-import { IImagePreviewOptions } from '../../utils/get-product-images'
+import { IImagePreviewOptions } from '../../utils/get-carousel-images'
 
 import ImageCarousel from './image-carousel'
 

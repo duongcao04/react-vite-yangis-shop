@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/table'
 
 import { config } from '@/config'
-import { formatMoney } from '@/utils/number-services'
 
 interface IProductsTableProps {
     loadingProducts: boolean

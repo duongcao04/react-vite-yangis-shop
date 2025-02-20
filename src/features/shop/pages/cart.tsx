@@ -16,8 +16,6 @@ import {
     removeCart,
 } from '@/redux/cart-slice'
 import { RootState } from '@/redux/store'
-import { calcSalePrice } from '@/utils/calc-sale-price'
-import { formatMoney } from '@/utils/number-services'
 
 import OrderInformation from '../components/order-information'
 

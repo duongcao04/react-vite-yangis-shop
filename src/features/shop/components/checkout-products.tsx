@@ -1,6 +1,3 @@
-import { calcSalePrice } from '@/utils/calc-sale-price'
-import { formatMoney } from '@/utils/number-services'
-
 export interface ICheckoutProductsProps {
     cart: Cart
 }

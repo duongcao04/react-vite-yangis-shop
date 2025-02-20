@@ -7,13 +7,11 @@ import { useGetOrders } from '@/hooks/useOrder'
 
 import { useAuthContext } from '@/context/auth-context'
 
-import { calcSalePrice } from '@/utils/calc-sale-price'
-import { shortDateFormat } from '@/utils/date-services'
-import { formatMoney } from '@/utils/number-services'
+import { VNDCurrencyFormat, shortDateFormat } from '@/utils/format'
 
 function CustomerOrder() {
     const { authUser } = useAuthContext()
-    const params = { userId: authUser._id }
+    const params = { userId: authUser.id }
     const { orders } = useGetOrders(params)
 
     return (
@@ -47,7 +45,9 @@ function CustomerOrder() {
                                     <div>
                                         <p className="text-sm">Tổng cộng</p>
                                         <p className="font-bold">
-                                            {formatMoney(order.totalAmount)}
+                                            {VNDCurrencyFormat(
+                                                order.totalAmount
+                                            )}
                                         </p>
                                     </div>
                                     <div>
@@ -70,9 +70,9 @@ function CustomerOrder() {
                                 </div>
                             </div>
                             <div className="border rounded-bl-xl rounded-br-xl px-5 divide-y-[1px]">
-                                {order.products.map((product) => (
+                                {order.products.map((product: Product) => (
                                     <div
-                                        key={product._id}
+                                        key={product.id}
                                         className="py-4 grid grid-cols-6 gap-3 items-center"
                                     >
                                         <div className="col-span-3 flex items-center justify-start gap-3">
@@ -100,11 +100,11 @@ function CustomerOrder() {
                                         </div>
                                         <div className="col-span-2 space-y-1 text-right">
                                             <p className="text-sm font-semibold">
-                                                {formatMoney(
+                                                {VNDCurrencyFormat(
                                                     product.quantity *
-                                                        calcSalePrice(
+                                                        calcProductPrice(
                                                             product.price,
-                                                            product.sale ?? ''
+                                                            product.discount_percentage
                                                         )
                                                 )}
                                             </p>

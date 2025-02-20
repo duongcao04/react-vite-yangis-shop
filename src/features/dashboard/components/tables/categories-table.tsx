@@ -16,7 +16,6 @@ import {
     TableRow,
 } from '@/components/ui/table'
 
-import { shortDateFormat } from '@/utils/date-services'
 
 export default function CategoriesTable() {
     const { isLoading, categories } = useGetAllCategories()

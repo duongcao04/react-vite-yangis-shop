@@ -14,7 +14,9 @@ function HomePage() {
     return (
         <React.Fragment>
             <Helmet>
-                <title>Yangis | Điện thoại, laptop, phụ kiện giá rẻ, ...</title>
+                <title>
+                    Yangis Shop | Điện thoại, laptop, phụ kiện giá rẻ, ...
+                </title>
             </Helmet>
 
             <section className="flex items-start justify-between overflow-hidden">

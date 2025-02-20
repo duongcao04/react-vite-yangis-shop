@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import useGetAllProducts from '@/hooks/use-get-all-products'
-
 import { Button } from '@/components/ui/button'
 
 import ProductsCarousel from '@/features/product/components/carousels/product-carousel'
+
+import { useGetAllProducts } from '../../features/product/hooks/use-get-all-products'
 
 export interface IFlashSaleTime {
     days: number

@@ -2,15 +2,15 @@ import axiosClient from '@/apis/axiosClient'
 
 const categoryApi = {
     getCategories: async (params: object) => {
-        const url = 'category'
+        const url = 'categories'
         return await axiosClient.get(url, { params })
     },
     getCategory: async (categoryId: string) => {
-        const url = `category/${categoryId}`
+        const url = `categories/${categoryId}`
         return await axiosClient.get(url)
     },
-    createCategory: async (newCategory: Category) => {
-        const url = 'category/add'
+    createCategory: async (newCategory: NewCategory) => {
+        const url = 'categories'
         return await axiosClient.post(url, newCategory)
     },
 }

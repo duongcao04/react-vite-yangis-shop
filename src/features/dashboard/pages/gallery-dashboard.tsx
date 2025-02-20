@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import useGetAllProducts from '@/hooks/use-get-all-products'
 import { useGetVariant } from '@/hooks/useProductVariant'
 
 import SelectBox from '@/components/fragments/select-box'
@@ -8,6 +7,7 @@ import { FloatingLabelInput } from '@/components/ui/floating-label-input'
 
 import { GALLERY_VIEW_STYLE } from '@/constants/gallery-view-styles'
 
+import { useGetAllProducts } from '../../product/hooks/use-get-all-products'
 import ViewAll from '../components/sections/view-all'
 import ViewByProduct from '../components/sections/view-by-product'
 

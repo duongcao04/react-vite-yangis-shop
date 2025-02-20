@@ -1,5 +1,5 @@
-import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import Footer from '@/components/footer'
 import TopHeader from '@/components/top-header'
 
 function DefaultLayout({ children }: { children: React.ReactNode }) {

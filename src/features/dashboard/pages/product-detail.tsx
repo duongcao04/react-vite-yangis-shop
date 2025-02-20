@@ -3,12 +3,11 @@ import React, { useState } from 'react'
 import { FaChevronLeft } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 
-import useGetAProduct from '@/hooks/use-get-a-product'
-
 import { Button } from '@/components/ui/button'
 
 import { config } from '@/config'
 
+import { useGetProductBySlug } from '../../product/hooks/use-get-product-by-slug'
 import EditProductForm from '../components/forms/edit-product-form'
 
 function Heading({
@@ -47,7 +46,7 @@ function Heading({
 
 function ProductDetail() {
     const { productSlug } = useParams()
-    const { product } = useGetAProduct(productSlug ?? '')
+    const { product } = useGetProductBySlug(productSlug ?? '')
 
     const [isEditMode, setEditMode] = useState<boolean>(false)
 

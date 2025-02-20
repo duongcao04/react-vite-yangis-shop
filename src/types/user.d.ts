@@ -14,14 +14,8 @@ type User = Timestampz & {
     phone_number: string
     account_type: string
     is_active: boolean
-    avatar: string | null
+    avatar: string
     bonus_points: number
     role: Role
+    refresh_token: string | null
 }
-type Login = Required<Pick<User, 'email' | 'password'>>
-type NewUser = Required<
-    Pick<
-        User,
-        'first_name' | 'last_name' | 'password' | 'email' | 'phone_number'
-    >
->

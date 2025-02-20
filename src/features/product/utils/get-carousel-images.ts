@@ -5,8 +5,8 @@ export interface IImagePreviewOptions {
     images: string[]
 }
 
-const getProductImages: (product: Product) => IImagePreviewOptions[] = (
-    product,
+export const getCarouselImages: (product: Product) => IImagePreviewOptions[] = (
+    product
 ) => {
     const result = []
 
@@ -29,5 +29,3 @@ const getProductImages: (product: Product) => IImagePreviewOptions[] = (
 
     return result
 }
-
-export { getProductImages }

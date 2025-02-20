@@ -15,9 +15,6 @@ import {
     TableRow,
 } from '@/components/ui/table'
 
-import { shortDateFormat } from '@/utils/date-services'
-import { formatMoney } from '@/utils/number-services'
-
 interface IOrdersTableProps {
     loadingOrders: boolean
     orders: Order[]

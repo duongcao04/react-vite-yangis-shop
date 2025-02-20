@@ -4,10 +4,6 @@ import { useParams } from 'react-router-dom'
 
 import { useGetOrder } from '@/hooks/useOrder'
 
-import { calcSalePrice } from '@/utils/calc-sale-price'
-import { shortDateFormat } from '@/utils/date-services'
-import { formatMoney } from '@/utils/number-services'
-
 export default function OrderDetail() {
     // Lấy order id từ params
     const { id: orderId } = useParams()

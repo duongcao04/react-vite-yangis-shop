@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 
 import { Button } from '@/components/ui/button'
 import { RootState } from '@/redux/store'
-import { formatMoney } from '@/utils/number-services'
 
 export interface IOrderInformationProps {
     action: React.ReactNode

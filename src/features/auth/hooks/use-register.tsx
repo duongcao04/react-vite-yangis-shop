@@ -1,41 +1,46 @@
 import { useState } from 'react'
 
+import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
 
-import { useAuthContext } from '@/context/auth-context'
+import { useToast } from '@/hooks/use-toast'
 
-import authApi from '@/apis/auth.api'
-import { type NewUser } from '@/types/user'
+import authApi, { IRegister } from '@/apis/auth.api'
 
 export const useRegister = () => {
-    const navigate = useNavigate()
+    const [, setCookie] = useCookies()
     const [isLoading, setLoading] = useState<boolean>(false)
-    const { setAuthUser } = useAuthContext()
+    const { onToast } = useToast()
+    const navigate = useNavigate()
 
-    const register = async (newUser: NewUser) => {
+    const register = async (user: IRegister) => {
         setLoading(true)
         try {
-            const res = await authApi.register(newUser)
+            const res = await authApi.register(user)
 
-            const { data, message, status } = res.data
+            if (res.status === 201) {
+                const { access_token, refresh_token } = res.data.data
 
-            if (status === 201) {
-                const userData = data.user
+                setCookie('access_token', access_token.value, {
+                    expires: new Date(access_token.expires_at),
+                })
                 localStorage.setItem(
-                    '__user-information',
-                    JSON.stringify(userData)
+                    'refresh_token',
+                    JSON.stringify(refresh_token)
                 )
-                setAuthUser(userData)
-                toast.success(message)
-                setTimeout(() => {
-                    navigate('/')
-                }, 5001)
-            } else {
-                throw new Error(message)
+                onToast({
+                    title: 'Sign up successfully !',
+                    description: res.data.message,
+                    color: 'success',
+                })
+                navigate('/')
             }
         } catch (error) {
-            toast.error('Đã xảy ra lỗi', { description: `${error}` })
+            onToast({
+                title: 'Sign up failed !',
+                description: `${error}`,
+                color: 'danger',
+            })
         } finally {
             setLoading(false)
         }

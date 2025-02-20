@@ -3,7 +3,6 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import ObjectID from 'bson-objectid'
 import { toast } from 'sonner'
 
-import { calcSalePrice } from '@/utils/calc-sale-price'
 
 const currentCart = localStorage.getItem('_cart') ?? JSON.stringify([] as Cart)
 const currentTotal: string = localStorage.getItem('_cart-total') ?? '0'

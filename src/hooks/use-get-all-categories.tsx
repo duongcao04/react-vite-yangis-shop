@@ -11,7 +11,7 @@ export const useGetAllCategories: (params?: object) => {
         queryFn: () =>
             categoryApi
                 .getCategories(params ?? {})
-                .then((response) => response.data.data),
+                .then((response) => response.data),
         refetchOnWindowFocus: false,
         placeholderData: () => {
             return []

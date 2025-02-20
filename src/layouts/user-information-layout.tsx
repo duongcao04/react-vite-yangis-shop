@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom'
 
 import { useAuthContext } from '@/context/auth-context'
 
+import Navbar from '@/components/navbar'
 import Breadcrumbs from '@/components/customize-breadcrumb'
 import Footer from '@/components/footer'
-import Navbar from '@/components/navbar'
 import TopHeader from '@/components/top-header'
 
 import useLogout from '@/features/auth/hooks/use-logout'

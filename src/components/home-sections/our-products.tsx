@@ -2,11 +2,10 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import useGetAllProducts from '@/hooks/use-get-all-products'
-
 import { Button } from '@/components/ui/button'
 
 import ProductsCarousel from '@/features/product/components/carousels/product-carousel'
+import { useGetAllProducts } from '@/features/product/hooks/use-get-all-products'
 
 function OurProducts() {
     const { isLoading, products } = useGetAllProducts()
@@ -24,11 +23,11 @@ function OurProducts() {
                     <rect width="20" height="40" rx="4" fill="#DB4444" />
                 </svg>
                 <p className="font-semibold text-base text-[#DB4444]">
-                    Sản phẩm
+                    Product
                 </p>
             </div>
             <h2 className="my-5 text-2xl font-semibold">
-                Khám phá sản phẩm của chúng tôi
+                Explorer our products
             </h2>
             <ProductsCarousel data={products} isLoading={isLoading} />
             <div className="mt-5 grid place-items-center">
