@@ -17,30 +17,25 @@ import { config } from '@/config'
 import { addCart, buyNow } from '@/redux/cart-slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
+import { VNDCurrencyFormat } from '@/utils/format'
 
-import { VNDCurrencyFormat } from '../../../utils/format'
 import { isProductInList } from '../components/cards/product-card'
-import ProductsCarousel from '../components/carousels/product-carousel'
 import ImagePreviewer from '../components/image-previews/image-item-previewer'
 import SpecialFeatures from '../components/special-features'
-import SpecificationsTable from '../components/tables/specifications-table'
 import UserReview from '../components/user-reviews'
-import { useGetAllProducts } from '../hooks/use-get-all-products'
 import { useGetProductBySlug } from '../hooks/use-get-product-by-slug'
 import { getCarouselImages } from '../utils/get-carousel-images'
 
-function ProductDetailPage() {
+async function ProductDetailPage() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { wishlist } = useSelector((state: RootState) => state.wishlist)
-    const { products } = useGetAllProducts()
 
     // Lấy product id từ params
     const { productSlug } = useParams()
     const { isLoading: loadingProduct, product } = useGetProductBySlug(
         productSlug ?? ''
     )
-    console.log(product)
 
     const { reviews } = useGetReviews({ product_slug: productSlug })
 
@@ -49,6 +44,8 @@ function ProductDetailPage() {
 
     // Lấy ảnh theo product-variant
     const carouselImages = getCarouselImages(product)
+
+    console.log(carouselImages)
 
     //TODO: dùng queryString format currentParams và thay đổi search params khi thay đổi lựa chọn màu sắc và storage
     const [searchParams] = useSearchParams()
@@ -62,43 +59,45 @@ function ProductDetailPage() {
     const [inStock, setInStock] = React.useState<number>(0)
 
     // Cập nhật lựa chọn và params
-    React.useEffect(() => {
-        const defaultSelection = product?.variants
-            ? product.variants[0].label
-            : ''
-        setCurrentSelection(defaultSelection)
-        const defaultInStock = product?.variants
-            ? product.variants[0].inStock
-            : product.inStock
-        setInStock(defaultInStock)
+    // React.useEffect(() => {
+    //     const defaultSelection = product?.variants
+    //         ? product.variants[0].label
+    //         : ''
+    //     setCurrentSelection(defaultSelection)
+    //     const defaultInStock = product?.variants
+    //         ? product.variants[0].inStock
+    //         : product.inStock
+    //     setInStock(defaultInStock)
 
-        const newParams = Object.fromEntries([...searchParams])
-        setCurrentParams(newParams)
-    }, [searchParams, product])
+    //     const newParams = Object.fromEntries([...searchParams])
+    //     setCurrentParams(newParams)
+    // }, [searchParams, product])
 
     const handleBuyNow = () => {
-        const currentVariant = product.variants.filter(
-            (item) => item.label === currentSelection
-        )[0]
-        const cartItem = {
-            product,
-            quantity: 1,
-            variant: currentVariant,
-        }
-        dispatch(buyNow(cartItem))
-        navigate(config.routes.check_out)
+        // const currentVariant = product.variants.filter(
+        //     (item) => item.label === currentSelection
+        // )[0]
+        // const cartItem = {
+        //     product,
+        //     quantity: 1,
+        //     variant: currentVariant,
+        // }
+        // dispatch(buyNow(cartItem))
+        // navigate(config.routes.check_out)
+        console.log('buy')
     }
 
     const handleAddCart = () => {
-        const currentVariant = product.variants.filter(
-            (item) => item.label === currentSelection
-        )[0]
-        const cartItem = {
-            product,
-            quantity: 1,
-            variant: currentVariant ?? product.variants[0],
-        }
-        dispatch(addCart(cartItem))
+        // const currentVariant = product.variants.filter(
+        //     (item) => item.label === currentSelection
+        // )[0]
+        // const cartItem = {
+        //     product,
+        //     quantity: 1,
+        //     variant: currentVariant ?? product.variants[0],
+        // }
+        // dispatch(addCart(cartItem))
+        console.log('add cart')
     }
 
     return (
@@ -124,7 +123,7 @@ function ProductDetailPage() {
                             )}
                             <ImagePreviewer
                                 loadingProduct={loadingProduct}
-                                productImages={productImages}
+                                productImages={carouselImages}
                                 currentSelection={currentSelection}
                             />
                         </div>
@@ -204,7 +203,7 @@ function ProductDetailPage() {
                                                         animate={{ opacity: 1 }}
                                                         key={index}
                                                     >
-                                                        <Button
+                                                        {/* <Button
                                                             variant={
                                                                 currentSelection ===
                                                                 item.label
@@ -226,7 +225,7 @@ function ProductDetailPage() {
                                                             }}
                                                         >
                                                             {item.label}
-                                                        </Button>
+                                                        </Button> */}
                                                     </motion.div>
                                                 )
                                             )}
@@ -430,21 +429,21 @@ function ProductDetailPage() {
                         </p>
                         <SpecialFeatures data={{}} />
                     </div>
-                    {product.properties && (
+                    {/* {product.properties && (
                         <div className="col-span-1 h-fit border rounded-xl bg-white">
                             <p className="font-semibold px-5 py-4">
                                 Thông số kỹ thuật
                             </p>
                             <SpecificationsTable data={product.properties} />
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
             <div className="mt-5 container px-5 py-4 rounded-xl bg-white">
                 <p className="mb-7 text-base leading-none font-semibold">
                     Đánh giá & nhận xét về {product.name}
                 </p>
-                <UserReview data={reviews} productId={product._id} />
+                <UserReview data={reviews} productId={product.id} />
             </div>
             <div className="mt-5 mb-20 container">
                 <div className="mb-5 flex items-center justify-start gap-4">
@@ -461,7 +460,7 @@ function ProductDetailPage() {
                         Sản phẩm tương tự
                     </p>
                 </div>
-                <ProductsCarousel products={products} />
+                {/* <ProductsCarousel products={products} /> */}
             </div>
         </React.Fragment>
     )

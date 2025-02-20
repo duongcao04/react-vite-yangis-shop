@@ -2,10 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import productApi from '@/apis/product.api'
 
-export const useGetProductBySlug: (slug: string) => {
-    isLoading: boolean
-    product: Product
-} = (slug) => {
+export function useGetProductBySlug(slug: string) {
     const { data, isFetching } = useQuery({
         queryKey: ['product', slug],
         queryFn: () =>
@@ -18,5 +15,5 @@ export const useGetProductBySlug: (slug: string) => {
         },
     })
 
-    return { isLoading: isFetching, product: data ?? ({} as Product) }
+    return { isLoading: isFetching, product: data }
 }

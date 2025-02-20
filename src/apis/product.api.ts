@@ -19,7 +19,7 @@ const productApi = {
     },
     getProductBySlug: async (slug: string): Promise<AxiosResponse<Product>> => {
         const url = 'products'
-        const params = { slug: slug }
+        const params = { slug }
         return await axiosClient.get(url, { params })
     },
     getProductsWithPaginate: async (params: IGetProductsParams) => {

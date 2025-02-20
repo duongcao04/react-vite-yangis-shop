@@ -10,22 +10,15 @@ export const getCarouselImages: (product: Product) => IImagePreviewOptions[] = (
 ) => {
     const result = []
 
-    if (product.featureImage?.length !== 0) {
-        result.push({
+    if (product.variants.length === 0) {
+        const thumbnail = {
             id: result.length,
             label: 'Ảnh nổi bật',
             icon: 'hugeicons:star-circle',
-            images: product.featureImage,
-        })
+            images: [...product.thumbnail],
+        }
+        result.push(thumbnail)
     }
-
-    product.variants?.forEach((item: ProductVariant) => {
-        result.push({
-            id: result.length,
-            label: item.label,
-            images: item.images,
-        })
-    })
 
     return result
 }
