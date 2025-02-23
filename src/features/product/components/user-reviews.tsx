@@ -1,11 +1,13 @@
 import Star from '@/components/icons/star'
 import { Progress } from '@/components/ui/progress'
 
-import { ReviewForm } from './review-form'
+import { type Comment } from '@/types/comment'
+
 import UserReviewCard from './cards/user-review-card'
+import { ReviewForm } from './review-form'
 
 interface IProps {
-    data: Review[]
+    data: Comment[]
     productId: string
 }
 
@@ -83,7 +85,7 @@ function UserReview({ data, productId }: IProps) {
                     </p>
                     <div className="divide-y">
                         {data.map((review) => (
-                            <UserReviewCard key={review._id} data={review} />
+                            <UserReviewCard key={review.id} data={review} />
                         ))}
                     </div>
                 </div>

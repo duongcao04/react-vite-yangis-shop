@@ -1,9 +1,14 @@
-type CartItem = {
+import { Product } from './product'
+import { Variant } from './variant'
+
+export type CartItem = {
     id: string
     product: Product
     variant: Variant
     quantity: number
 }
-type Cart = CartItem[]
+export type Cart = CartItem[]
 
-type NewCartItem = Pick<CartItem, 'product' | 'quantity' | 'variant'>
+export type NewCartItem = Pick<CartItem, 'product' | 'variant'> & {
+    quantity?: number
+}

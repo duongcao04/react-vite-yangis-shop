@@ -9,16 +9,16 @@ import { config } from '@/config'
 import BlankLayout from '@/layouts/blank-layout'
 import UserInformationLayout from '@/layouts/user-information-layout'
 
-import LoginPage from '../features/auth/pages/login'
-import RegisterPage from '../features/auth/pages/register'
-import CartPage from '../features/shop/pages/cart'
-import CheckoutPage from '../features/shop/pages/checkout'
-import CustomerAddressBookPage from '../features/customer-profile/pages/customer-address-book'
-import CustomerOrderPage from '../features/customer-profile/pages/customer-orders'
-import CustomerProfilePage from '../features/customer-profile/pages/customer-profile'
-import ProductDetailPage from '../features/product/pages/product-detail'
-import ProductsPage from '../features/product/pages/products'
-import WishListPage from '../features/shop/pages/wishlist'
+import LoginPage from '@/features/auth/pages/login'
+import RegisterPage from '@/features/auth/pages/register'
+import CartPage from '@/features/shop/pages/cart'
+import CheckoutPage from '@/features/shop/pages/checkout'
+import CustomerAddressBookPage from '@/features/customer-profile/pages/customer-address-book'
+import CustomerOrderPage from '@/features/customer-profile/pages/customer-orders'
+import CustomerProfilePage from '@/features/customer-profile/pages/customer-profile'
+import ProductDetailPage from '@/features/product/pages/product-detail'
+import ProductsPage from '@/features/product/pages/products'
+import WishListPage from '@/features/shop/pages/wishlist'
 
 export type TRoute = Omit<RouteProps, 'path' | 'element'> & {
     path: string
@@ -32,7 +32,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.home,
         element: HomePage,
         handle: {
-            crumb: () => 'Trang chủ',
+            crumb: () => 'Home',
         },
         isPrivateRoute: false,
     },
@@ -41,7 +41,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         layout: BlankLayout,
         element: RegisterPage,
         handle: {
-            crumb: () => 'Đăng ký',
+            crumb: () => 'Register',
         },
         isPrivateRoute: false,
     },
@@ -50,7 +50,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         layout: BlankLayout,
         element: LoginPage,
         handle: {
-            crumb: () => 'Đăng nhập',
+            crumb: () => 'Login',
         },
         isPrivateRoute: false,
     },
@@ -58,7 +58,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.favourite,
         element: WishListPage,
         handle: {
-            crumb: () => 'Yêu thích',
+            crumb: () => 'Wishlist',
         },
         isPrivateRoute: false,
     },
@@ -66,7 +66,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.cart,
         element: CartPage,
         handle: {
-            crumb: () => 'Giỏ hàng',
+            crumb: () => 'Cart',
         },
         isPrivateRoute: false,
     },
@@ -74,7 +74,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.products,
         element: ProductsPage,
         handle: {
-            crumb: () => 'Sản phẩm',
+            crumb: () => 'Product',
         },
         isPrivateRoute: false,
     },
@@ -82,7 +82,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.product_detail,
         element: ProductDetailPage,
         handle: {
-            crumb: () => 'Chi tiết sản phẩm',
+            crumb: () => 'Product Detail',
         },
         isPrivateRoute: false,
     },
@@ -90,7 +90,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.about,
         element: AboutPage,
         handle: {
-            crumb: () => 'Về chúng tôi',
+            crumb: () => 'About us',
         },
         isPrivateRoute: false,
     },
@@ -98,7 +98,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.contact,
         element: ContactPage,
         handle: {
-            crumb: () => 'Liên hệ',
+            crumb: () => 'Contact',
         },
         isPrivateRoute: false,
     },
@@ -106,7 +106,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.check_out,
         element: CheckoutPage,
         handle: {
-            crumb: () => 'Thanh toán',
+            crumb: () => 'Checkout',
         },
         isPrivateRoute: true,
     },
@@ -114,7 +114,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         path: config.routes.address_book,
         element: CustomerAddressBookPage,
         handle: {
-            crumb: () => 'Sổ tay địa chỉ',
+            crumb: () => 'Address Book',
         },
         isPrivateRoute: true,
     },
@@ -123,7 +123,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         element: CustomerProfilePage,
         layout: UserInformationLayout,
         handle: {
-            crumb: () => 'Thông tin cá nhân',
+            crumb: () => 'Account Information',
         },
         isPrivateRoute: true,
     },
@@ -132,7 +132,7 @@ export const GLOBAL_ROUTES: TRoute[] = [
         element: CustomerOrderPage,
         layout: UserInformationLayout,
         handle: {
-            crumb: () => 'Đơn hàng của tôi',
+            crumb: () => 'My Order',
         },
         isPrivateRoute: true,
     },

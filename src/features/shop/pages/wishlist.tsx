@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Breadcrumbs from '@/components/customize-breadcrumb'
 import { Button } from '@/components/ui/button'
 
-import { addMany } from '@/redux/cart-slice'
+import { addMany } from '@/redux/cart.slice'
 import { RootState } from '@/redux/store'
 import { resetWishlist } from '@/redux/wishlist-slice'
 

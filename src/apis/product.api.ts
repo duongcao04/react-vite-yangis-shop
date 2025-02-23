@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios'
 
 import axiosClient from '@/apis/axiosClient'
+import { type Attribute } from '@/types/attribute'
+import { type NewProduct, type Product } from '@/types/product'
 
 export interface IGetProductsParams {
     slug?: string
@@ -22,17 +24,33 @@ const productApi = {
         const params = { slug }
         return await axiosClient.get(url, { params })
     },
+    getProductAttributes: async (
+        productId: string
+    ): Promise<AxiosResponse<Attribute[]>> => {
+        const url = `products/${productId}/attributes`
+        return await axiosClient.get(url)
+    },
+    getAllCommentsOfProduct: async (
+        productId: string
+    ): Promise<AxiosResponse<Comment[]>> => {
+        const url = `products/${productId}/comments`
+        return await axiosClient.get(url)
+    },
+    getVariantByAttributes: async (
+        productId: string,
+        attributes: Record<string, string>
+    ) => {
+        const url = `products/${productId}/variants/findByAttributes`
+        const params = attributes
+        return await axiosClient.get(url, { params })
+    },
     getProductsWithPaginate: async (params: IGetProductsParams) => {
         const url = 'products/paginate'
         return await axiosClient.get(url, { params })
     },
     createProduct: async (newProduct: NewProduct) => {
-        const url = 'products/add'
-        return await axiosClient.post(url, newProduct, {
-            headers: {
-                'content-type': 'multipart/form-data',
-            },
-        })
+        const url = 'products'
+        return await axiosClient.post(url, newProduct)
     },
     deleteProduct: (productId: string) => {
         const url = `products/${productId}`

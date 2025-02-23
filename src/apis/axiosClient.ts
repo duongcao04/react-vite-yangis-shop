@@ -13,7 +13,7 @@ import authApi from './auth.api'
 
 const cookie = new Cookies()
 
-const config: CreateAxiosDefaults<any> = {
+const config: CreateAxiosDefaults = {
     // Configuration
     withCredentials: true,
     baseURL: `${import.meta.env.VITE_API_URL}/api/v1`,
@@ -76,8 +76,8 @@ axiosClient.interceptors.response.use(
                 if (refresh?.access_token) {
                     cookie.set('access_token', refresh?.access_token)
                 }
-                const originalRequest: InternalAxiosRequestConfig<any> =
-                    error.config as InternalAxiosRequestConfig<any>
+                const originalRequest: InternalAxiosRequestConfig =
+                    error.config as InternalAxiosRequestConfig
                 if (refresh?.access_token) {
                     originalRequest.headers['Authorization'] =
                         `Bearer ${refresh?.access_token}`

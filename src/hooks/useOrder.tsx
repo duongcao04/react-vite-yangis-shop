@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 
 import orderApi from '@/apis/order.api'
-import { resetCart } from '@/redux/cart-slice'
+import { resetCart } from '@/redux/cart.slice'
 
 export const useGetOrders: (params?: object) => {
     isLoading: boolean

@@ -1,9 +1,9 @@
-type Category = Timestampz & {
+export type Category = Timestampz & {
     id: string
     name: string
     slug: string
     thumbnail: string
-    description?: string
+    description: string | null
 }
 
-type NewCategory = Pick<Category, 'name' | 'slug' | 'thumbnail' | 'description'>
+export type NewCategory = Pick<Category, 'name' | 'slug' | 'thumbnail' | 'description'>

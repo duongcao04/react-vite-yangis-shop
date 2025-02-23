@@ -117,7 +117,7 @@ export default function MobileNavigate({ trigger }: IMobileNavigateProps) {
                             </p>
                             <ul>
                                 {categories.map((item) => (
-                                    <li key={item._id}>
+                                    <li key={item.id}>
                                         <SheetClose asChild>
                                             <Link
                                                 to={item.name}

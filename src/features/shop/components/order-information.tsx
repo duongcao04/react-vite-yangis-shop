@@ -5,14 +5,16 @@ import { GoGift } from 'react-icons/go'
 import { useSelector } from 'react-redux'
 
 import { Button } from '@/components/ui/button'
-import { RootState } from '@/redux/store'
 
-export interface IOrderInformationProps {
+import { RootState } from '@/redux/store'
+import { VNDCurrencyFormat } from '@/utils/format'
+
+export interface Props {
     action: React.ReactNode
 }
 
-export default function OrderInformation({ action }: IOrderInformationProps) {
-    const { total } = useSelector((state: RootState) => state.cart)
+export default function OrderInformation({ action }: Props) {
+    const { totalAmount } = useSelector((state: RootState) => state.cart)
 
     const SHIPPING_COST = 0
 
@@ -61,7 +63,7 @@ export default function OrderInformation({ action }: IOrderInformationProps) {
                             Tổng tiền
                         </p>
                         <p className="text-base leading-[24px] font-medium">
-                            {formatMoney(total)}
+                            {VNDCurrencyFormat(totalAmount)}
                         </p>
                     </div>
                     <div className="h-[1px] w-full bg-gray-300" />
@@ -70,7 +72,7 @@ export default function OrderInformation({ action }: IOrderInformationProps) {
                             Tổng khuyến mãi
                         </p>
                         <p className="text-base leading-[24px] font-medium">
-                            {formatMoney(total)}
+                            {VNDCurrencyFormat(totalAmount)}
                         </p>
                     </div>
                     <div className="flex items-center justify-between">
@@ -80,7 +82,7 @@ export default function OrderInformation({ action }: IOrderInformationProps) {
                         <p className="text-xs leading-[18px] font-medium">
                             {SHIPPING_COST === 0
                                 ? 'Miễn phí'
-                                : formatMoney(SHIPPING_COST)}
+                                : VNDCurrencyFormat(SHIPPING_COST)}
                         </p>
                     </div>
                     <div className="flex items-center justify-between border-t border-gray-300 border-dashed pt-2">
@@ -88,7 +90,7 @@ export default function OrderInformation({ action }: IOrderInformationProps) {
                             Cần thanh toán
                         </p>
                         <p className="text-base leading-[24px] font-medium text-red-500">
-                            {formatMoney(total + SHIPPING_COST)}
+                            {VNDCurrencyFormat(totalAmount + SHIPPING_COST)}
                         </p>
                     </div>
                     <div className="flex items-center justify-between">
@@ -96,7 +98,7 @@ export default function OrderInformation({ action }: IOrderInformationProps) {
                             Điểm thưởng
                         </p>
                         <p className="text-base leading-[24px] font-medium">
-                            +{(total / 100).toLocaleString()}
+                            +{(totalAmount / 100).toLocaleString()}
                         </p>
                     </div>
                 </div>

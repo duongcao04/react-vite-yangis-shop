@@ -7,7 +7,7 @@ import Star from '@/components/icons/star'
 import { Skeleton } from '@/components/ui/skeleton'
 
 import { config } from '@/config'
-import { addCart } from '@/redux/cart-slice'
+import { addCart } from '@/redux/cart.slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
 import { VNDCurrencyFormat } from '@/utils/format'

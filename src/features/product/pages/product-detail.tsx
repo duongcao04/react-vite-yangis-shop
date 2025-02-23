@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Icon } from '@iconify/react'
 import { motion } from 'framer-motion'
@@ -6,104 +6,104 @@ import { Helmet } from 'react-helmet-async'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
-import { useGetReviews } from '@/hooks/useReview'
-
 import Breadcrumbs from '@/components/customize-breadcrumb'
 import Star from '@/components/icons/star'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 
+import { isProductExist } from '@/features/product/utils/is-product-exist'
+
 import { config } from '@/config'
-import { addCart, buyNow } from '@/redux/cart-slice'
+import { addCart, buyNow } from '@/redux/cart.slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
+import type { NewCartItem } from '@/types/cart'
 import { VNDCurrencyFormat } from '@/utils/format'
+import { isObjectEmpty } from '@/utils/is-object-empty'
 
-import { isProductInList } from '../components/cards/product-card'
-import ImagePreviewer from '../components/image-previews/image-item-previewer'
+import ImageItemPreviewer from '../components/image-previews/image-item-previewer'
+import ProductSelection from '../components/product-selection'
 import SpecialFeatures from '../components/special-features'
 import UserReview from '../components/user-reviews'
+import { useGetAllCommentsOfProduct } from '../hooks/use-get-all-comments-of-product'
 import { useGetProductBySlug } from '../hooks/use-get-product-by-slug'
+import { useGetVariantByAttributes } from '../hooks/use-get-variant-by-attributes'
 import { getCarouselImages } from '../utils/get-carousel-images'
 
-async function ProductDetailPage() {
+export default function ProductDetailPage() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { wishlist } = useSelector((state: RootState) => state.wishlist)
 
     // Lấy product id từ params
     const { productSlug } = useParams()
-    const { isLoading: loadingProduct, product } = useGetProductBySlug(
+    const { isLoading: isLoadingProduct, product } = useGetProductBySlug(
         productSlug ?? ''
     )
 
-    const { reviews } = useGetReviews({ product_slug: productSlug })
-
-    // Kiểm tra sản phẩm có nằm trong wishlist ?
-    const isWished = isProductInList(product, wishlist)
-
-    // Lấy ảnh theo product-variant
-    const carouselImages = getCarouselImages(product)
-
-    console.log(carouselImages)
-
-    //TODO: dùng queryString format currentParams và thay đổi search params khi thay đổi lựa chọn màu sắc và storage
-    const [searchParams] = useSearchParams()
-    const [, setCurrentParams] = React.useState<object>(
-        Object.fromEntries([...searchParams])
-    )
+    const { comments } = useGetAllCommentsOfProduct(product.id)
 
     // Khởi tạo state lưu thông tin lựa chọn hiện tại
-    const [currentSelection, setCurrentSelection] = React.useState<string>('')
+    const initVariantFilters = React.useMemo(() => {
+        const filters: Record<string, string> = {}
+        product.attributes.forEach((attribute) => {
+            const attributeName = attribute.name.toLowerCase()
+            const attributeValue = attribute.values[0].value.toLowerCase()
+            filters[`${attributeName}`] = attributeValue
+        })
+        return filters
+    }, [product.attributes])
+    const [variantFilters, setVariantFilters] =
+        useState<Record<string, string>>(initVariantFilters)
 
-    const [inStock, setInStock] = React.useState<number>(0)
+    const [searchParams, setSearchParams] = useSearchParams()
 
-    // Cập nhật lựa chọn và params
-    // React.useEffect(() => {
-    //     const defaultSelection = product?.variants
-    //         ? product.variants[0].label
-    //         : ''
-    //     setCurrentSelection(defaultSelection)
-    //     const defaultInStock = product?.variants
-    //         ? product.variants[0].inStock
-    //         : product.inStock
-    //     setInStock(defaultInStock)
+    useEffect(() => {
+        const searchFilters = Object.fromEntries([...searchParams])
+        if (isObjectEmpty(searchFilters)) {
+            setVariantFilters(initVariantFilters)
+            return
+        }
+        setVariantFilters(searchFilters)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initVariantFilters])
 
-    //     const newParams = Object.fromEntries([...searchParams])
-    //     setCurrentParams(newParams)
-    // }, [searchParams, product])
+    useEffect(() => {
+        setSearchParams(variantFilters)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [variantFilters])
+
+    const { variant } = useGetVariantByAttributes(product.id, variantFilters)
+
+    // Lấy tất cả ảnh theo product-variant
+    const carouselImages = getCarouselImages(product)
+
+    // Kiểm tra sản phẩm có nằm trong wishlist ?
+    const isWished = isProductExist(product, wishlist)
 
     const handleBuyNow = () => {
-        // const currentVariant = product.variants.filter(
-        //     (item) => item.label === currentSelection
-        // )[0]
-        // const cartItem = {
-        //     product,
-        //     quantity: 1,
-        //     variant: currentVariant,
-        // }
-        // dispatch(buyNow(cartItem))
-        // navigate(config.routes.check_out)
-        console.log('buy')
+        const newCart: NewCartItem = {
+            product,
+            variant,
+        }
+        dispatch(buyNow(newCart))
+        navigate(config.routes.check_out)
     }
 
     const handleAddCart = () => {
-        // const currentVariant = product.variants.filter(
-        //     (item) => item.label === currentSelection
-        // )[0]
-        // const cartItem = {
-        //     product,
-        //     quantity: 1,
-        //     variant: currentVariant ?? product.variants[0],
-        // }
-        // dispatch(addCart(cartItem))
-        console.log('add cart')
+        const newCart: NewCartItem = {
+            product,
+            variant,
+        }
+        console.log(newCart)
+
+        dispatch(addCart(newCart))
     }
 
     return (
         <React.Fragment>
             <Helmet>
-                <title>{product.name}</title>
+                <title>{product.name} | Yangis Shop</title>
             </Helmet>
 
             <div className="bg-white border-t border-b">
@@ -113,22 +113,22 @@ async function ProductDetailPage() {
                     </div>
                     <div className="laptop:py-12 pb-12 rounded-lg laptop:grid grid-cols-[750px_1fr] gap-16">
                         <div>
-                            {!loadingProduct && (
+                            {!isLoadingProduct && (
                                 <p className="block laptop:hidden text-xl font-inter font-semibold">
                                     {product.name}
                                 </p>
                             )}
-                            {loadingProduct && (
+                            {isLoadingProduct && (
                                 <Skeleton className="w-fit h-[20px] rounded-md bg-white" />
                             )}
-                            <ImagePreviewer
-                                loadingProduct={loadingProduct}
-                                productImages={carouselImages}
-                                currentSelection={currentSelection}
+                            <ImageItemPreviewer
+                                isLoading={isLoadingProduct}
+                                carouselImages={carouselImages}
+                                currentVariant={variant}
                             />
                         </div>
                         <div>
-                            {!loadingProduct && (
+                            {!isLoadingProduct && (
                                 <motion.p
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
@@ -137,11 +137,11 @@ async function ProductDetailPage() {
                                     {product.name}
                                 </motion.p>
                             )}
-                            {loadingProduct && (
+                            {isLoadingProduct && (
                                 <Skeleton className="w-full h-[30px] rounded-md" />
                             )}
                             <div className="mt-4">
-                                {!loadingProduct && (
+                                {!isLoadingProduct && (
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -163,20 +163,20 @@ async function ProductDetailPage() {
                                                 ))}
                                         </div>
                                         <p className="text-sm leading-[21px] font-semibold opacity-60">
-                                            ({reviews.length} đánh giá)
+                                            ({comments.length} comments)
                                         </p>
                                         <div className="w-[1px] h-[20px] bg-neutral-300 mx-2" />
                                         <p className="font-medium opacity-60">
-                                            Kho: {inStock}
+                                            Stock: {variant.stock_quantity}
                                         </p>
                                     </motion.div>
                                 )}
-                                {loadingProduct && (
+                                {isLoadingProduct && (
                                     <Skeleton className="w-full h-[21px] rounded-md" />
                                 )}
                             </div>
                             <div className="mt-6 mb-2">
-                                {!loadingProduct && (
+                                {!isLoadingProduct && (
                                     <motion.p
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
@@ -185,62 +185,16 @@ async function ProductDetailPage() {
                                         {VNDCurrencyFormat(product.price)}
                                     </motion.p>
                                 )}
-                                {loadingProduct && (
+                                {isLoadingProduct && (
                                     <Skeleton className="h-[28px]" />
                                 )}
                             </div>
-                            {product.variants && (
-                                <div className="mt-6 grid grid-cols-[100px_1fr] gap-6 items-center">
-                                    <p className="mt-2 text-sm font-medium font-inter text-nowrap">
-                                        Màu sắc
-                                    </p>
-                                    <div className="flex items-center justify-start gap-2 flex-wrap">
-                                        {!loadingProduct &&
-                                            product.variants.map(
-                                                (item, index) => (
-                                                    <motion.div
-                                                        initial={{ opacity: 0 }}
-                                                        animate={{ opacity: 1 }}
-                                                        key={index}
-                                                    >
-                                                        {/* <Button
-                                                            variant={
-                                                                currentSelection ===
-                                                                item.label
-                                                                    ? 'default'
-                                                                    : 'outline'
-                                                            }
-                                                            disabled={
-                                                                item.inStock ===
-                                                                0
-                                                            }
-                                                            className={`py-1 px-3 rounded-md font-semibold`}
-                                                            onClick={() => {
-                                                                setCurrentSelection(
-                                                                    item.label
-                                                                )
-                                                                setInStock(
-                                                                    item.inStock
-                                                                )
-                                                            }}
-                                                        >
-                                                            {item.label}
-                                                        </Button> */}
-                                                    </motion.div>
-                                                )
-                                            )}
-                                        {loadingProduct &&
-                                            new Array(5)
-                                                .fill('product')
-                                                .map((item, index) => (
-                                                    <Skeleton
-                                                        key={item + index}
-                                                        className="w-[65px] h-[40px] rounded-md"
-                                                    />
-                                                ))}
-                                    </div>
-                                </div>
-                            )}
+                            <ProductSelection
+                                isLoading={isLoadingProduct}
+                                data={product.attributes}
+                                variantFilters={variantFilters}
+                                onChangeVariantFilters={setVariantFilters}
+                            />
                             <div className="mt-6 flex items-center justify-start gap-3">
                                 <Button
                                     size={'lg'}
@@ -261,7 +215,7 @@ async function ProductDetailPage() {
                                         handleBuyNow()
                                     }}
                                 >
-                                    Mua ngay
+                                    Buy Now
                                 </Button>
                                 <Button
                                     variant={'outline'}
@@ -441,9 +395,9 @@ async function ProductDetailPage() {
             </div>
             <div className="mt-5 container px-5 py-4 rounded-xl bg-white">
                 <p className="mb-7 text-base leading-none font-semibold">
-                    Đánh giá & nhận xét về {product.name}
+                    Đánh giá & nhận xét về {product?.name}
                 </p>
-                <UserReview data={reviews} productId={product.id} />
+                <UserReview data={comments} productId={product.id} />
             </div>
             <div className="mt-5 mb-20 container">
                 <div className="mb-5 flex items-center justify-start gap-4">
@@ -465,5 +419,3 @@ async function ProductDetailPage() {
         </React.Fragment>
     )
 }
-
-export default ProductDetailPage
