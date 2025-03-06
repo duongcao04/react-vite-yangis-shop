@@ -1,7 +1,8 @@
 import axiosClient from '@/apis/axiosClient'
+import { NewCategory } from '@/types/category'
 
 const categoryApi = {
-    getCategories: async (params: object) => {
+    getAllCategories: async (params: object) => {
         const url = 'categories'
         return await axiosClient.get(url, { params })
     },

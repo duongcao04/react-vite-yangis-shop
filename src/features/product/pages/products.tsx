@@ -2,10 +2,8 @@ import * as React from 'react'
 
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
-import { IoFilter } from 'react-icons/io5'
 import { useSearchParams } from 'react-router-dom'
 
-import useGetProductsAndPaginate from '@/hooks/use-get-product-with-pagination'
 import { useQueryString } from '@/hooks/use-query-string'
 
 import Breadcrumbs from '@/components/customize-breadcrumb'
@@ -16,61 +14,57 @@ import { Skeleton } from '@/components/ui/skeleton'
 import MobileFilterDrawer from '@/features/product/components/product-filter-mobile'
 import FilterBar from '@/features/product/components/products-filter-bar'
 
-import { config } from '@/config'
+import type { Product } from '@/types/product'
 
 import ProductCard from '../components/cards/product-card'
+import { useGetAllProducts } from '../hooks/use-get-all-products'
 
+export interface IFilters {
+    category?: string
+    brand?: string
+    price?: string
+    sort?: string
+    page?: string
+    take?: string
+    keyword?: string
+}
 export default function ProductsPage() {
     // State for pagination
     const [currentPage, setCurrentPage] = React.useState<number>(1)
     const [, setSearchParams] = useSearchParams()
-    // Get search url params
-    const [params, setParams] = React.useState<object>({})
+    const query: IFilters = useQueryString()
+
+    const [filters, _setFilters] = React.useState<IFilters>({
+        keyword: query.keyword,
+        brand: query.brand,
+        category: query.category,
+        price: query.price,
+        sort: query.sort,
+        page: query.page,
+        take: query.take,
+    })
+    const setFilters = (filterRecord: Record<string, string | undefined>) => {
+        const updateFilters: IFilters = {
+            ...filters,
+            [Object.keys(filterRecord)[0]]: Object.values(filterRecord)[0],
+        }
+
+        _setFilters(updateFilters)
+        Object.keys(updateFilters).forEach((key: string) => {
+            if (updateFilters[key as keyof IFilters] === undefined) {
+                delete updateFilters[key as keyof IFilters]
+            }
+        })
+        setSearchParams(updateFilters as Record<string, string>)
+    }
+
     // Get products
     const {
         isLoading: loadingProducts,
         products,
-        totalProduct,
         totalPage,
-    } = useGetProductsAndPaginate(params)
-
-    const { tim_kiem, danh_muc, thuong_hieu, gia_tien } = useQueryString()
-
-    const initialFilter = {
-        category: danh_muc,
-        brand: thuong_hieu,
-        price: gia_tien,
-    }
-    const [, setSort] = React.useState<string>('name')
-    const [filter, setFilter] = React.useState<{
-        category?: string
-        brand?: string
-        price?: string
-    }>(initialFilter)
-
-    React.useEffect(() => {
-        const searchParamsBuilder = () => {
-            const temp: {
-                tim_kiem?: string
-                danh_muc?: string
-                thuong_hieu?: string
-                gia_tien?: string
-            } = {}
-            if (tim_kiem) temp.tim_kiem = tim_kiem
-            if (filter.category) temp.danh_muc = filter.category
-            if (filter.brand) temp.thuong_hieu = filter.brand
-            if (filter.price) temp.gia_tien = filter.price
-            return temp
-        }
-        setSearchParams(searchParamsBuilder())
-        setParams({
-            name: tim_kiem,
-            category: filter.category,
-            brand: filter.brand,
-            limit: config.products_pagination.limit,
-            page: currentPage,
-        })
-    }, [filter, tim_kiem, currentPage, setSearchParams])
+        totalCount,
+    } = useGetAllProducts(filters)
 
     return (
         <div className="container mx-auto">
@@ -83,7 +77,7 @@ export default function ProductsPage() {
             </div>
             <div className="laptop:grid grid-cols-4 gap-8 mb-14">
                 <div className="hidden laptop:block">
-                    <FilterBar filter={filter} setFilter={setFilter} />
+                    <FilterBar filters={filters} setFilters={setFilters} />
                 </div>
                 <div className="col-span-3 h-fit">
                     <div className="block laptop:hidden">
@@ -94,17 +88,17 @@ export default function ProductsPage() {
                                     className={
                                         'w-[120px] laptop:w-[180px] h-[30px] focus:ring-0'
                                     }
-                                    defaultValue="A-Z"
                                     selectList={[
                                         'A-Z',
                                         'Giá thấp nhất',
                                         'Giá cao nhất',
                                     ]}
-                                    setValue={setSort}
+                                    filters={filters}
+                                    setFilters={setFilters}
                                 />
                             </div>
 
-                            <MobileFilterDrawer
+                            {/* <MobileFilterDrawer
                                 trigger={
                                     <button className="py-1 px-3 hover:bg-wallground-light transition duration-200 rounded-md flex items-center justify-start gap-3 text-sm">
                                         <IoFilter size={15} />
@@ -113,7 +107,7 @@ export default function ProductsPage() {
                                 }
                                 filter={filter}
                                 setFilter={setFilter}
-                            />
+                            /> */}
                         </div>
                     </div>
                     <div className="mb-3 flex items-center justify-between">
@@ -123,11 +117,9 @@ export default function ProductsPage() {
                                 animate={{ opacity: 1 }}
                                 className="text-sm"
                             >
-                                Tìm thấy{' '}
-                                <span className="font-bold">
-                                    {totalProduct}
-                                </span>{' '}
-                                kết quả
+                                Found{' '}
+                                <span className="font-bold">{totalCount}</span>{' '}
+                                results
                             </motion.p>
                         )}
                         {loadingProducts && (
@@ -140,24 +132,24 @@ export default function ProductsPage() {
                                     className={
                                         'w-[180px] h-[30px] focus:ring-0'
                                     }
-                                    defaultValue="A-Z"
                                     selectList={[
                                         'A-Z',
                                         'Giá thấp nhất',
                                         'Giá cao nhất',
                                     ]}
-                                    setValue={setSort}
+                                    filters={filters}
+                                    setFilters={setFilters}
                                 />
                             </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 tablet:grid-cols-3 laptop:grid-cols-4 gap-[11px]">
                         {!loadingProducts &&
-                            products.map((product) => (
+                            products?.map((product: Product) => (
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    key={product._id}
+                                    key={product.id}
                                 >
                                     <ProductCard product={product} />
                                 </motion.div>

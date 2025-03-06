@@ -30,10 +30,23 @@ export type Product = Timestampz & {
 
 export type NewProduct = Omit<
     Product,
-    'id' | 'brand' | 'created_at' | 'categories' | 'updated_at' | 'deleted_at'
+    | 'id'
+    | 'brand'
+    | 'created_at'
+    | 'categories'
+    | 'updated_at'
+    | 'attributes'
+    | 'variants'
+    | 'comments'
+    | 'thumbnail'
+    | 'feature_images'
+    | 'view_count'
+    | 'deleted_at'
 > & {
+    thumbnail: File
+    feature_images: File[]
     brand_id: string
     category_ids: string[]
-    feature_image_urls: string[]
-    attribute_ids: string[]
+    feature_image_urls?: string[]
+    attribute_ids?: string[]
 }

@@ -7,16 +7,19 @@ const useGetAllUser: () => {
     isLoading: boolean
     users: User[]
 } = () => {
+    const initialData = [{} as User]
+    const placeholderData = [{} as User]
+
     const { data, isFetching } = useQuery({
         queryKey: ['allUsers'],
         queryFn: () =>
-            userApi.getAllUsers().then((response) => response.data.data),
+            userApi.getAllUsers().then((response) => {
+                return response.data.data
+            }),
         refetchOnWindowFocus: false,
-        placeholderData: () => {
-            return []
-        },
+        placeholderData,
+        initialData,
     })
-
-    return { isLoading: isFetching, users: data }
+    return { isLoading: isFetching, users: data ?? [] }
 }
-export default useGetAllUser
+export { useGetAllUser }

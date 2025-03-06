@@ -1,9 +1,12 @@
-import axiosClient from './axiosClient'
+import { AxiosResponse } from 'axios'
+
+import { TReponse, axiosAuth } from '@/apis/axiosClient'
+import { type User } from '@/types/user'
 
 const userApi = {
-    getAllUsers: async () => {
+    getAllUsers: async (): Promise<AxiosResponse<TReponse<User[]>>> => {
         const url = 'users'
-        return await axiosClient.get(url)
+        return await axiosAuth.get(url)
     },
 }
 

@@ -46,11 +46,14 @@ export default function ProductDetailPage() {
     // Khởi tạo state lưu thông tin lựa chọn hiện tại
     const initVariantFilters = React.useMemo(() => {
         const filters: Record<string, string> = {}
-        product.attributes.forEach((attribute) => {
-            const attributeName = attribute.name.toLowerCase()
-            const attributeValue = attribute.values[0].value.toLowerCase()
-            filters[`${attributeName}`] = attributeValue
-        })
+        if (product.attributes) {
+            product.attributes.forEach((attribute) => {
+                const attributeName = attribute.name.toLowerCase()
+                const attributeValue =
+                    attribute.values?.[0]?.value.toLowerCase() || ''
+                filters[`${attributeName}`] = attributeValue
+            })
+        }
         return filters
     }, [product.attributes])
     const [variantFilters, setVariantFilters] =
@@ -103,7 +106,7 @@ export default function ProductDetailPage() {
     return (
         <React.Fragment>
             <Helmet>
-                <title>{product.name} | Yangis Shop</title>
+                <title>{product.name ?? 'Hello'} | Yangis Shop</title>
             </Helmet>
 
             <div className="bg-white border-t border-b">
@@ -189,12 +192,17 @@ export default function ProductDetailPage() {
                                     <Skeleton className="h-[28px]" />
                                 )}
                             </div>
-                            <ProductSelection
-                                isLoading={isLoadingProduct}
-                                data={product.attributes}
-                                variantFilters={variantFilters}
-                                onChangeVariantFilters={setVariantFilters}
-                            />
+                            {product.variants &&
+                                product.variants.length > 0 && (
+                                    <ProductSelection
+                                        isLoading={isLoadingProduct}
+                                        data={product.attributes}
+                                        variantFilters={variantFilters}
+                                        onChangeVariantFilters={
+                                            setVariantFilters
+                                        }
+                                    />
+                                )}
                             <div className="mt-6 flex items-center justify-start gap-3">
                                 <Button
                                     size={'lg'}
@@ -397,7 +405,7 @@ export default function ProductDetailPage() {
                 <p className="mb-7 text-base leading-none font-semibold">
                     Đánh giá & nhận xét về {product?.name}
                 </p>
-                <UserReview data={comments} productId={product.id} />
+                {/* <UserReview data={comments} productId={product.id} /> */}
             </div>
             <div className="mt-5 mb-20 container">
                 <div className="mb-5 flex items-center justify-start gap-4">

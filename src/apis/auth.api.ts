@@ -1,26 +1,31 @@
-import axiosClient from './axiosClient'
+import { AxiosResponse } from 'axios'
 
-export interface ILogin {
-    email: string
+import type { User } from '@/types/user'
+
+import axiosClient, { TReponse, axiosAuth } from './axiosClient'
+
+export type TLogin = Pick<User, 'email'> & {
     password: string
 }
-
-export interface IRegister {
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    phone_number: string
+export type TRegister = TLogin &
+    Pick<User, 'first_name' | 'last_name' | 'phone_number'>
+export type TLoginResponse = {
+    access_token: { value: string; expires_at: string }
+    refresh_token: string
 }
 
 const authApi = {
-    register: async (newUser: IRegister) => {
+    register: async (
+        newUser: TRegister
+    ): Promise<AxiosResponse<TReponse<TLoginResponse>>> => {
         const url = 'auth/register'
         return await axiosClient.post(url, newUser, {
             withCredentials: true,
         })
     },
-    login: async (user: ILogin) => {
+    login: async (
+        user: TLogin
+    ): Promise<AxiosResponse<TReponse<TLoginResponse>>> => {
         const url = 'auth/login'
         return await axiosClient.post(url, user, {
             withCredentials: true,
@@ -34,7 +39,7 @@ const authApi = {
     },
     getProfile: async () => {
         const url = 'auth/profile'
-        return await axiosClient.get(url)
+        return await axiosAuth.get(url)
     },
     logout: async () => {
         const url = `auth/logout`

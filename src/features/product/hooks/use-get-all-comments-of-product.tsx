@@ -7,17 +7,19 @@ export function useGetAllCommentsOfProduct(productId: string): {
     isLoading: boolean
     comments: Comment[]
 } {
+    const initialData = [{} as Comment]
+    const placeholderData = [{} as Comment]
+
     const { data, isFetching } = useQuery({
         queryKey: ['comments', productId],
         queryFn: () =>
             productApi
                 .getAllCommentsOfProduct(productId)
-                .then((response) => response.data),
+                .then((response) => response.data.data),
         refetchOnWindowFocus: false,
-        placeholderData: () => {
-            return []
-        },
+        placeholderData,
+        initialData,
     })
 
-    return { isLoading: isFetching, comments: data }
+    return { isLoading: isFetching, comments: data ?? [] }
 }

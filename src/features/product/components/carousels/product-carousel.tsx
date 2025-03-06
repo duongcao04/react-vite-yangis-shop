@@ -38,7 +38,7 @@ function ProductsCarousel({
                                 'basis-1/2 laptop:basis-1/5',
                                 classNames?.carouselItem
                             )}
-                            key={product._id}
+                            key={product.id}
                         >
                             <ProductCard
                                 isLoading={isLoading}

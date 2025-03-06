@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import {
     Select,
     SelectContent,
@@ -8,23 +6,29 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 
+import { IFilters } from '../../features/product/pages/products'
+
 interface ISelectBoxProps {
     selectList: string[]
     className?: string
-    defaultValue?: string
-    setValue: Dispatch<SetStateAction<string>>
+    filters: IFilters
+    setFilters: (filterRecord: Record<string, string | undefined>) => void
 }
 
 export default function SelectBox({
     className,
-    defaultValue,
-    setValue,
+    filters,
+    setFilters,
     selectList,
 }: ISelectBoxProps) {
     return (
-        <Select onValueChange={setValue}>
+        <Select
+            onValueChange={(value) => {
+                setFilters({ price: value })
+            }}
+        >
             <SelectTrigger className={className}>
-                <SelectValue placeholder={defaultValue} />
+                <SelectValue placeholder={filters.price} />
             </SelectTrigger>
             <SelectContent>
                 {selectList.map((item, index) => (

@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from 'react'
+
 import { User } from '@/types/user'
 
 export type AuthContextType = {
@@ -19,7 +20,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const initAuthUser = JSON.parse(
         localStorage.getItem('__user-information') ?? '{}'
     )
-    const [authUser, setAuthUser] = useState<User>(initAuthUser)
+    const [authUser, _setAuthUser] = useState<User>(initAuthUser)
+    const setAuthUser = (user: User) => {
+        localStorage.setItem('__user-information', JSON.stringify(user))
+        _setAuthUser(user)
+    }
 
     return (
         <AuthContext.Provider value={{ authUser, setAuthUser }}>

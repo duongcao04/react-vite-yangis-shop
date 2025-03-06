@@ -21,7 +21,7 @@ export default function App() {
         if (!authUser.role) {
             setRoutes(GLOBAL_ROUTES)
         } else {
-            if (authUser.role === 'admin') {
+            if (authUser.role === 'ADMIN') {
                 setRoutes([...GLOBAL_ROUTES, ...ADMIN_ROUTES])
             }
         }

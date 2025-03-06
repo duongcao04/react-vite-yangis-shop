@@ -1,12 +1,13 @@
 import axiosClient from '@/apis/axiosClient'
+import type { NewBrand } from '@/types/brand'
 
 const brandApi = {
-    getBrands: async (params: object) => {
-        const url = 'brand'
+    getAllBrands: async (params: object) => {
+        const url = 'brands'
         return await axiosClient.get(url, { params })
     },
     createBrand: async (newBrand: NewBrand) => {
-        const url = 'brand/add'
+        const url = 'brands'
         return await axiosClient.post(url, newBrand)
     },
 }

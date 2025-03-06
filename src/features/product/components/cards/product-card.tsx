@@ -10,6 +10,7 @@ import { config } from '@/config'
 import { addCart } from '@/redux/cart.slice'
 import { RootState } from '@/redux/store'
 import { addProduct, removeProduct } from '@/redux/wishlist-slice'
+import type { Product } from '@/types/product'
 import { VNDCurrencyFormat } from '@/utils/format'
 
 import { calcProductPrice } from '../../utils/calc-product-price'
@@ -81,7 +82,7 @@ function ProductRating({ data }: { data: Product }) {
                 ))}
             </div>
             <p className="text-sm leading-[21px] font-semibold">
-                ({data.reviews ? data.reviews.length : '0'})
+                ({data.comments ? data.comments.length : '0'})
             </p>
         </div>
     )

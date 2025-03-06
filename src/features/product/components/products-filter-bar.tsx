@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { motion } from 'framer-motion'
 import { FaChevronDown } from 'react-icons/fa6'
 import { IoFilter } from 'react-icons/io5'
-
-import { useGetAllBrands } from '@/hooks/use-get-all-brands'
-import { useGetAllCategories } from '@/hooks/use-get-all-categories'
 
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -14,24 +11,20 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 import { FILTER_PRICE_VALUES } from '@/constants/products-initial-filter'
 
-export interface IFilterBarProps {
-    filter: {
+import { useGetAllBrands } from '../hooks/use-get-all-brands'
+import { useGetAllCategories } from '../hooks/use-get-all-categories'
+
+export interface Props {
+    filters: {
         category?: string
         brand?: string
         price?: string
     }
-    setFilter: React.Dispatch<
-        React.SetStateAction<{
-            category?: string
-            brand?: string
-            price?: string
-        }>
-    >
+    setFilters: (filterRecord: Record<string, string | undefined>) => void
 }
-
-function FilterBar({ filter, setFilter }: IFilterBarProps) {
-    const { isLoading: loadingCategories, categories } = useGetAllCategories()
-    const { isLoading: loadingBrands, brands } = useGetAllBrands()
+function FilterBar({ filters, setFilters }: Props) {
+    const { isLoading: isLoadingCategories, categories } = useGetAllCategories()
+    const { isLoading: isLoadingBrands, brands } = useGetAllBrands()
 
     const [collapse, setCollapse] = useState<{
         category: boolean
@@ -50,7 +43,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                     className="inline-block mr-3 leading-none align-middle"
                     size={23}
                 />
-                Bộ lọc tìm kiếm
+                Filters
             </h2>
 
             <div className="px-5 py-4">
@@ -64,7 +57,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                     }}
                 >
                     <h3 className="text-base leading-none font-semibold">
-                        Danh mục
+                        Category
                     </h3>
                     <FaChevronDown
                         className={`${
@@ -77,27 +70,24 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                         collapse.category == true ? '' : 'hidden'
                     } mt-5 grid grid-cols-2 gap-3`}
                 >
-                    {!loadingCategories &&
+                    {!isLoadingCategories &&
                         categories.map((category) => (
                             <Button
                                 asChild
-                                key={category._id}
+                                key={category.id}
                                 variant={
-                                    filter.category === category.slug
+                                    filters.category === category.slug
                                         ? 'default'
                                         : 'outline'
                                 }
+                                className="w-full"
                                 onClick={() => {
-                                    if (filter.category !== category.slug) {
-                                        setFilter((pre) => ({
-                                            ...pre,
+                                    if (filters.category !== category.slug) {
+                                        setFilters({
                                             category: category.slug,
-                                        }))
+                                        })
                                     } else {
-                                        setFilter((pre) => ({
-                                            ...pre,
-                                            category: undefined,
-                                        }))
+                                        setFilters({ category: undefined })
                                     }
                                 }}
                             >
@@ -109,7 +99,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                                 </motion.button>
                             </Button>
                         ))}
-                    {loadingCategories &&
+                    {isLoadingCategories &&
                         new Array(8)
                             .fill('category')
                             .map((item, index) => (
@@ -132,7 +122,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                     }}
                 >
                     <h3 className="text-base leading-none font-semibold">
-                        Hãng sản xuất
+                        Company
                     </h3>
                     <FaChevronDown
                         className={`${
@@ -145,27 +135,22 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                         collapse.brand == true ? '' : 'hidden'
                     } mt-5 grid grid-cols-2 gap-3`}
                 >
-                    {!loadingBrands &&
+                    {!isLoadingBrands &&
                         brands.map((brand) => (
                             <Button
                                 asChild
-                                key={brand._id}
+                                key={brand.id}
                                 variant={
-                                    filter.brand === brand.slug
+                                    filters.brand === brand.slug
                                         ? 'default'
                                         : 'outline'
                                 }
+                                className="w-full"
                                 onClick={() => {
-                                    if (filter.brand !== brand.slug) {
-                                        setFilter((pre) => ({
-                                            ...pre,
-                                            brand: brand.slug,
-                                        }))
+                                    if (filters.brand !== brand.slug) {
+                                        setFilters({ brand: brand.slug })
                                     } else {
-                                        setFilter((pre) => ({
-                                            ...pre,
-                                            brand: undefined,
-                                        }))
+                                        setFilters({ brand: undefined })
                                     }
                                 }}
                             >
@@ -177,7 +162,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                                 </motion.button>
                             </Button>
                         ))}
-                    {loadingBrands &&
+                    {isLoadingBrands &&
                         new Array(8)
                             .fill('brands')
                             .map((item, index) => (
@@ -219,10 +204,7 @@ function FilterBar({ filter, setFilter }: IFilterBarProps) {
                             <div
                                 className="flex items-center space-x-2"
                                 onClick={() => {
-                                    setFilter((pre) => ({
-                                        ...pre,
-                                        price: item.value,
-                                    }))
+                                    setFilters({ price: item.value })
                                 }}
                                 key={item.id}
                             >

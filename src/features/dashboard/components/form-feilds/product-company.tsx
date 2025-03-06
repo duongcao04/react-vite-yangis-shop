@@ -6,6 +6,8 @@ import useHorizontalScroll from '@/hooks/use-horizontal-scroll'
 
 import { Button } from '@/components/ui/button'
 
+import { Brand } from '@/types/brand'
+
 import { NewProductFormValue } from '../../schemas/new-product-validate-schema'
 
 export default function ProductComponany({
@@ -17,8 +19,8 @@ export default function ProductComponany({
 }) {
     const scrollHorizontalRef = useHorizontalScroll()
     // Form validate value
-    const isError = Boolean(form.errors.brand)
-    const isTouched = Boolean(form.touched.brand)
+    const isError = Boolean(form.errors.brandId)
+    const isTouched = Boolean(form.touched.brandId)
 
     return (
         <>
@@ -43,10 +45,11 @@ export default function ProductComponany({
                     ref={scrollHorizontalRef}
                 >
                     {brands.map((brand) => {
-                        const isSelected = form.values.brand === brand._id
+                        const isSelected = form.values.brandId === brand.id
+
                         return (
                             <motion.div
-                                key={brand._id}
+                                key={brand.id}
                                 whileTap={{
                                     scale: 0.95,
                                 }}
@@ -55,12 +58,12 @@ export default function ProductComponany({
                                     type="button"
                                     className={`border rounded-md px-6 py-4 w-[230px] h-[150px] flex flex-col justify-between transition duration-200 ${isSelected ? 'bg-primary-50 border-primary-500' : 'bg-border border'}`}
                                     onClick={() => {
-                                        form.setFieldValue('brand', brand._id)
+                                        form.setFieldValue('brandId', brand.id)
                                     }}
                                 >
                                     <img
                                         src={brand.logo}
-                                        className="size-[50px] object-contain"
+                                        className="size-[90px] object-contain"
                                     />
                                     <div className="text-left">
                                         <p
@@ -72,9 +75,6 @@ export default function ProductComponany({
                                         >
                                             {brand.name}
                                         </p>
-                                        <p className="text-sm opacity-80">
-                                            {brand.products.length} items
-                                        </p>
                                     </div>
                                 </motion.button>
                             </motion.div>
@@ -84,7 +84,7 @@ export default function ProductComponany({
                 {isTouched && isError && (
                     <div className="mt-2">
                         <p className="text-xs font-semibold text-red-500">
-                            {form.errors.brand}
+                            {form.errors.brandId}
                         </p>
                     </div>
                 )}

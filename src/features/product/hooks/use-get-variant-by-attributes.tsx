@@ -18,13 +18,13 @@ const useGetVariantByAttributes = (
         queryFn: () =>
             productApi
                 .getVariantByAttributes(productId, attributes)
-                .then((response) => response.data),
+                .then((response) => response.data.data),
         refetchOnWindowFocus: false,
         initialData,
         placeholderData,
     })
 
-    return { isLoading: isFetching, variant: data }
+    return { isLoading: isFetching, variant: data ?? ({} as Variant) }
 }
 
 export { useGetVariantByAttributes }

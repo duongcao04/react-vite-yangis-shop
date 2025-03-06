@@ -11,6 +11,17 @@ import { config as localConfig } from '@/config'
 
 import authApi from './auth.api'
 
+export type TError = {
+    message: string
+    error: string
+    statusCode: number
+}
+export type TReponse<T = unknown> = {
+    message: string
+    data?: T
+    statusCode: number
+}
+
 const cookie = new Cookies()
 
 const config: CreateAxiosDefaults = {
@@ -29,15 +40,14 @@ axiosClient.defaults.headers.common['Content-Type'] = 'application/json'
 axiosClient.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axiosClient.defaults.headers.common['X-Requested-Store'] = 'default'
 
-let requestTime = 0
-let authToken: string = ''
-
 // Config interceptor here
 axiosClient.interceptors.request.use(
     async (config) => {
-        const authToken = cookie.get('access_token') || ''
+        const authToken = await cookie.get('accessToken')
+
         if (authToken) {
-            config.headers.Authorization = `Bearer ${authToken}`
+            const authorization = `Bearer ${authToken}`
+            axiosAuth.defaults.headers.common['Authorization'] = authorization
         }
         return config
     },
@@ -58,23 +68,19 @@ axiosClient.interceptors.response.use(
     async (error: AxiosError) => {
         try {
             if (error?.response?.status === 401) {
-                // if (requestTime >= 6) {
-                //   return;
-                // }
-
                 const refresh = await authApi
                     .refreshToken('refresh token')
                     .catch(async (err: AxiosError) => {
                         if (err.response?.status === 400) {
                             await authApi.logout().then(() => {
-                                cookie.remove('access_token')
+                                cookie.remove('accessToken')
                                 window.location.href = localConfig.routes.login
                             })
                             window.location.href = localConfig.routes.login
                         }
                     })
                 if (refresh?.access_token) {
-                    cookie.set('access_token', refresh?.access_token)
+                    cookie.set('accessToken', refresh?.access_token)
                 }
                 const originalRequest: InternalAxiosRequestConfig =
                     error.config as InternalAxiosRequestConfig

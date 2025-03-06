@@ -4,12 +4,13 @@ import { Icon } from '@iconify/react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-import useLogout from '@/features/auth/hooks/use-logout'
 import { useOutsideClick } from '@/hooks/use-outside-click'
 
 import { useAuthContext } from '@/context/auth-context'
 
 import { Input } from '@/components/ui/input'
+
+import useLogout from '@/features/auth/hooks/use-logout'
 
 export interface DashboardHeaderProps {
     showSidebar: boolean
@@ -95,10 +96,10 @@ export default function DashboardHeader({
                         />
                         <div>
                             <p className="font-bold text-sm">
-                                {authUser.fullName}
+                                {authUser.first_name + ' ' + authUser.last_name}
                             </p>
                             <p className="text-xs capitalize">
-                                {authUser.role}
+                                {authUser.role.toLowerCase()}
                             </p>
                         </div>
                     </button>

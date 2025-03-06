@@ -7,17 +7,19 @@ export const useGetAllCategories: (params?: object) => {
     isLoading: boolean
     categories: Category[]
 } = (params) => {
+    const initialData = [{} as Category]
+    const placeholderData = [{} as Category]
+
     const { data, isFetching } = useQuery({
         queryKey: ['categories', params],
         queryFn: () =>
             categoryApi
-                .getCategories(params ?? {})
+                .getAllCategories(params ?? {})
                 .then((response) => response.data.data),
         refetchOnWindowFocus: false,
-        placeholderData: () => {
-            return []
-        },
+        initialData,
+        placeholderData,
     })
 
-    return { isLoading: isFetching, categories: data ?? [] }
+    return { isLoading: isFetching, categories: data }
 }

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 
 import { config } from '@/config'
+
 import NewProductForm from '../components/forms/new-product-form'
 
 function Heading() {
@@ -26,7 +27,7 @@ function Heading() {
     )
 }
 
-function ProductCreate() {
+export default function ProductCreate() {
     return (
         <div className="w-full h-full">
             <Heading />
@@ -37,5 +38,3 @@ function ProductCreate() {
         </div>
     )
 }
-
-export default ProductCreate

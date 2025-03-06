@@ -10,7 +10,7 @@ import {
     loginValidateSchema as validationSchema,
 } from '../../schemas/login-validate-schema'
 import SocialButton from '../buttons/social-button'
-import { InputPassword } from './register-form'
+import InputPassword from '../fields/input-password'
 
 export default function LoginForm() {
     const { isLoading, login } = useLogin()

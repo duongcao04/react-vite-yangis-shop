@@ -34,6 +34,7 @@ import {
 
 import { RootState } from '@/redux/store'
 
+import { NewOrder } from '../../../types/order'
 import CheckoutProducts from '../components/checkout-products'
 import OrderInformation from '../components/order-information'
 
@@ -64,7 +65,7 @@ const FormSchema = z.object({
         .max(10, {
             message: 'Số điện thoại không hợp lệ',
         }),
-    email: z.string().email({ message: 'Email không hợp lệ' }).optional(),
+    email: z.string().email({ message: 'Email không hợp lệ' }),
     provice: z.string(),
     district: z.string(),
     commune: z.string(),
@@ -74,7 +75,7 @@ const FormSchema = z.object({
 })
 
 export default function CheckoutPage() {
-    const { cart, total } = useSelector((state: RootState) => state.cart)
+    const { cart, totalAmount } = useSelector((state: RootState) => state.cart)
 
     const { provinces, getDistricts, getCommunes } = useGetAddress()
 
@@ -104,19 +105,19 @@ export default function CheckoutPage() {
 
         // TODO: Validate for address feild
         const newOrder: NewOrder = {
-            user: authUser._id,
-            deliveryInformation: {
-                fullName: data.fullName,
-                phone: data.phone,
+            user_id: authUser.id,
+            delivery_nformation: {
+                full_name: data.fullName,
+                phone: +data.phone,
                 email: data.email,
                 address: `${communes[foundIndex].name}, ${communes[foundIndex].district}, ${communes[foundIndex].province}`,
             },
-            paymentMethod: data.paymentMethod,
+            payment_id: data.paymentMethod,
             products: cart,
-            totalAmount: total,
-            subtotal: total,
-            shippingFee: 0,
-            bonusPoints: 0.01 * total,
+            total_amount: totalAmount,
+            subtotal: totalAmount,
+            shipping_fee: 0,
+            bonus_points: 0.01 * totalAmount,
         }
         await createAOrder(newOrder)
     }

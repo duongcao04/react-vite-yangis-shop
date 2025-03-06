@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
 import brandApi from '@/apis/brand.api'
-
-import { Brand } from '../types/brand'
+import { Brand } from '@/types/brand'
 
 export const useGetAllBrands: (params?: object) => {
     isLoading: boolean
     brands: Brand[]
 } = (params) => {
+    const initialData = [{} as Brand]
+    const placeholderData = [{} as Brand]
+
     const { data, isFetching } = useQuery({
         queryKey: ['brands', params],
         queryFn: () =>
@@ -15,12 +17,9 @@ export const useGetAllBrands: (params?: object) => {
                 .getAllBrands(params ?? {})
                 .then((response) => response.data.data),
         refetchOnWindowFocus: false,
-        placeholderData: () => {
-            return { data: [] }
-        },
+        placeholderData,
+        initialData,
     })
 
-    const { data: brands } = data
-
-    return { isLoading: isFetching, brands }
+    return { isLoading: isFetching, brands: data ?? initialData }
 }

@@ -6,7 +6,7 @@ export type Attribute = Partial<Timestampz> & {
     name: string
     product?: Product
     variants?: Variant[]
-    values: {
+    values?: {
         id: string
         value: string
     }[]

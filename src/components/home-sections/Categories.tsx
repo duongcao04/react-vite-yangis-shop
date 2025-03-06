@@ -2,6 +2,8 @@ import React from 'react'
 
 import { useGetAllCategories } from '@/hooks/use-get-all-categories'
 
+import { Category } from '@/types/category'
+
 import CategoryCard from '../cards/category-card'
 
 function Categories() {

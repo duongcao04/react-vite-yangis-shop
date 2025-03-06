@@ -20,25 +20,25 @@ export const routesSchema = {
     dashboard: {
         home: '/dashboard',
         product: {
-            DEFAULT: '/dashboard/my-shop/products',
-            create: '/dashboard/my-shop/products/create',
-            detail: '/dashboard/my-shop/products/:productSlug',
+            DEFAULT: '/dashboard/shop/products',
+            create: '/dashboard/shop/products/create',
+            detail: '/dashboard/shop/products/:productSlug',
         },
         category: {
-            DEFAULT: '/dashboard/my-shop/categories',
+            DEFAULT: '/dashboard/shop/categories',
         },
         brand: {
-            DEFAULT: '/dashboard/my-shop/brand',
+            DEFAULT: '/dashboard/shop/brand',
         },
         order: {
-            DEFAULT: '/dashboard/my-shop/orders',
-            detail: '/dashboard/my-shop/orders/:orderId',
+            DEFAULT: '/dashboard/shop/orders',
+            detail: '/dashboard/shop/orders/:orderId',
         },
         customer: {
-            DEFAULT: '/dashboard/my-shop/customers',
+            DEFAULT: '/dashboard/shop/customers',
         },
         article: {
-            DEFAULT: '/dashboard/my-shop/articles',
+            DEFAULT: '/dashboard/shop/articles',
         },
         report: {
             DEFAULT: '/dashboard/business-analytics/reports',

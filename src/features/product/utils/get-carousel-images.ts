@@ -21,19 +21,19 @@ export const getCarouselImages: (product: Product) => CarouselImage[] = (
     }
     result.push(thumbnail)
 
-    if (product.variants.length === 0) {
-        return result
-    }
+    const productVariant = product.variants ?? []
 
-    product.variants.forEach((variant: Variant) => {
-        const images = variant.images.map((img) => img.image_url)
-        result.push({
-            id: result.length,
-            thumbnail: images[0],
-            label: variant.SKU,
-            images: images,
+    if (productVariant.length > 0) {
+        product.variants?.forEach((variant: Variant) => {
+            const images = variant.images.map((img) => img.image_url)
+            result.push({
+                id: result.length,
+                thumbnail: images[0],
+                label: variant.SKU,
+                images: images,
+            })
         })
-    })
+    }
 
     return result
 }

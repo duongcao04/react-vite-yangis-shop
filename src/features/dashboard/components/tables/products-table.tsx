@@ -16,16 +16,15 @@ import {
 } from '@/components/ui/table'
 
 import { config } from '@/config'
+import type { Product } from '@/types/product'
+import { VNDCurrencyFormat } from '@/utils/format'
 
-interface IProductsTableProps {
+interface Props {
     loadingProducts: boolean
     products: Product[]
 }
 
-export default function ProductsTable({
-    loadingProducts,
-    products,
-}: IProductsTableProps) {
+export default function ProductsTable({ loadingProducts, products }: Props) {
     const { deleteProduct } = useDeleteProduct()
 
     const handleDeleteProduct = (product: Product) => {
@@ -33,7 +32,7 @@ export default function ProductsTable({
             description: `${product.name}`,
             action: {
                 label: 'Confirm',
-                onClick: () => deleteProduct(product._id),
+                onClick: () => deleteProduct(product.id),
             },
         })
     }
@@ -54,7 +53,7 @@ export default function ProductsTable({
             <TableBody>
                 {!loadingProducts &&
                     products.map((product) => (
-                        <TableRow key={product._id}>
+                        <TableRow key={product.id}>
                             <TableCell className="flex items-center justify-start gap-[14px]">
                                 <motion.img
                                     initial={{ opacity: 0 }}
@@ -66,7 +65,6 @@ export default function ProductsTable({
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="flex flex-col items-start justify-start gap-1"
                                 >
                                     <Link
                                         to={`${config.routes.dashboard.product.DEFAULT}/${product.slug}`}
@@ -74,9 +72,6 @@ export default function ProductsTable({
                                     >
                                         {product.name}
                                     </Link>
-                                    <p className="text-xs">
-                                        {product.category.name}
-                                    </p>
                                 </motion.div>
                             </TableCell>
                             <TableCell>
@@ -84,7 +79,7 @@ export default function ProductsTable({
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    {formatMoney(product.price)}
+                                    {VNDCurrencyFormat(product.price)}
                                 </motion.p>
                             </TableCell>
                             <TableCell>
@@ -92,7 +87,9 @@ export default function ProductsTable({
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                 >
-                                    {product.sale && product.sale + '%'}
+                                    {product.discount_percentage &&
+                                        product.discount_percentage + '%'}
+                                    {!product.discount_percentage && '---'}
                                 </motion.p>
                             </TableCell>
                             <TableCell>
@@ -104,22 +101,22 @@ export default function ProductsTable({
                                 </motion.p>
                             </TableCell>
                             <TableCell>
-                                {product.inStock === 0 && (
+                                {product.price === 0 && (
                                     <motion.p
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         className="text-xs leading-none p-1 bg-[#fff2ed] w-fit rounded-md font-medium text-[#ff5200]"
                                     >
-                                        Hết hàng
+                                        Out stock
                                     </motion.p>
                                 )}
-                                {product.inStock > 0 && (
+                                {product.price > 0 && (
                                     <motion.p
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         className="text-xs leading-none p-1 bg-[#f0fdf4] w-fit rounded-md font-medium text-[#3ecc73]"
                                     >
-                                        Còn hàng
+                                        In stock
                                     </motion.p>
                                 )}
                             </TableCell>
@@ -129,9 +126,9 @@ export default function ProductsTable({
                                     animate={{ opacity: 1 }}
                                     className="flex items-center justify-center gap-5"
                                 >
-                                    <button title="Xem sản phẩm">
+                                    <button title="View">
                                         <Link
-                                            to={`${config.routes.dashboard.product.DEFAULT}/${product.slug}`}
+                                            to={`${config.routes.products}/${product.slug}`}
                                         >
                                             <Icon
                                                 icon="hugeicons:view"
@@ -140,7 +137,7 @@ export default function ProductsTable({
                                             />
                                         </Link>
                                     </button>
-                                    <button title="Chỉnh sửa">
+                                    <button title="Edit">
                                         <Icon
                                             icon="hugeicons:pencil-edit-01"
                                             fontSize={20}
@@ -148,7 +145,7 @@ export default function ProductsTable({
                                         />
                                     </button>
                                     <button
-                                        title="Xóa"
+                                        title="Delete"
                                         onClick={() => {
                                             handleDeleteProduct(product)
                                         }}

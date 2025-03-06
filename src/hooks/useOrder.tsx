@@ -7,26 +7,27 @@ import { toast } from 'sonner'
 
 import orderApi from '@/apis/order.api'
 import { resetCart } from '@/redux/cart.slice'
+import type { Order } from '@/types/order'
 
 export const useGetOrders: (params?: object) => {
     isLoading: boolean
     orders: Order[]
 } = (params) => {
+    const placeholderData = [{} as Order]
+    const initialData = [{} as Order]
+
     const { data, isFetching } = useQuery({
         queryKey: ['orders', params],
         queryFn: () =>
-            orderApi.getOrders(params ?? {}).then((response) => response.data),
+            orderApi
+                .getAllOrders(params ?? {})
+                .then((response) => response.data.data),
         refetchOnWindowFocus: false,
-        placeholderData: () => {
-            return {
-                data: [],
-            }
-        },
+        placeholderData,
+        initialData,
     })
 
-    const { data: orders } = data
-
-    return { isLoading: isFetching, orders }
+    return { isLoading: isFetching, orders: data }
 }
 
 export const useGetOrder: (orderId: string) => {

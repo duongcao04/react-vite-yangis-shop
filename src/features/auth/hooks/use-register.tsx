@@ -1,31 +1,40 @@
 import { useState } from 'react'
 
+import { AxiosError, AxiosResponse } from 'axios'
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
 import { useToast } from '@/hooks/use-toast'
 
-import authApi, { IRegister } from '@/apis/auth.api'
+import { useAuthContext } from '@/context/auth-context'
+
+import authApi, { type TLoginResponse, type TRegister } from '@/apis/auth.api'
+import type { TError, TReponse } from '@/apis/axiosClient'
+
+import { useGetUserProfile } from './use-get-user-profile'
 
 export const useRegister = () => {
-    const [, setCookie] = useCookies()
     const [isLoading, setLoading] = useState<boolean>(false)
+    const [, setCookie] = useCookies()
     const { onToast } = useToast()
     const navigate = useNavigate()
+    const { getUser } = useGetUserProfile()
+    const { setAuthUser } = useAuthContext()
 
-    const register = async (user: IRegister) => {
+    const register = async (user: TRegister) => {
         setLoading(true)
         try {
-            const res = await authApi.register(user)
+            const res: AxiosResponse<TReponse<TLoginResponse>> =
+                await authApi.register(user)
+            const { access_token, refresh_token } = res.data.data
 
             if (res.status === 201) {
-                const { access_token, refresh_token } = res.data.data
-
-                setCookie('access_token', access_token.value, {
+                setCookie('accessToken', access_token.value, {
+                    path: '/',
                     expires: new Date(access_token.expires_at),
                 })
                 localStorage.setItem(
-                    'refresh_token',
+                    'refreshToken',
                     JSON.stringify(refresh_token)
                 )
                 onToast({
@@ -34,11 +43,15 @@ export const useRegister = () => {
                     color: 'success',
                 })
                 navigate('/')
+                const getAuthUser = await getUser()
+                setAuthUser(getAuthUser)
             }
         } catch (error) {
+            const err = error as AxiosError<TError>
+
             onToast({
                 title: 'Sign up failed !',
-                description: `${error}`,
+                description: `${err.response?.data.message}`,
                 color: 'danger',
             })
         } finally {

@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react/dist/iconify.js'
 import { FormikProps } from 'formik'
 import { motion } from 'framer-motion'
 import { FaPlus } from 'react-icons/fa'
@@ -7,9 +6,11 @@ import useHorizontalScroll from '@/hooks/use-horizontal-scroll'
 
 import { Button } from '@/components/ui/button'
 
+import { Category } from '@/types/category'
+
 import { NewProductFormValue } from '../../schemas/new-product-validate-schema'
 
-export default function ProductType({
+export default function ProductCategory({
     data: categories,
     form,
 }: {
@@ -18,8 +19,26 @@ export default function ProductType({
 }) {
     const scrollHorizontalRef = useHorizontalScroll()
     // Form validate value
-    const isError = Boolean(form.errors.category)
-    const isTouched = Boolean(form.touched.category)
+    const isError = Boolean(form.errors.categoryIds)
+    const isTouched = Boolean(form.touched.categoryIds)
+
+    const formCategoryIds = form.values.categoryIds
+
+    const onChangeHandler = (categoryId: string) => {
+        const foundCategory = formCategoryIds.findIndex(
+            (id) => id === categoryId
+        )
+        const isSelected = foundCategory !== -1 ? true : false
+
+        if (isSelected) {
+            form.setFieldValue(
+                'categoryIds',
+                formCategoryIds.filter((id) => id !== categoryId)
+            )
+        } else {
+            form.setFieldValue('categoryIds', [...formCategoryIds, categoryId])
+        }
+    }
 
     return (
         <>
@@ -27,7 +46,7 @@ export default function ProductType({
                 <h3
                     className={`text-lg font-semibold ${isTouched ? (isError ? 'text-red-600' : 'text-foreground') : 'text-foreground'}`}
                 >
-                    Product Type
+                    Product Category
                 </h3>
                 <Button
                     type="button"
@@ -44,10 +63,14 @@ export default function ProductType({
                     ref={scrollHorizontalRef}
                 >
                     {categories.map((category) => {
-                        const isSelected = form.values.category === category._id
+                        const foundCategory = formCategoryIds.findIndex(
+                            (id) => id === category.id
+                        )
+                        const isSelected = foundCategory !== -1 ? true : false
+
                         return (
                             <motion.div
-                                key={category._id}
+                                key={category.id}
                                 whileTap={{
                                     scale: 0.95,
                                 }}
@@ -56,21 +79,18 @@ export default function ProductType({
                                     type="button"
                                     className={`border rounded-md px-6 py-4 w-[230px] h-[150px] flex flex-col justify-between transition duration-200 ${isSelected ? 'bg-primary-50 border-primary-500' : 'bg-border border'}`}
                                     onClick={() => {
-                                        form.setFieldValue(
-                                            'category',
-                                            category._id
-                                        )
+                                        onChangeHandler(category.id)
                                     }}
                                 >
-                                    <Icon
-                                        icon={category.icon}
-                                        fontSize={30}
-                                        className={`transition duration-200 ${
+                                    <img
+                                        src={category.thumbnail}
+                                        className={`size-[70px] object-contain transition duration-200 ${
                                             isSelected
                                                 ? 'text-primary-700'
                                                 : 'text-foreground'
                                         }`}
                                     />
+
                                     <div className="text-left">
                                         <p
                                             className={`font-semibold transition duration-200 ${
@@ -81,9 +101,6 @@ export default function ProductType({
                                         >
                                             {category.name}
                                         </p>
-                                        <p className="text-sm opacity-80">
-                                            {category.products.length} items
-                                        </p>
                                     </div>
                                 </motion.button>
                             </motion.div>
@@ -93,7 +110,7 @@ export default function ProductType({
                 {isTouched && isError && (
                     <div className="mt-2">
                         <p className="text-xs font-semibold text-red-500">
-                            {form.errors.category}
+                            {form.errors.categoryIds}
                         </p>
                     </div>
                 )}

@@ -15,8 +15,8 @@ export default function ProductImages({
 }) {
     const scrollHorizontalRef = useHorizontalScroll()
     const [files, setFiles] = useState<File[]>([])
-    const isError = Boolean(form.errors.featureImage)
-    const isTouched = Boolean(form.touched.featureImage)
+    const isError = Boolean(form.errors.featureImages)
+    const isTouched = Boolean(form.touched.featureImages)
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const inputFiles = event.target.files
@@ -32,7 +32,7 @@ export default function ProductImages({
                 }
             })
             setFiles(rest)
-            form.setFieldValue('featureImage', rest)
+            form.setFieldValue('featureImages', rest)
         }
     }
     const handleRemove = (item: File) => {
@@ -118,7 +118,7 @@ export default function ProductImages({
                 {isTouched && isError && (
                     <div className="mt-2">
                         <p className="text-xs font-semibold text-red-500">
-                            {form.errors.featureImage?.toString()}
+                            {form.errors.featureImages?.toString()}
                         </p>
                     </div>
                 )}

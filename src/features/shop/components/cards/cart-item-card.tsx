@@ -18,6 +18,13 @@ import { isObjectEmpty } from '@/utils/is-object-empty'
 
 import { calcProductPrice } from '../../../product/utils/calc-product-price'
 
+export const getCartImageThumbnail = (cartItem: CartItem) => {
+    if (!isObjectEmpty(cartItem.variant)) {
+        return cartItem.variant.images[0].image_url
+    }
+    return cartItem.product.thumbnail
+}
+
 interface Props {
     cartItem: CartItem
 }
@@ -25,13 +32,6 @@ export default function CartItemCard({ cartItem }: Props) {
     const dispatch = useDispatch()
     const handleRemoveCart = (cartId: string) => {
         dispatch(removeCart(cartId))
-    }
-
-    const getImageThumbnail = () => {
-        if (!isObjectEmpty(cartItem.variant)) {
-            return cartItem.variant.images[0].image_url
-        }
-        return cartItem.product.thumbnail
     }
 
     return (
@@ -43,7 +43,7 @@ export default function CartItemCard({ cartItem }: Props) {
             <div className="flex gap-x-3 w-[calc(100%-28px)]">
                 <div className="p-2 border rounded-lg">
                     <img
-                        src={getImageThumbnail()}
+                        src={getCartImageThumbnail(cartItem)}
                         alt={cartItem.product.name}
                         className="size-[50px] object-contain"
                     />

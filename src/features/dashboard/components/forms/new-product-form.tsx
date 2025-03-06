@@ -2,8 +2,6 @@ import { FormikProps, useFormik } from 'formik'
 import { MdDelete } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 
-import { useCreateProduct } from '@/hooks/use-create-product'
-import { useGetAllBrands } from '@/hooks/use-get-all-brands'
 import { useGetAllCategories } from '@/hooks/use-get-all-categories'
 
 import { Button } from '@/components/ui/button'
@@ -12,17 +10,19 @@ import { ButtonLoading } from '@/components/ui/button-loading'
 import { config } from '@/config'
 import { EDITORJS_INITIAL_DATA } from '@/constants/editorjs-initial-data'
 
+import { useCreateProduct } from '../../hooks/use-create-product'
+import { useGetAllBrands } from '../../hooks/use-get-all-brands'
 import {
     NewProductFormValue,
     newProductValidateSchema as validationSchema,
 } from '../../schemas/new-product-validate-schema'
+import ProductAttributes from '../form-feilds/product-attributes'
+import ProductCategory from '../form-feilds/product-category'
 import ProductComponany from '../form-feilds/product-company'
 import ProductDescription from '../form-feilds/product-description'
 import ProductDetail from '../form-feilds/product-detail'
 import ProductImages from '../form-feilds/product-images'
 import ProductThumbnail from '../form-feilds/product-thumbnail'
-import ProductType from '../form-feilds/product-type'
-import ProductVariants from '../form-feilds/product-variants'
 
 function FloatButton({
     form,
@@ -89,16 +89,14 @@ const initialValues: NewProductFormValue = {
     slug: '',
     description: JSON.stringify(EDITORJS_INITIAL_DATA),
     thumbnail: {} as File,
-    featureImage: [],
+    featureImages: [],
     price: 0,
-    sale: '',
-    category: '',
-    brand: '',
-    inStock: 0,
-    variants: [],
+    categoryIds: [],
+    brandId: '',
+    attributeIds: [],
+    discountPercentage: 0,
 }
 export default function NewProductForm() {
-    const navigate = useNavigate()
     const { isLoading, createProduct } = useCreateProduct()
     const { categories } = useGetAllCategories()
     const { brands } = useGetAllBrands()
@@ -108,22 +106,54 @@ export default function NewProductForm() {
             initialValues,
             validationSchema,
             onSubmit: (values) => {
-                const newProduct: NewProduct = {
-                    name: values.name,
-                    description: values.description,
-                    thumbnail: values.thumbnail,
-                    featureImage: values.featureImage,
-                    price: +values.price,
-                    sale: values.sale,
-                    slug: values.slug,
-                    inStock: 0,
-                    category: values.category,
-                    brand: values.brand,
-                    variants: values.variants,
-                }
-                console.log(newProduct)
+                const form = new FormData()
 
-                // createProduct(newProduct)
+                form.append('name', values.name)
+                form.append('slug', values.slug)
+                form.append('price', values.price.toString())
+
+                if (values.discountPercentage) {
+                    form.append(
+                        'discount_percentage',
+                        values.discountPercentage.toString()
+                    )
+                }
+
+                form.append('description', values.description)
+
+                // Kiểm tra thumbnail trước khi append
+                if (values.thumbnail instanceof File) {
+                    form.append('thumbnail', values.thumbnail)
+                }
+
+                // Kiểm tra featureImages trước khi duyệt
+                if (Array.isArray(values.featureImages)) {
+                    values.featureImages.forEach((image) => {
+                        if (image instanceof File) {
+                            form.append('feature_images', image)
+                        }
+                    })
+                }
+
+                form.append('is_published', 'true')
+
+                if (values.brandId) {
+                    form.append('brand_id', values.brandId.toString())
+                }
+
+                if (Array.isArray(values.categoryIds)) {
+                    values.categoryIds.forEach((categoryId) => {
+                        form.append('category_ids', categoryId.toString())
+                    })
+                }
+
+                if (Array.isArray(values.attributeIds)) {
+                    values.attributeIds.forEach((attributeId) => {
+                        form.append('attribute_ids', attributeId.toString())
+                    })
+                }
+
+                createProduct(form)
                 // navigate(config.routes.dashboard.product.DEFAULT)
             },
         })
@@ -140,18 +170,18 @@ export default function NewProductForm() {
                         <ProductImages form={formik} />
                     </div>
                     <div className="bg-white rounded-xl p-6 border">
-                        <ProductVariants form={formik} />
+                        <ProductAttributes form={formik}/>
                     </div>
                 </div>
                 <div className="col-span-2 space-y-5">
                     <div className="bg-white rounded-xl p-6 border">
-                        <ProductType data={categories} form={formik} />
+                        <ProductDetail form={formik} />
+                    </div>
+                    <div className="bg-white rounded-xl p-6 border">
+                        <ProductCategory data={categories} form={formik} />
                     </div>
                     <div className="bg-white rounded-xl p-6 border">
                         <ProductComponany data={brands} form={formik} />
-                    </div>
-                    <div className="bg-white rounded-xl p-6 border">
-                        <ProductDetail form={formik} />
                     </div>
                     <div className="bg-white rounded-xl p-6 border">
                         <ProductDescription form={formik} />
